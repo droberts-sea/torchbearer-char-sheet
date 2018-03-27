@@ -1,0 +1,27 @@
+.tab-row ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0;
+
+  background-color: rgb(210, 204, 174);
+
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+
+}
+
+.tab-row ul li {
+  font-size: 1.2em;
+  font-family: fantasy, sans-serif;
+  text-align: center;
+
+  background-color: rgb(242, 239, 208);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  margin: 1px 1px 0 1px;
+  padding-top: .3em;
+}
+
+.tab-row li.active {
+  background-color: white;
+}
