@@ -1,17 +1,49 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Tabs } from './actions';
 import './App.css';
 
-import ConditionsTabContainer from './containers/ConditionsTabContainer';
 import TabRowContainer from './containers/TabRowContainer';
+import StatsPageContainer from './containers/StatsPageContainer';
+import InfoPageContainer from './containers/InfoPageContainer';
 
-const App = () => {
-  // TODO: how to flip b/w tabs?
+const mapStateToProps = (state) => {
+  return {
+    currentTab: state.currentTab
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  };
+};
+
+const App = ({ currentTab }) => {
+  let page = null;
+  switch(currentTab) {
+    case Tabs.STATS:
+    page = (<StatsPageContainer />);
+    break;
+
+    case Tabs.INFO:
+    page = (<InfoPageContainer />);
+    break;
+  }
+
   return (
     <div>
       <TabRowContainer />
-      <ConditionsTabContainer />
+      <main>
+        {page}
+      </main>
     </div>
   );
 };
 
-export default App;
+// Is this bad? A little. This component is basically just
+// a dispatcher, not complex enough to justify two files.
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

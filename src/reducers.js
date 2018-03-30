@@ -8,7 +8,8 @@ import points from './reducers/points_reducer';
 
 const character = combineReducers({
   conditions,
-  points
+  points,
+  // abilities
 });
 
 function currentTab(state=Tabs.INFO, action) {

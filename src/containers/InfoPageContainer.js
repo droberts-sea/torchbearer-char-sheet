@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { toggleCondition, addPoint, spendPoint } from '../actions';
-import InfoTab from '../components/InfoTab';
+import InfoPage from '../components/InfoPage';
 
 const mapStateToProps = (state) => {
   return {
@@ -23,9 +23,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-const InfoTabContainer = connect(
+const InfoPageContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(InfoTab);
+)(InfoPage);
 
-export default InfoTabContainer;
+export default InfoPageContainer;

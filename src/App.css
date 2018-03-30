@@ -1,0 +1,34 @@
+main {
+  margin: 0 8px;
+}
+
+main h2 {
+  font-family: fantasy, sans-serif;
+  margin: 0;
+  text-align: center;
+}
+
+main h2::first-letter {
+  text-transform: capitalize;
+}
+
+main ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+main section {
+  margin-bottom: 2.5em;
+}
+
+.number {
+  font-family: fantasy;
+  font-size: 1.4em;
+
+  width: 1.5em;
+  text-align: center;
+
+  height: 1.3em;
+  border-bottom: 1px solid black;
+}

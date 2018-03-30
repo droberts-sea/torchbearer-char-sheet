@@ -6,7 +6,7 @@ const mapStateToProps = (state) => {
   // console.log(state);
   return {
     currentTab: state.currentTab
-  }
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch) => {
     onTabSelect: (name) => {
       dispatch(showTab(name));
     }
-  }
+  };
 };
 
 const TabRowContainer = connect(

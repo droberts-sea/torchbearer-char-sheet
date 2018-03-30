@@ -1,27 +1,3 @@
-.info-tab {
-  margin: 0 8px;
-}
-
-.info-tab h2 {
-  font-family: fantasy, sans-serif;
-  margin: 0;
-  text-align: center;
-}
-
-.info-tab .point-bucket {
-  margin-bottom: 2.5em;
-}
-
-.info-tab h2::first-letter {
-  text-transform: capitalize;
-}
-
-.info-tab ul {
-  list-style-type: none;
-  padding-left: 0;
-  margin: 0;
-}
-
 .condition > div {
   display: grid;
   grid-template-columns: 1fr 1fr 2em;
@@ -58,11 +34,6 @@
   margin: 0 1em;
   font-size: .7em;
   font-style: italic;
-}
-
-.point-bucket-grid .point-value {
-  text-align: center;
-  font-size: 1.4em;
 }
 
 .point-bucket-grid button {
