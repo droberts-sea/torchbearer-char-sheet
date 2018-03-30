@@ -7,14 +7,14 @@ class Abilities extends React.Component {
     }
     return (
       <React.Fragment>
-        <div>
+        <td className="advancement">
           <span className="number">{ability.advancement.pass}</span>
           <button onClick={() => this.props.onAdvance('PASS')}>Mark</button>
-        </div>
-        <div>
+        </td>
+        <td className="advancement">
           <span className="number">{ability.advancement.fail}</span>
           <button onClick={() => this.props.onAdvance('FAIL')}>Mark</button>
-        </div>
+        </td>
       </React.Fragment>
     );
   }
@@ -22,11 +22,13 @@ class Abilities extends React.Component {
     const abilities = this.props.abilities;
     return Object.keys(abilities).map((key) => {
       return (
-        <React.Fragment>
-          <div className="skill-name">{abilities[key].name}</div>
-          <div className="number">{abilities[key].rating}</div>
+        <tr key={`ability_${key}`}>
+          <td>{abilities[key].name}</td>
+          <td>
+            <span className="number">{abilities[key].rating}</span>
+          </td>
           {this.advancementRows(abilities[key])}
-        </React.Fragment>
+        </tr>
       );
     });
   }
@@ -34,13 +36,19 @@ class Abilities extends React.Component {
     return (
       <section>
         <h2>Abilities</h2>
-        <div className="skill-table">
-          <div className="skill-name header">Name</div>
-          <div className="header">Rating</div>
-          <div className="header">Passes</div>
-          <div className="header">Fails</div>
-          {this.tableBody()}
-        </div>
+        <table className="skill-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Rating</th>
+              <th>Passes</th>
+              <th>Fails</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.tableBody()}
+          </tbody>
+        </table>
       </section>
     );
   };

@@ -1,18 +1,3 @@
-const Abilities = {
-  WILL: 'WILL',
-  HEALTH: 'HEALTH',
-  NATURE: 'NATURE',
-  RESOURCES: 'RESOURCES',
-  CIRCLES: 'CIRCLES',
-  MIGHT: 'MIGHT'
-}
-
-const AbilityCategories = {
-  RAW: 'RAW',
-  TOWN: 'TOWN',
-
-}
-
 const InitialAbilities = {
   WILL: {
     name: 'Will',

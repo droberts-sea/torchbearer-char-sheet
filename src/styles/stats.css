@@ -1,4 +1,16 @@
-.skill-table {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+.skill-table td:first-child {
+  width: 100%;
+}
+
+.skill-table .advancement {
+  white-space: nowrap;
+}
+
+.skill-table button {
+  border: 1px solid black;
+  margin: 0 .5em;
+  padding-left: .5em;
+  padding-right: .5em;
+  height: 2.3em;
+  /* height: 100%; */
 }
