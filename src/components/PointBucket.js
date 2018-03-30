@@ -6,7 +6,7 @@ const PointBucket = ({ name, bucket, onAdd, onSpend }) => {
     <div className="point-bucket">
       <h2>{name}</h2>
       <div className="point-bucket-grid">
-        <button onClick={onAdd}>Add</button>
+        <button onClick={onAdd}>Earn</button>
         <label>Earned</label>
         <label>Spent</label>
         <button

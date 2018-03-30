@@ -10,6 +10,7 @@ export const SPEND_POINT = 'SPEND_POINT';
 /* Other Constants */
 
 export const Tabs = {
+  MENU: 'MENU',
   BIO: 'BIO',
   STATS: 'STATS',
   INFO: 'INFO',
