@@ -5,11 +5,11 @@ import '../../styles/stats.css';
 
 class StatsPage extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <div id="stats-page">
         <Abilities
           abilities={this.props.abilities}
+          onMarkTest={this.props.onMarkTest}
           />
         <section>
           <h2>Wises</h2>

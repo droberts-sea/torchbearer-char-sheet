@@ -29,6 +29,9 @@ const App = ({ currentTab }) => {
     case Tabs.INFO:
     page = (<InfoPageContainer />);
     break;
+
+    default:
+    break;
   }
 
   return (

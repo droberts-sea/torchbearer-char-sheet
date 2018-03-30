@@ -1,3 +1,5 @@
+import { MARK_TEST } from '../actions';
+
 const InitialAbilities = {
   WILL: {
     name: 'Will',
@@ -47,12 +49,56 @@ const InitialAbilities = {
   }
 }
 
+const markTest = function(state, action) {
+  // See rulebook page 104: Advancement
+  // TODO: No advancement if sick
+
+  // We use the MARK_TEST action for both skills and abilities
+  const ability = action.payload.skillName;
+  if (!state[ability]) {
+    return state;
+  }
+
+  const newAdvancement = { ...state[ability].advancement };
+  switch (action.payload.result) {
+    case 'PASS':
+    newAdvancement.pass += 1;
+    break;
+
+    case 'FAIL':
+    newAdvancement.fail += 1;
+    break;
+
+    default:
+    throw `Bogus test result: ${action.payload.result}`;
+  }
+
+  // Advancement
+  let rating = state[ability].rating;
+  if (newAdvancement.pass >= rating &&
+    newAdvancement.fail >= rating - 1
+  ) {
+    rating += 1;
+    newAdvancement.pass = 0;
+    newAdvancement.fail = 0;
+    // TODO: resources only once per town phase
+  }
+
+  const newState = { ...state };
+  newState[ability] = {
+    ...state[ability],
+    advancement: newAdvancement,
+    rating: rating
+  }
+
+  return newState;
+}
+
 const abilitiesReducer = function(state=InitialAbilities, action) {
   switch (action.type) {
-    // case MARK_TEST:
-    // console.log('TODO: implement tests');
-    // // if action.payload.name in state.keys, do something
-    // break;
+    case MARK_TEST:
+    return markTest(state, action);
+
     //
     // case TAX:
     // console.log('TODO: implement tax');

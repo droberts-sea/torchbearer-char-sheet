@@ -14,3 +14,12 @@
   height: 2.3em;
   /* height: 100%; */
 }
+
+.skill-table .nature-descriptors {
+  padding: .2em 1em;
+  font-style: italic;
+}
+
+.skill-table .rating {
+  width: 90%;
+}

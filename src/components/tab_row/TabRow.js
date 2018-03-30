@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Tabs } from '../../actions';
 import Tab from './Tab';
