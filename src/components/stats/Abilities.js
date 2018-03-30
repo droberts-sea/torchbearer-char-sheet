@@ -1,22 +1,12 @@
 import React from 'react';
+import SkillTable from './SkillTable';
 
-class Abilities extends React.Component {
-  passesAndFails(key, ability) {
-    if (!ability.advancement) {
-      return null;
+class Abilities extends SkillTable {
+  rating(key, ability) {
+    if (key === 'NATURE') {
+      return `${ability.rating}/${ability.untaxed}`;
     }
-    return (
-      <React.Fragment>
-        <td className="advancement">
-          <span className="number">{ability.advancement.pass}</span>
-          <button onClick={() => this.props.onMarkTest(key, 'PASS')}>Mark</button>
-        </td>
-        <td className="advancement">
-          <span className="number">{ability.advancement.fail}</span>
-          <button onClick={() => this.props.onMarkTest(key, 'FAIL')}>Mark</button>
-        </td>
-      </React.Fragment>
-    );
+    return super.rating(key, ability);
   }
 
   natureDescriptors(nature) {
@@ -30,58 +20,21 @@ class Abilities extends React.Component {
     );
   }
 
-  rating(key, ability) {
-    let value;
+  extraRow(key, ability) {
     if (key === 'NATURE') {
-      value = `${ability.rating}/${ability.untaxed}`;
-    } else {
-      value = ability.rating;
+      return this.natureDescriptors(ability);
     }
-    return (<span className="number rating">{value}</span>);
-  }
-
-  tableBody() {
-    const abilities = this.props.abilities;
-    return Object.keys(abilities).map((key) => {
-      let extraRow = null;
-      if (key === 'NATURE') {
-        extraRow = this.natureDescriptors(abilities[key]);
-      }
-      return (
-        <React.Fragment key={`ability_${key}`}>
-          <tr>
-            <td>{abilities[key].name}</td>
-            <td>
-              {this.rating(key, abilities[key])}
-            </td>
-            {this.passesAndFails(key, abilities[key])}
-          </tr>
-          {extraRow}
-        </React.Fragment>
-      );
-    });
+    return null;
   }
 
   render() {
     return (
       <section>
         <h2>Abilities</h2>
-        <table className="skill-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Rating</th>
-              <th>Passes</th>
-              <th>Fails</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.tableBody()}
-          </tbody>
-        </table>
+        {this.table(this.props.abilities)}
       </section>
     );
-  };
+  }
 }
 
 export default Abilities;

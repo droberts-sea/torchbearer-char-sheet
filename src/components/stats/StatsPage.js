@@ -1,5 +1,6 @@
 import React from 'react';
 import Abilities from './Abilities';
+import Skills from './Skills';
 
 import '../../styles/stats.css';
 
@@ -14,9 +15,10 @@ class StatsPage extends React.Component {
         <section>
           <h2>Wises</h2>
         </section>
-        <section>
-          <h2>Skills</h2>
-        </section>
+        <Skills
+          skills={this.props.skills}
+          onMarkTest={this.props.onMarkTest}
+          />
         <section>
           <h2>Traits</h2>
         </section>

@@ -6,11 +6,13 @@ import {
 import conditions from './reducers/conditions_reducer';
 import points from './reducers/points_reducer';
 import abilities from './reducers/abilities_reducer';
+import skills from './reducers/skills_reducer';
 
 const character = combineReducers({
   conditions,
   points,
-  abilities
+  abilities,
+  skills
 });
 
 function currentTab(state=Tabs.STATS, action) {

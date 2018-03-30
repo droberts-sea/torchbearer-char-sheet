@@ -1,6 +1,16 @@
 import { MARK_TEST } from '../actions';
 
 const InitialAbilities = {
+  NATURE: {
+    name: 'Nature',
+    rating: 3,
+    untaxed: 5,
+    advancement: {
+      pass: 0,
+      fail: 0
+    },
+    descriptors: ['Sneaking', 'Riddling', 'Merrymaking']
+  },
   WILL: {
     name: 'Will',
     rating: 5,
@@ -16,16 +26,6 @@ const InitialAbilities = {
       pass: 0,
       fail: 0
     }
-  },
-  NATURE: {
-    name: 'Nature',
-    rating: 3,
-    untaxed: 5,
-    advancement: {
-      pass: 0,
-      fail: 0
-    },
-    descriptors: ['Sneaking', 'Riddling', 'Merrymaking']
   },
   RESOURCES: {
     name: 'Resources',

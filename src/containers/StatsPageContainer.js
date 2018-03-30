@@ -6,7 +6,8 @@ import { markTest } from '../actions';
 const mapStateToProps = (state) => {
   // console.log(state);
   return {
-    abilities: state.character.abilities
+    abilities: state.character.abilities,
+    skills: state.character.skills
   };
 };
 
