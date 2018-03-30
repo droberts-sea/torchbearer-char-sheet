@@ -4,6 +4,8 @@
 
 export const TOGGLE_CONDITION = 'TOGGLE_CONDITION';
 export const SHOW_TAB = 'SHOW_TAB';
+export const ADD_POINT = 'ADD_POINT';
+export const SPEND_POINT = 'SPEND_POINT';
 
 /* Other Constants */
 
@@ -13,6 +15,12 @@ export const Tabs = {
   INFO: 'INFO',
   GEAR: 'GEAR',
   ROLL: 'ROLL'
+}
+
+export const PointCategories = {
+  FATE: 'fate',
+  PERSONA: 'persona',
+  CHECKS: 'checks'
 }
 
 /* Action Creators */
@@ -32,6 +40,24 @@ export function showTab(tab) {
     type: SHOW_TAB,
     payload: {
       tab: tab
+    }
+  }
+}
+
+export function addPoint(category) {
+  return {
+    type: ADD_POINT,
+    payload: {
+      category: category
+    }
+  }
+}
+
+export function spendPoint(category) {
+  return {
+    type: SPEND_POINT,
+    payload: {
+      category: category
     }
   }
 }

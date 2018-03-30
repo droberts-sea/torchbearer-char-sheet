@@ -3,7 +3,7 @@ import { showTab } from '../actions';
 import TabRow from '../components/TabRow';
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return {
     currentTab: state.currentTab
   }

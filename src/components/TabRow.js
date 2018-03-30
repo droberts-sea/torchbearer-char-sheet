@@ -15,7 +15,7 @@ const TabRow = ({ currentTab, onTabSelect }) => {
             <Tab
               key={`tab_${name}`}
               name={name}
-              selected={name == currentTab}
+              selected={name === currentTab}
               onSelect={() => onTabSelect(name)}
               />
           ))
