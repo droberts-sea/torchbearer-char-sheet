@@ -5,14 +5,15 @@ import {
 } from './actions';
 import conditions from './reducers/conditions_reducer';
 import points from './reducers/points_reducer';
+import abilities from './reducers/abilities_reducer';
 
 const character = combineReducers({
   conditions,
   points,
-  // abilities
+  abilities
 });
 
-function currentTab(state=Tabs.INFO, action) {
+function currentTab(state=Tabs.STATS, action) {
   switch (action.type) {
     case SHOW_TAB:
     console.log(`Showing tab: ${action.payload.tab}`);

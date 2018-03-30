@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import img_x from '../images/letter-x.png';
+import img_x from '../../images/letter-x.png';
 
 const Condition = ({ name, active, test, effect, onToggle }) => {
   let className = "condition";

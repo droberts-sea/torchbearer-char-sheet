@@ -15,6 +15,7 @@ const AbilityCategories = {
 
 const InitialAbilities = {
   WILL: {
+    name: 'Will',
     rating: 5,
     advancement: {
       pass: 0,
@@ -22,6 +23,7 @@ const InitialAbilities = {
     }
   },
   HEALTH: {
+    name: 'Health',
     rating: 3,
     advancement: {
       pass: 0,
@@ -29,6 +31,7 @@ const InitialAbilities = {
     }
   },
   NATURE: {
+    name: 'Nature',
     rating: 3,
     untaxed: 5,
     advancement: {
@@ -38,6 +41,7 @@ const InitialAbilities = {
     descriptors: ['Sneaking', 'Riddling', 'Merrymaking']
   },
   RESOURCES: {
+    name: 'Resources',
     rating: 3,
     advancement: {
       pass: 0,
@@ -45,6 +49,7 @@ const InitialAbilities = {
     }
   },
   CIRCLES: {
+    name: 'Circles',
     rating: 4,
     advancement: {
       pass: 0,
@@ -52,23 +57,26 @@ const InitialAbilities = {
     }
   },
   MIGHT: {
+    name: 'Might',
     rating: 3
   }
 }
 
 const abilitiesReducer = function(state=InitialAbilities, action) {
   switch (action.type) {
-    case MARK_TEST:
-    console.log('TODO: implement tests');
-    // if action.payload.name in state.keys, do something
-    break;
-
-    case TAX:
-    console.log('TODO: implement tax');
-    return state;
-    break;
+    // case MARK_TEST:
+    // console.log('TODO: implement tests');
+    // // if action.payload.name in state.keys, do something
+    // break;
+    //
+    // case TAX:
+    // console.log('TODO: implement tax');
+    // return state;
+    // break;
 
     default:
     return state;
   }
 }
+
+export default abilitiesReducer;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import hamburger from '../images/hamburger_icon.png';
+import hamburger from '../../images/hamburger_icon.png';
 
 const Tab = ({ name, selected, onSelect }) => {
   let className = selected ? 'active' : 'inactive';
@@ -10,7 +10,7 @@ const Tab = ({ name, selected, onSelect }) => {
     contents = (<img src={hamburger} alt="menu" />);
     className += " menu";
   }
-  
+
   return (
     <li className={className} onClick={onSelect}>
       {contents}

@@ -23,6 +23,7 @@ main section {
 }
 
 .number {
+  display: inline-block;
   font-family: fantasy;
   font-size: 1.4em;
 

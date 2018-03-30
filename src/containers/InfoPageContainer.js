@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { toggleCondition, addPoint, spendPoint } from '../actions';
-import InfoPage from '../components/InfoPage';
+import InfoPage from '../components/info/InfoPage';
 
 const mapStateToProps = (state) => {
   return {
