@@ -30,7 +30,10 @@ export const advanceSkill = function(skill, result, character) {
   if (skill.rating >= skill.max) {
     return skill;
   }
-  // TODO: No advancement if sick
+  if (character.conditions.SICK) {
+    console.debug("Can't mark advancement while sick!");
+    return skill;
+  }
 
   const newAdvancement = { ...skill.advancement };
   switch (result) {

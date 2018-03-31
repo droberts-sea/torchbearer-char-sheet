@@ -5,7 +5,10 @@ class SkillTable extends React.Component {
     if (!ability.advancement) {
       return null;
     }
-    const disabled = ability.rating >= ability.max;
+    const disabled = (
+      this.props.advancementDisabled ||
+      ability.rating >= ability.max
+    );
     return (
       <React.Fragment>
         <td className="advancement">

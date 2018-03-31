@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
   return {
     abilities: state.character.abilities,
     skills: state.character.skills,
-    ui: state.ui
+    ui: state.ui,
+    character: state.character
   };
 };
 
