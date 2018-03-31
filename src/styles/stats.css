@@ -1,5 +1,12 @@
+.skill-table {
+  max-width: 100%;
+}
+
 .skill-table td:first-child {
   width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .skill-table .advancement {
