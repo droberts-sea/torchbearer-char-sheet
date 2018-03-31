@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import conditions from './reducers/conditions_reducer';
-import points from './reducers/points_reducer';
-import abilities from './reducers/abilities_reducer';
-import skills from './reducers/skills_reducer';
+import conditions from './conditions_reducer';
+import points from './points_reducer';
+import abilities from './abilities_reducer';
+import skills from './skills_reducer';
 
-import ui from './reducers/ui_reducer';
+import ui from './ui_reducer';
 
 const character = function(state={}, action) {
   return {

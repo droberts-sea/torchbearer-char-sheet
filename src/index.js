@@ -7,7 +7,7 @@ import { createStore } from 'redux';
 import './index.css';
 import App from './App';
 
-import { tbCharApp } from './reducers';
+import { tbCharApp } from './reducers/reducers';
 
 let store = createStore(tbCharApp);
 
