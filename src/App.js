@@ -9,7 +9,7 @@ import InfoPageContainer from './containers/InfoPageContainer';
 
 const mapStateToProps = (state) => {
   return {
-    currentTab: state.currentTab
+    ui: state.ui
   };
 };
 
@@ -19,9 +19,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const App = ({ currentTab }) => {
+const App = ({ ui }) => {
   let page = null;
-  switch(currentTab) {
+  switch(ui.currentTab) {
     case Tabs.STATS:
     page = (<StatsPageContainer />);
     break;

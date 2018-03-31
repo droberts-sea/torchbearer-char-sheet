@@ -7,6 +7,7 @@ export const SHOW_TAB = 'SHOW_TAB';
 export const ADD_POINT = 'ADD_POINT';
 export const SPEND_POINT = 'SPEND_POINT';
 export const MARK_TEST = 'MARK_TEST';
+export const SKILL_COLLAPSE = 'SKILL_COLLAPSE';
 
 /* Other Constants */
 
@@ -75,5 +76,11 @@ export function markTest(skillName, result) {
       skillName: skillName,
       result: result
     }
+  };
+};
+
+export function skillCollapse() {
+  return {
+    type: SKILL_COLLAPSE
   };
 };

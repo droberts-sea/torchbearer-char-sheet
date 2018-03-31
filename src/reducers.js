@@ -1,31 +1,22 @@
 import { combineReducers } from 'redux';
-import {
-  SHOW_TAB,
-  Tabs
-} from './actions';
+
 import conditions from './reducers/conditions_reducer';
 import points from './reducers/points_reducer';
 import abilities from './reducers/abilities_reducer';
 import skills from './reducers/skills_reducer';
 
-const character = combineReducers({
-  conditions,
-  points,
-  abilities,
-  skills
-});
+import ui from './reducers/ui_reducer';
 
-function currentTab(state=Tabs.STATS, action) {
-  switch (action.type) {
-    case SHOW_TAB:
-    console.log(`Showing tab: ${action.payload.tab}`);
-    return action.payload.tab;
-    default:
-    return state;
+const character = function(state={}, action) {
+  return {
+    conditions: conditions(state.conditions, action),
+    points: points(state.points, action),
+    abilities: abilities(state.abilities, action, state),
+    skills: skills(state.skills, action, state)
   }
-}
+};
 
 export const tbCharApp = combineReducers({
-  currentTab,
+  ui,
   character,
 });

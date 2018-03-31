@@ -7,8 +7,8 @@ const PointBucket = ({ name, bucket, onAdd, onSpend }) => {
       <h2>{name}</h2>
       <div className="point-bucket-grid">
         <button onClick={onAdd}>Earn</button>
-        <label for="earned">Earned</label>
-        <label for="spent">Spent</label>
+        <label htmlFor="earned">Earned</label>
+        <label htmlFor="spent">Spent</label>
         <button
           onClick={onSpend}
           disabled={bucket.available <= 0}

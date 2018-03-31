@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 
 import StatsPage from '../components/stats/StatsPage';
-import { markTest } from '../actions';
+import { markTest, skillCollapse } from '../actions';
 
 const mapStateToProps = (state) => {
-  // console.log(state);
   return {
     abilities: state.character.abilities,
-    skills: state.character.skills
+    skills: state.character.skills,
+    ui: state.ui
   };
 };
 
@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onMarkTest: (skillName, result) => {
       dispatch(markTest(skillName, result));
+    },
+    onSkillCollapse: () => {
+      dispatch(skillCollapse());
     }
   };
 };

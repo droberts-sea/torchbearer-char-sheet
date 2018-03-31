@@ -15,13 +15,15 @@ class StatsPage extends React.Component {
         <section>
           <h2>Wises</h2>
         </section>
-        <Skills
-          skills={this.props.skills}
-          onMarkTest={this.props.onMarkTest}
-          />
         <section>
           <h2>Traits</h2>
         </section>
+        <Skills
+          skills={this.props.skills}
+          onMarkTest={this.props.onMarkTest}
+          isCollapsed={this.props.ui.skillTable.collapsed}
+          onSkillCollapse={this.props.onSkillCollapse}
+          />
       </div>
     );
   }

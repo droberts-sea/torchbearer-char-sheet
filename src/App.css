@@ -3,8 +3,8 @@ main {
 }
 
 main h2 {
-  font-family: fantasy, sans-serif;
-  margin: 0;
+  font-family: 'Macondo', fantasy, cursive, sans-serif;
+  margin: .2em 0;
   text-align: center;
 }
 
@@ -24,12 +24,15 @@ main section {
 
 .number {
   display: inline-block;
-  font-family: fantasy;
+  font-family: 'Macondo', fantasy, cursive;
   font-size: 1.4em;
 
   width: 1.5em;
   text-align: center;
 
-  height: 1.3em;
   border-bottom: 1px solid black;
+}
+
+button {
+  border: 1px solid black;
 }

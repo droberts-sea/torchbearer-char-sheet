@@ -3,9 +3,8 @@ import { showTab } from '../actions';
 import TabRow from '../components/tab_row/TabRow';
 
 const mapStateToProps = (state) => {
-  // console.log(state);
   return {
-    currentTab: state.currentTab
+    currentTab: state.ui.currentTab
   };
 };
 
