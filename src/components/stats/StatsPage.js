@@ -1,5 +1,6 @@
 import React from 'react';
 import Abilities from './Abilities';
+import Wises from './Wises';
 import Skills from './Skills';
 
 import '../../styles/stats.css';
@@ -13,9 +14,9 @@ class StatsPage extends React.Component {
           onMarkTest={this.props.onMarkTest}
           advancementDisabled={this.props.character.conditions.SICK}
           />
-        <section>
-          <h2>Wises</h2>
-        </section>
+        <Wises
+          wises={this.props.wises}
+          />
         <section>
           <h2>Traits</h2>
         </section>

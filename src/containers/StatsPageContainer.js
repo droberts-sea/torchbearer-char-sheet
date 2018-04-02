@@ -6,6 +6,7 @@ import { markTest, skillCollapse } from '../actions';
 const mapStateToProps = (state) => {
   return {
     abilities: state.character.abilities,
+    wises: state.character.wises,
     skills: state.character.skills,
     ui: state.ui,
     character: state.character
