@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import img_x from '../../images/letter-x.png';
+
+import Checkbox from '../shared/checkbox';
 
 const Condition = ({ name, active, test, effect, onToggle }) => {
   let className = "condition";
@@ -15,11 +16,7 @@ const Condition = ({ name, active, test, effect, onToggle }) => {
       <div>
         <h3>{ name }</h3>
         { test ? (<p>(Ob { test.ob } { test.skill })</p>) : ""}
-        <div
-          className="checkbox"
-          onClick={onToggle}
-          style={ active ? { backgroundImage: `url(${img_x})` } : undefined }
-          />
+        <Checkbox onToggle={onToggle} active={active} />
       </div>
       <p>{ effect }</p>
     </li>
