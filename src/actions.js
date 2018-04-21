@@ -2,12 +2,14 @@
 * Action types
 */
 
-export const TOGGLE_CONDITION = 'TOGGLE_CONDITION';
+// UI
 export const SHOW_TAB = 'SHOW_TAB';
+export const TOGGLE_CONDITION = 'TOGGLE_CONDITION';
 export const ADD_POINT = 'ADD_POINT';
 export const SPEND_POINT = 'SPEND_POINT';
 export const MARK_TEST = 'MARK_TEST';
 export const SKILL_COLLAPSE = 'SKILL_COLLAPSE';
+export const MARK_WISE = 'MARK_WISE';
 
 /* Other Constants */
 
@@ -84,3 +86,17 @@ export function skillCollapse() {
     type: SKILL_COLLAPSE
   };
 };
+
+export function markWise(wiseName, testType) {
+  testType = testType.toLowerCase();
+  if (!['pass', 'fail', 'fate', 'persona'].include(testType)) {
+    throw `Bogus wise type: ${testType}`;
+  }
+  return {
+    type: MARK_WISE,
+    payload: {
+      wiseName: wiseName,
+      testType: testType
+    }
+  }
+}

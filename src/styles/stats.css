@@ -2,7 +2,7 @@
   max-width: 100%;
 }
 
-.skill-table td:first-child {
+table td:first-child {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -32,4 +32,10 @@
 
 .skill-table .beginners-luck {
   text-align: center;
+}
+
+.trait-uses {
+  white-space: nowrap;
+  text-align: center;
+  height: 2em;
 }

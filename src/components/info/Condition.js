@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Checkbox from '../shared/checkbox';
+import Checkbox from '../shared/Checkbox';
 
 const Condition = ({ name, active, test, effect, onToggle }) => {
   let className = "condition";
