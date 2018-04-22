@@ -9,6 +9,8 @@ import wises from './wises_reducer';
 
 import ui from './ui_reducer';
 
+import roll from './roll_reducer';
+
 const character = function(state={}, action) {
   return {
     abilities: abilities(state.abilities, action, state),
@@ -20,7 +22,10 @@ const character = function(state={}, action) {
   }
 };
 
-export const tbCharApp = combineReducers({
-  ui,
-  character,
-});
+export const tbCharApp = function(state={}, action) {
+  return {
+    ui: ui(state.ui, action),
+    character: character(state.character, action),
+    roll: roll(state.roll, action, state.character)
+  }
+};

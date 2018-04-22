@@ -6,6 +6,7 @@ import './App.css';
 import TabRowContainer from './containers/TabRowContainer';
 import StatsPageContainer from './containers/StatsPageContainer';
 import InfoPageContainer from './containers/InfoPageContainer';
+import RollPageContainer from './containers/RollPageContainer';
 
 const mapStateToProps = (state) => {
   return {
@@ -28,6 +29,10 @@ const App = ({ ui }) => {
 
     case Tabs.INFO:
     page = (<InfoPageContainer />);
+    break;
+
+    case Tabs.ROLL:
+    page = (<RollPageContainer />);
     break;
 
     default:
