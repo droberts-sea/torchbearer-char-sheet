@@ -12,7 +12,7 @@ class RollPage extends React.Component {
       case 'GATHER INFO':
       return (
         <GatherInfo {...this.props.dice}
-          {...this.props.gatherInfoCallbacks}
+          onSetProperty={this.props.onSetProperty}
           character={this.props.character} />
       );
 
@@ -40,7 +40,10 @@ class RollPage extends React.Component {
   render() {
     return (
       <div id="roll-page">
-        <RollNav {...this.props.display} />
+        <RollNav
+          {...this.props.display}
+          onGotoPage={this.props.onGotoPage}
+          />
         <div className="roll-page-container">
           { this.currentAction() }
         </div>

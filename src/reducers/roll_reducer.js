@@ -1,11 +1,13 @@
 import {
-  ROLL_SET_PROPERTY
+  ROLL_SET_PROPERTY,
+  ROLL_GOTO_PAGE,
+  ROLL_PAGES
 } from '../actions/roll_actions';
-const ROLL_PAGES = ['GATHER INFO', 'ADD DICE', 'READY', 'RESULTS', 'AFTERMATH'];
+
 
 const InitialRoll = {
   display: {
-    currentPage: 'GATHER INFO',
+    currentPage: ROLL_PAGES[0],
 
     back: {
       target: undefined,
@@ -62,7 +64,27 @@ const InitialRoll = {
 };
 
 const reduceDisplay = function(state, action, character) {
-  return state;
+  switch(action.type) {
+    case ROLL_GOTO_PAGE:
+    const pageIndex = ROLL_PAGES.indexOf(action.payload.page);
+    return {
+      ...state,
+      currentPage: action.payload.page,
+      back: {
+        target: ROLL_PAGES[pageIndex-1],
+        // TODO some transitions have extra reqs
+        enabled: !!ROLL_PAGES[pageIndex-1]
+      },
+      forward: {
+        target: ROLL_PAGES[pageIndex+1],
+        // TODO some transitions have extra reqs
+        enabled: !!ROLL_PAGES[pageIndex+1]
+      }
+    };
+
+    default:
+    return state;
+  }
 };
 
 const reduceInfo = function(state, action, character) {

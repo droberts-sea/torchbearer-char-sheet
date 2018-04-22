@@ -1,6 +1,7 @@
 export const ROLL_SET_PROPERTY = 'ROLL_SET_PROPERTY';
+export const ROLL_GOTO_PAGE = 'ROLL_GOTO_PAGE';
 
-export const ROLL_PROPERTIES = {
+const ROLL_PROPERTIES = {
   ob: 'OB',
   skill: 'SKILL',
   inNature: 'IN_NATURE',
@@ -23,3 +24,17 @@ export function rollSetProperty(prop, value) {
     }
   };
 };
+
+export const ROLL_PAGES = ['GATHER INFO', 'ADD DICE', 'READY', 'RESULTS', 'AFTERMATH'];
+
+export function rollGotoPage(page) {
+  if (!ROLL_PAGES.includes(page)) {
+    throw new Error(`Invalid page ${page}`);
+  }
+  return {
+    type: ROLL_GOTO_PAGE,
+    payload: {
+      page: page
+    }
+  };
+}

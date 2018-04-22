@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import {
-  rollSetProperty
+  rollSetProperty,
+  rollGotoPage
 } from '../actions/roll_actions';
 import RollPage from '../components/roll/RollPage';
 
@@ -14,10 +15,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    gatherInfoCallbacks: {
-      onSetProperty: (prop, value) => {
-        dispatch(rollSetProperty(prop, value));
-      }
+    onGotoPage: (page) => {
+      dispatch(rollGotoPage(page));
+    },
+    onSetProperty: (prop, value) => {
+      dispatch(rollSetProperty(prop, value));
     }
   };
 };

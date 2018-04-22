@@ -6,6 +6,7 @@ const RollNav = function(props) {
       <button
         className="arrow"
         disabled={!props.back.enabled}
+        onClick={() => props.onGotoPage(props.back.target)}
         >&lt;</button>
 
       <h2>{props.currentPage}</h2>
@@ -14,6 +15,7 @@ const RollNav = function(props) {
       <button
         className="arrow"
         disabled={!props.forward.enabled}
+        onClick={() => props.onGotoPage(props.forward.target)}
         >&gt;</button>
     </nav>
   );
