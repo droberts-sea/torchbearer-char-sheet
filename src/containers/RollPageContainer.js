@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
-import { rollSetVersus, rollSetOb, rollSetSkill } from '../actions';
+import {
+  rollSetProperty
+} from '../actions/roll_actions';
 import RollPage from '../components/roll/RollPage';
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     display: state.roll.display,
     dice: state.roll.dice,
@@ -14,14 +15,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     gatherInfoCallbacks: {
-      onSetVersus: (isVersus) => {
-        dispatch(rollSetVersus(isVersus));
-      },
-      onSetOb: (ob) => {
-        dispatch(rollSetOb(ob));
-      },
-      onSelectSkill: (skill) => {
-        dispatch(rollSetSkill(skill));
+      onSetProperty: (prop, value) => {
+        dispatch(rollSetProperty(prop, value));
       }
     }
   };

@@ -56,7 +56,7 @@ class SkillAbilityDropdown extends React.Component {
               value={name}
               >
               {skills[name].name}&nbsp;
-              ({bl.name} - {bl.rating})
+              ({bl.name[0]} - {bl.rating})
             </option>
           );
         })}
@@ -65,11 +65,14 @@ class SkillAbilityDropdown extends React.Component {
   }
 
   render () {
+    // NB The dropdown menu looks like garbage in chrome's dev tools,
+    // but on a real mobile browser the default styles are pretty solid
     const value = this.props.current || "default";
-    console.log(`Rendering dropdown with value ${value}`);
     return (
-      <select value={value}
-        onChange={(event) => {this.props.onSelectSkill(event.target.value)}}>
+      <select className="skill-ability-dropdown"
+        value={value}
+        onChange={(event) => {this.props.onSelectSkill(event.target.value)}}
+        >
         <option key="default" value="default" disabled={true}>
           -- Choose One --
         </option>
