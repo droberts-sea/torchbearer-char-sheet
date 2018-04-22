@@ -50,3 +50,10 @@ button {
 .checkbox.disabled {
   background-color: lightgrey;
 }
+
+.label {
+  margin: 0 1em;
+  font-size: .7em;
+  font-style: italic;
+  text-transform: capitalize;
+}

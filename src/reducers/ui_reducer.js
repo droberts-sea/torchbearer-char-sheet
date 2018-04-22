@@ -6,7 +6,7 @@ import {
   SKILL_COLLAPSE
 } from '../actions';
 
-function currentTab(state=Tabs.STATS, action) {
+function currentTab(state=Tabs.ROLL, action) {
   switch (action.type) {
     case SHOW_TAB:
     console.log(`Showing tab: ${action.payload.tab}`);

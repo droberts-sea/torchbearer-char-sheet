@@ -26,12 +26,6 @@
   justify-items: center;
 }
 
-.point-bucket-grid label {
-  margin: 0 1em;
-  font-size: .7em;
-  font-style: italic;
-}
-
 .point-bucket-grid button {
   grid-row: span 2;
   width: 6em;

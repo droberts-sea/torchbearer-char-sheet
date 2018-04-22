@@ -4,6 +4,8 @@ import RollNav from './RollNav';
 import RollSummary from './RollSummary';
 import GatherInfo from './GatherInfo';
 
+import '../../styles/roll.css';
+
 class RollPage extends React.Component {
   currentAction() {
     switch(this.props.display.currentPage) {
