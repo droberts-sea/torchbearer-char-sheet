@@ -11,7 +11,7 @@ const GatherInfo = function(props) {
         <h3>Versus test</h3>
         <Checkbox
           active={props.info.type === 'versus'}
-          onToggle={() => {props.onSetVersus(props.info.type !== 'versus')}}
+          onToggle={props.onSetVersus}
           />
       </li>
       <li>
