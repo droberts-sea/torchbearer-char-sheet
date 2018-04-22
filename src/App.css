@@ -57,3 +57,13 @@ button {
   font-style: italic;
   text-transform: capitalize;
 }
+
+.plus-minus button {
+  font-size: 1.4em;
+  width: 1.4em;
+  text-align: center;
+}
+
+.plus-minus .number {
+  margin: 0 .5em;
+}

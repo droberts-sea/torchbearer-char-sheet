@@ -11,7 +11,7 @@ class RollPage extends React.Component {
     switch(this.props.display.currentPage) {
       case 'GATHER INFO':
       return (
-        <GatherInfo {...this.props} />
+        <GatherInfo {...this.props.dice} />
       );
 
       // case 'ADD DICE':
