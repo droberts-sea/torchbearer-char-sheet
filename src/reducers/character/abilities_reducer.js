@@ -1,4 +1,4 @@
-import { MARK_TEST } from '../actions';
+import { MARK_TEST } from '../../actions';
 import { advanceSkill } from './skills_reducer';
 
 // See _Abilities_, page 26

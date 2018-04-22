@@ -1,5 +1,5 @@
-import { TOGGLE_CONDITION } from '../actions';
-import { Conditions, ConditionRules } from '../rules/conditions';
+import { TOGGLE_CONDITION } from '../../actions';
+import { Conditions, ConditionRules } from '../../rules/conditions';
 
 const InitialConditions = {};
 Object.keys(ConditionRules).forEach((name) => {

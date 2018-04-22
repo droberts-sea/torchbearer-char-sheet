@@ -1,7 +1,7 @@
 import {
   ADD_POINT,
   SPEND_POINT
-} from '../actions';
+} from '../../actions';
 
 const InitialPoints = {
   fate: {

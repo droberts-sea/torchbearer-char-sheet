@@ -35,9 +35,13 @@ class RollPage extends React.Component {
       // return (
       //   <Aftermath ...this.props />
       // );
+
+      default:
+      throw new Error(`Invalid roll page ${this.props.display.currentPage}`);
     }
   }
   render() {
+    console.log(this.props);
     return (
       <div id="roll-page">
         <RollNav
@@ -47,7 +51,7 @@ class RollPage extends React.Component {
         <div className="roll-page-container">
           { this.currentAction() }
         </div>
-        <RollSummary {...this.props.display.summary} />
+        <RollSummary {...this.props.derived.summary} />
       </div>
     );
   }

@@ -1,15 +1,15 @@
 import { combineReducers } from 'redux';
 
-import abilities from './abilities_reducer';
-import conditions from './conditions_reducer';
-import points from './points_reducer';
-import skills from './skills_reducer';
-import traits from './traits_reducer';
-import wises from './wises_reducer';
+import abilities from './character/abilities_reducer';
+import conditions from './character/conditions_reducer';
+import points from './character/points_reducer';
+import skills from './character/skills_reducer';
+import traits from './character/traits_reducer';
+import wises from './character/wises_reducer';
 
 import ui from './ui_reducer';
 
-import roll from './roll_reducer';
+import roll from './roll/roll_reducer';
 
 const character = function(state={}, action) {
   return {

@@ -1,5 +1,5 @@
-import { SkillRules } from '../rules/skills';
-import { MARK_TEST } from '../actions';
+import { SkillRules } from '../../rules/skills';
+import { MARK_TEST } from '../../actions';
 
 const InitialSkills = {};
 Object.keys(SkillRules).forEach((name) => {

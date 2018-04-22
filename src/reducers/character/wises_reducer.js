@@ -1,4 +1,4 @@
-import { MARK_WISE } from '../actions';
+import { MARK_WISE } from '../../actions';
 
 const InitialWises = [
   {

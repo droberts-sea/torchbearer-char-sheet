@@ -2,8 +2,9 @@ import {
   ROLL_SET_PROPERTY,
   ROLL_GOTO_PAGE,
   ROLL_PAGES
-} from '../actions/roll_actions';
+} from '../../actions/roll_actions';
 
+import calculateDerivedRollState from './derived_state';
 
 const InitialRoll = {
   display: {
@@ -17,14 +18,7 @@ const InitialRoll = {
     forward: {
       target: 'ADD DICE',
       enabled: true
-    },
-
-    summary: {
-      type: 'obstacle',
-      dice: 0,
-      ob: 0,
-      odds: 0
-    },
+    }
   },
   dice: {
     info: {
@@ -106,47 +100,14 @@ const reduceDice = function(state, action, character) {
   }
 };
 
-const calculateDerivedRollState = function(state, character) {
-  const summary = {
-    type: state.dice.info.isVersus ? 'versus' : 'obstacle',
-    dice: 0,
-    ob: state.dice.info.ob,
-    odds: 50
-  }
-  const details = [
-  ]
 
-  // TODO: dice from conditions
-
-  const skillName = state.dice.info.skill;
-  let rating = 0;
-  if (character && character.skills[skillName]) {
-    rating = character.skills[skillName].rating;
-  } else if (character && character.abilities[skillName]) {
-    rating = character.abilities[skillName].rating;
-  }
-  summary.dice += rating;
-  details.push(`+${rating} from skill/ability rating`);
-
-  // TODO: dice from everything else
-
-
-  // TODO: dice math - calculate a success chance
-
-
-  state.display = {
-    ...state.display,
-    summary: summary,
-    details: details
-  };
-};
 
 const rollReducer = function(state=InitialRoll, action, character) {
   state = {
     display: reduceDisplay(state.display, action, character),
     dice: reduceDice(state.dice, action, character),
   }
-  calculateDerivedRollState(state, character);
+  state.derived = calculateDerivedRollState(state, character);
   return state;
 }
 

@@ -7,8 +7,7 @@ import RollPage from '../components/roll/RollPage';
 
 const mapStateToProps = (state) => {
   return {
-    display: state.roll.display,
-    dice: state.roll.dice,
+    ...state.roll,
     character: state.character
   };
 };
