@@ -2,7 +2,7 @@ import React from 'react';
 
 const PlusMinus = function(props) {
   return (
-    <div class="plus-minus">
+    <div className="plus-minus">
       <button
         onClick={() => props.onValueChange(props.value - 1)}
         disabled={props.value <= props.min}

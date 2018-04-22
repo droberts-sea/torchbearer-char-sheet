@@ -11,7 +11,9 @@ class RollPage extends React.Component {
     switch(this.props.display.currentPage) {
       case 'GATHER INFO':
       return (
-        <GatherInfo {...this.props.dice} />
+        <GatherInfo {...this.props.dice}
+          {...this.props.gatherInfoCallbacks}
+          character={this.props.character} />
       );
 
       // case 'ADD DICE':
@@ -39,7 +41,7 @@ class RollPage extends React.Component {
     return (
       <div id="roll-page">
         <RollNav {...this.props.display} />
-        <div class="roll-page-container">
+        <div className="roll-page-container">
           { this.currentAction() }
         </div>
         <RollSummary {...this.props.display.summary} />

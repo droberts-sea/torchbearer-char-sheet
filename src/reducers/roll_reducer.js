@@ -1,3 +1,4 @@
+import { ROLL_SET_VERSUS, ROLL_SET_OB, ROLL_SET_SKILL } from '../actions';
 const ROLL_PAGES = ['GATHER INFO', 'ADD DICE', 'READY', 'RESULTS', 'AFTERMATH'];
 
 const InitialRoll = {
@@ -62,8 +63,27 @@ const reduceDisplay = function(state, action, character) {
   return state;
 };
 
+const reduceInfo = function(state, action, character) {
+  switch(action.type) {
+    case ROLL_SET_VERSUS:
+    return {...state, type: action.payload.isVersus ? 'versus' : 'obstacle'}
+
+    case ROLL_SET_OB:
+    return {...state, ob: action.payload.ob}
+
+    case ROLL_SET_SKILL:
+    return {...state, skill: action.payload.skill}
+
+    default:
+    return state;
+  }
+}
+
 const reduceDice = function(state, action, character) {
-  return state;
+  return {
+    ...state,
+    info: reduceInfo(state.info, action, character)
+  }
 };
 
 const calculateDerivedRollState = function(state, character) {

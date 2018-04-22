@@ -1,4 +1,3 @@
-import _ from 'underscore';
 import React from 'react';
 
 import Checkbox from '../shared/Checkbox';
@@ -7,7 +6,7 @@ class Traits extends React.Component {
   buildUseCheckboxes(trait) {
     if (trait.level < 1 || trait.level > 3) {
       throw `Bogus trait level ${trait.level}`;
-    } else if (trait.level == 3) {
+    } else if (trait.level === 3) {
       return "----";
     } else {
       return (

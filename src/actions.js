@@ -4,12 +4,21 @@
 
 // UI
 export const SHOW_TAB = 'SHOW_TAB';
+
+// INFO
 export const TOGGLE_CONDITION = 'TOGGLE_CONDITION';
 export const ADD_POINT = 'ADD_POINT';
 export const SPEND_POINT = 'SPEND_POINT';
+
+// STATS
 export const MARK_TEST = 'MARK_TEST';
-export const SKILL_COLLAPSE = 'SKILL_COLLAPSE';
 export const MARK_WISE = 'MARK_WISE';
+export const SKILL_COLLAPSE = 'SKILL_COLLAPSE';
+
+// ROLLS
+export const ROLL_SET_VERSUS = 'ROLL_SET_VERSUS';
+export const ROLL_SET_OB = 'ROLL_SET_OB';
+export const ROLL_SET_SKILL = 'ROLL_SET_SKILL';
 
 /* Other Constants */
 
@@ -99,4 +108,34 @@ export function markWise(wiseName, testType) {
       testType: testType
     }
   }
-}
+};
+
+// ROLLS
+export function rollSetVersus(isVersus) {
+  return {
+    type: ROLL_SET_VERSUS,
+    payload: {
+      isVersus: isVersus
+    }
+  };
+};
+
+export function rollSetOb(ob) {
+  return {
+    type: ROLL_SET_OB,
+    payload: {
+      ob: ob
+    }
+  };
+};
+
+export function rollSetSkill(skill) {
+  console.log(`Setting skill to ${skill}`);
+  console.log(skill);
+  return {
+    type: ROLL_SET_SKILL,
+    payload: {
+      skill: skill
+    }
+  };
+};
