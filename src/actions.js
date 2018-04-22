@@ -75,7 +75,7 @@ export function spendPoint(category) {
 // could be for a skill or ability; we generalize to "skill"
 export function markTest(skillName, result) {
   if (result !== 'PASS' && result !== 'FAIL') {
-    throw `Bogus test result: ${result}`;
+    throw new Error(`Bogus test result: ${result}`);
   }
   return {
     type: MARK_TEST,
@@ -95,7 +95,7 @@ export function skillCollapse() {
 export function markWise(wiseName, testType) {
   testType = testType.toLowerCase();
   if (!['pass', 'fail', 'fate', 'persona'].include(testType)) {
-    throw `Bogus wise type: ${testType}`;
+    throw new Error(`Bogus wise type: ${testType}`);
   }
   return {
     type: MARK_WISE,

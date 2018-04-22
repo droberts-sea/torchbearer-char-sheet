@@ -13,7 +13,7 @@ export const ROLL_PROPERTIES = {
 export function rollSetProperty(prop, value) {
   // TODO Validation
   if (!Object.keys(ROLL_PROPERTIES).includes(prop)) {
-    throw `Invalid roll property: ${prop}`
+    throw new Error(`Invalid roll property: ${prop}`);
   }
   return {
     type: ROLL_SET_PROPERTY,

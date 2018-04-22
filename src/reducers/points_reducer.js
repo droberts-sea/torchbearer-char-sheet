@@ -46,7 +46,7 @@ const pointsReducer = function(state=InitialPoints, action) {
     break;
 
     default:
-    throw 'How did we even get here?';
+    throw new Error('How did we even get here?');
 
   }
 

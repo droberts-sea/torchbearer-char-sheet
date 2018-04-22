@@ -46,7 +46,7 @@ export const advanceSkill = function(skill, result, character) {
     break;
 
     default:
-    throw `Bogus test result: ${result}`;
+    throw new Error(`Bogus test result: ${result}`);
   }
 
   const newSkill = {
