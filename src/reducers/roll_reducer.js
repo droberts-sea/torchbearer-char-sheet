@@ -11,7 +11,7 @@ const InitialRoll = {
 
     forward: {
       target: 'ADD DICE',
-      enabled: false
+      enabled: true
     },
 
     summary: {

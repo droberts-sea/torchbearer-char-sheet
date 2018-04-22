@@ -10,3 +10,29 @@
   position: fixed;
   bottom: 0px;
 }
+
+#roll-nav {
+  display: grid;
+  grid-template-columns: 2em 1fr 5em 2em;
+  justify-items: center;
+  align-items: center;
+}
+
+#roll-nav h2 {
+  margin-bottom: 0px;
+}
+
+#roll-nav button.arrow {
+  font-size: 2em;
+  border: none;
+  background-color: white;
+}
+#roll-nav button.arrow[disabled] {
+  color: lightgrey;
+}
+
+#roll-nav button.cancel {
+  font-size: 1em;
+  width: 90%;
+  height: 100%;
+}

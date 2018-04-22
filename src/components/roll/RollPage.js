@@ -38,7 +38,7 @@ class RollPage extends React.Component {
   render() {
     return (
       <div id="roll-page">
-        <RollNav display={this.props.display} />
+        <RollNav {...this.props.display} />
         { this.currentAction() }
         <RollSummary {...this.props.display.summary} />
       </div>

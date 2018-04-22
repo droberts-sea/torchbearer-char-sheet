@@ -1,11 +1,22 @@
 import React from 'react';
 
-class RollNav extends React.Component {
-  render() {
-    return (
-      <h3>Roll Nav</h3>
-    );
-  }
+const RollNav = function(props) {
+  return (
+    <nav id="roll-nav">
+      <button
+        className="arrow"
+        disabled={!props.back.enabled}
+        >&lt;</button>
+
+      <h2>{props.currentPage}</h2>
+      <button className="cancel">Cancel</button>
+
+      <button
+        className="arrow"
+        disabled={!props.forward.enabled}
+        >&gt;</button>
+    </nav>
+  );
 }
 
 export default RollNav;
