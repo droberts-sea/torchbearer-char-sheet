@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://droberts-ada.github.io/torchbearer-char-sheet",
   "dependencies": {
+    "mathjs": "^4.1.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
