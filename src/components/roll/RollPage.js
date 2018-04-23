@@ -3,6 +3,7 @@ import React from 'react';
 import RollNav from './RollNav';
 import RollSummary from './RollSummary';
 import GatherInfo from './GatherInfo';
+import Ready from './Ready';
 
 import '../../styles/roll.css';
 
@@ -20,12 +21,12 @@ class RollPage extends React.Component {
       // return (
       //   <AddDice ...this.props />
       // );
-      //
-      // case 'READY':
-      // return (
-      //   <Ready ...this.props />
-      // );
-      //
+
+      case 'READY':
+      return (
+        <Ready {...this.props} />
+      );
+
       // case 'RESULTS':
       // return (
       //   <Results ...this.props />
@@ -37,7 +38,8 @@ class RollPage extends React.Component {
       // );
 
       default:
-      throw new Error(`Invalid roll page ${this.props.display.currentPage}`);
+      // throw new Error(`Invalid roll page ${this.props.display.currentPage}`);
+      break;
     }
   }
   render() {
