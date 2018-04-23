@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux';
-
 import abilities from './character/abilities_reducer';
 import conditions from './character/conditions_reducer';
 import points from './character/points_reducer';

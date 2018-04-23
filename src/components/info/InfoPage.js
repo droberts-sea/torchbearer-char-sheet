@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Condition from './Condition';
 import PointBucket from './PointBucket';
 import { ConditionRules, DisplayOrder } from '../../rules/conditions';

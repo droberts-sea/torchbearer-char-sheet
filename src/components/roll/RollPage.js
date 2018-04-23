@@ -41,7 +41,6 @@ class RollPage extends React.Component {
     }
   }
   render() {
-    console.log(this.props);
     return (
       <div id="roll-page">
         <RollNav

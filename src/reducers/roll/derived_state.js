@@ -83,7 +83,7 @@ const skillDice = function(state, character, summary, details) {
 export const expectedMargin = function(summary) {
   const expected_success = (summary.dice / 2.0) + summary.successes;
   let expected_bar;
-  if (summary.type == 'versus') {
+  if (summary.type === 'versus') {
     expected_bar = summary.ob / 2;
   } else {
     expected_bar = summary.ob;
@@ -92,7 +92,11 @@ export const expectedMargin = function(summary) {
 }
 
 export const oddsOfSuccess = function(summary) {
-  // TODO: what about versus tests?
+  if (summary.type === 'versus') {
+    // TODO: versus tests - competing bernoulli processes
+    return NaN;
+  }
+
   if (summary.ob - summary.successes <= 0) {
     return 1;
   }

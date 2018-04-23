@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Checkbox from '../shared/checkbox';
+import Checkbox from '../shared/Checkbox';
 
 class Wises extends React.Component {
 

@@ -5,7 +5,6 @@ const InitialConditions = {};
 Object.keys(ConditionRules).forEach((name) => {
   InitialConditions[name] = ConditionRules[name].default_state;
 });
-InitialConditions;
 
 const conditionsReducer = function(state=InitialConditions, action) {
   switch (action.type) {

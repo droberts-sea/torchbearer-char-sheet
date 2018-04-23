@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import hamburger from '../../images/hamburger_icon.png';
 
 const Tab = ({ name, selected, onSelect }) => {
