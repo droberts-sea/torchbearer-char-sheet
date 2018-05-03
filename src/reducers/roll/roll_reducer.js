@@ -8,7 +8,7 @@ import calculateDerivedRollState from './derived_state';
 
 const InitialRoll = {
   display: {
-    currentPage: ROLL_PAGES[0],
+    currentPage: ROLL_PAGES[1],
 
     back: {
       target: undefined,

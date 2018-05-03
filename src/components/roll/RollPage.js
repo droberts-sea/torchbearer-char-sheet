@@ -20,7 +20,9 @@ class RollPage extends React.Component {
 
       case 'ADD DICE':
       return (
-        <AddDice {...this.props} />
+        <AddDice
+          {...this.props.dice}
+          disabledOptions={this.props.derived.disabledOptions} />
       );
 
       case 'READY':

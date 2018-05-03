@@ -10,7 +10,10 @@ const InitialState = {
     odds: 0,
     expected_margin: 0
   },
-  details: []
+  details: [],
+  disabledOptions: {
+    natureInstead: true
+  }
 }
 
 const conditionDice = function(state, character, summary, details) {
@@ -116,6 +119,15 @@ const diceMath = function(state, character, summary, details) {
   summary.odds = oddsOfSuccess(summary);
 }
 
+const calculateDisabledOptions = function(state, character) {
+  const disabledOptions = {};
+
+  const skillName = state.dice.info.skill;
+  disabledOptions.natureInstead = !(character && character.skills[skillName] && !character.skills[skillName].open);
+
+  return disabledOptions;
+}
+
 const calculateDerivedRollState = function(state, character) {
   if (!character) {
     return InitialState;
@@ -143,7 +155,8 @@ const calculateDerivedRollState = function(state, character) {
 
   return {
     summary: summary,
-    details: details
+    details: details,
+    disabledOptions: calculateDisabledOptions(state, character)
   };
 };
 
