@@ -28,7 +28,7 @@ const InitialRoll = {
       inNature: false,
       isInstinct: false,
       isRecovery: false,
-      isDisposition: false
+      isDisposition: true
     },
 
     modifiers: {

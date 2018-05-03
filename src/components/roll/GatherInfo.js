@@ -2,6 +2,7 @@ import React from 'react';
 
 import Checkbox from '../shared/Checkbox';
 import PlusMinus from '../shared/PlusMinus';
+import Toggle from '../shared/Toggle';
 import SkillAbilityDropdown from './SkillAbilityDropdown';
 
 class GatherInfo extends React.Component {
@@ -29,13 +30,11 @@ class GatherInfo extends React.Component {
       }
     ];
     return properties.map((prop) => (
-      <li key={`gi_${prop.name}`}>
-        <h3>{prop.text}</h3>
-        <Checkbox
-          active={this.props.info[prop.name]}
-          onToggle={(value) => this.props.onSetProperty(prop.name, value)}
-          />
-      </li>
+      <Toggle key={`gi_${prop.name}`}
+        name={prop.text}
+        active={this.props.info[prop.name]}
+        onToggle={(value) => this.props.onSetProperty(prop.name, value)}
+        />
     ));
   }
   render() {

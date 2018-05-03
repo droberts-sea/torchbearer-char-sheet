@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Checkbox from '../shared/Checkbox';
+import Checkbox from './Checkbox';
 
-const Condition = ({ name, active, test, effect, onToggle }) => {
-  let className = "condition";
+// TODO DPR: come up with a more generic way to pass in the test
+const Toggle = ({ name, active, test, subtext, onToggle }) => {
+  console.log(name);
+  console.log(subtext);
+  let className = "toggle";
   if (active) {
     className += " active";
   }
@@ -18,17 +21,17 @@ const Condition = ({ name, active, test, effect, onToggle }) => {
         { test ? (<p>(Ob { test.ob } { test.skill })</p>) : ""}
         <Checkbox onToggle={onToggle} active={active} />
       </div>
-      <p>{ effect }</p>
+      { subtext ? (<p>{ subtext }</p>) : "" }
     </li>
   );
 };
 
-Condition.propTypes = {
+Toggle.propTypes = {
   name: PropTypes.string.isRequired,
   active: PropTypes.bool.isRequired,
-  effect: PropTypes.string.isRequired,
+  subtext: PropTypes.string,
   onToggle: PropTypes.func.isRequired,
   // test: PropTypes.shape({ ob: PropTypes.number, skill: PropTypes.string }),
 };
 
-export default Condition;
+export default Toggle;

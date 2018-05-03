@@ -1,5 +1,5 @@
 import React from 'react';
-import Condition from './Condition';
+import Toggle from '../shared/Toggle';
 import PointBucket from './PointBucket';
 import { ConditionRules, DisplayOrder } from '../../rules/conditions';
 import { PointCategories } from '../../actions';
@@ -30,9 +30,10 @@ class InfoPage extends React.Component {
             {
               DisplayOrder.map((name) => {
                 return (
-                  <Condition
+                  <Toggle
                     key={`condition_${name}`}
                     {...ConditionRules[name]}
+                    subtext={ConditionRules[name].effect}
                     active={this.props.conditions[name]}
                     onToggle={() => this.props.onConditionToggle(name)}
                     />

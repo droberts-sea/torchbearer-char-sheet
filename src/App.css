@@ -67,3 +67,30 @@ button {
 .plus-minus .number {
   margin: 0 .5em;
 }
+
+.toggle > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2em;
+  align-items: end;
+  margin-bottom: 1em;
+}
+
+.toggle > p {
+  margin-top: 0;
+}
+
+.toggle > div > * {
+  margin-bottom: 0;
+}
+
+.toggle.notest h3 {
+  grid-column: 1 / 3;
+}
+
+.toggle .checkbox {
+  grid-column: 3;
+}
+
+.toggle > p {
+  margin-bottom: .5em;
+}

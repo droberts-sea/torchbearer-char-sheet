@@ -2,6 +2,7 @@ import React from 'react';
 
 import RollNav from './RollNav';
 import RollSummary from './RollSummary';
+import AddDice from './AddDice';
 import GatherInfo from './GatherInfo';
 import Ready from './Ready';
 
@@ -17,10 +18,10 @@ class RollPage extends React.Component {
           character={this.props.character} />
       );
 
-      // case 'ADD DICE':
-      // return (
-      //   <AddDice ...this.props />
-      // );
+      case 'ADD DICE':
+      return (
+        <AddDice {...this.props} />
+      );
 
       case 'READY':
       return (
@@ -29,12 +30,12 @@ class RollPage extends React.Component {
 
       // case 'RESULTS':
       // return (
-      //   <Results ...this.props />
+      //   <Results {...this.props} />
       // );
       //
       // case 'AFTERMATH':
       // return (
-      //   <Aftermath ...this.props />
+      //   <Aftermath {...this.props} />
       // );
 
       default:
