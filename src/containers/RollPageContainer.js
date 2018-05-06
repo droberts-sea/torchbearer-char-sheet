@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import {
-  rollSetProperty,
+  rollSetInfo,
+  rollSetModifier,
   rollGotoPage
 } from '../actions/roll_actions';
 import RollPage from '../components/roll/RollPage';
@@ -17,8 +18,11 @@ const mapDispatchToProps = (dispatch) => {
     onGotoPage: (page) => {
       dispatch(rollGotoPage(page));
     },
-    onSetProperty: (prop, value) => {
-      dispatch(rollSetProperty(prop, value));
+    onSetInfo: (prop, value) => {
+      dispatch(rollSetInfo(prop, value));
+    },
+    onSetModifier: (prop, value) => {
+      dispatch(rollSetModifier(prop, value));
     }
   };
 };

@@ -156,4 +156,4 @@ describe('oddsOfSuccess', () => {
     };
     expect(oddsOfSuccess(summary)).toBe(.75);
   })
-})
+});

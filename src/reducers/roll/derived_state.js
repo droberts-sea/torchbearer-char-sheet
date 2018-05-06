@@ -1,6 +1,8 @@
 import math from 'mathjs';
 import _ from 'underscore';
 
+import disabledOptions from './disabled_options';
+
 const InitialState = {
   summary: {
     type: 'obstacle',
@@ -119,14 +121,7 @@ const diceMath = function(state, character, summary, details) {
   summary.odds = oddsOfSuccess(summary);
 }
 
-const calculateDisabledOptions = function(state, character) {
-  const disabledOptions = {};
 
-  const skillName = state.dice.info.skill;
-  disabledOptions.natureInstead = !(character && character.skills[skillName] && !character.skills[skillName].open);
-
-  return disabledOptions;
-}
 
 const calculateDerivedRollState = function(state, character) {
   if (!character) {
@@ -156,7 +151,7 @@ const calculateDerivedRollState = function(state, character) {
   return {
     summary: summary,
     details: details,
-    disabledOptions: calculateDisabledOptions(state, character)
+    disabledOptions: disabledOptions(state, character)
   };
 };
 

@@ -1,5 +1,6 @@
 import {
-  ROLL_SET_PROPERTY,
+  ROLL_SET_INFO,
+  ROLL_SET_MODIFIER,
   ROLL_GOTO_PAGE,
   ROLL_PAGES
 } from '../../actions/roll_actions';
@@ -34,12 +35,10 @@ const InitialRoll = {
     modifiers: {
       natureInstead: false,
       tapNature: false,
-      trait: {
-        name: undefined,
-        checks: 0
-      },
+      traitName: undefined,
+      traitChecks: 0,
       help: 0,
-      addThroughPersona: 0
+      personaDice: 0
     },
 
     locked: false,
@@ -83,7 +82,19 @@ const reduceDisplay = function(state, action, character) {
 
 const reduceInfo = function(state, action, character) {
   switch(action.type) {
-    case ROLL_SET_PROPERTY:
+    case ROLL_SET_INFO:
+    const newState = {...state};
+    newState[action.payload.prop] = action.payload.value;
+    return newState;
+
+    default:
+    return state;
+  }
+}
+
+const reduceModifiers = function(state, action, character) {
+  switch(action.type) {
+    case ROLL_SET_MODIFIER:
     const newState = {...state};
     newState[action.payload.prop] = action.payload.value;
     return newState;
@@ -96,7 +107,8 @@ const reduceInfo = function(state, action, character) {
 const reduceDice = function(state, action, character) {
   return {
     ...state,
-    info: reduceInfo(state.info, action, character)
+    info: reduceInfo(state.info, action, character),
+    modifiers: reduceModifiers(state.modifiers, action, character)
   }
 };
 

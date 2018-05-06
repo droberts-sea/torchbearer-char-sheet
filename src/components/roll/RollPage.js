@@ -14,7 +14,7 @@ class RollPage extends React.Component {
       case 'GATHER INFO':
       return (
         <GatherInfo {...this.props.dice}
-          onSetProperty={this.props.onSetProperty}
+          onSetProperty={this.props.onSetInfo}
           character={this.props.character} />
       );
 
@@ -22,6 +22,7 @@ class RollPage extends React.Component {
       return (
         <AddDice
           {...this.props.dice}
+          onSetProperty={this.props.onSetModifier}
           disabledOptions={this.props.derived.disabledOptions} />
       );
 
