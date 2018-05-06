@@ -12,9 +12,17 @@ class AddDice extends React.Component {
       <ul id="roll-add-dice">
         <Toggle
           name="Roll using Nature"
+          subtext="If you don't have the skill, you can roll with (full) Nature instead of using Beginner's Luck. If the test is outside your Nature, your Nature will be taxed by the margin of failure."
           disabled={this.props.disabledOptions.natureInstead}
           active={this.props.modifiers.natureInstead}
           onToggle={(value) => this.props.onSetProperty('natureInstead', value)}
+          />
+        <Toggle
+          name="Tap Nature"
+          subtext="Spend a Persona to add your Nature to this test. If the test is outside your Nature, Nature will be taxed by one."
+          disabled={this.props.disabledOptions.tapNature}
+          active={this.props.modifiers.tapNature}
+          onToggle={(value) => this.props.onSetProperty('tapNature', value)}
           />
       </ul>
     );
