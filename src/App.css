@@ -58,6 +58,26 @@ button {
   text-transform: capitalize;
 }
 
+/* Controls all have similar styling. This includes toggles, plusminus, maybe more in the future */
+.control > div {
+  margin-bottom: 1em;
+}
+
+.control > div > * {
+  margin-bottom: 0;
+}
+
+.control > p {
+  margin-top: 0;
+  margin-bottom: .5em;
+}
+
+.plus-minus > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .plus-minus button {
   font-size: 1.4em;
   width: 1.4em;
@@ -72,15 +92,6 @@ button {
   display: grid;
   grid-template-columns: 1fr 1fr 2em;
   align-items: end;
-  margin-bottom: 1em;
-}
-
-.toggle > p {
-  margin-top: 0;
-}
-
-.toggle > div > * {
-  margin-bottom: 0;
 }
 
 .toggle.notest h3 {
@@ -89,8 +100,4 @@ button {
 
 .toggle .checkbox {
   grid-column: 3;
-}
-
-.toggle > p {
-  margin-bottom: .5em;
 }

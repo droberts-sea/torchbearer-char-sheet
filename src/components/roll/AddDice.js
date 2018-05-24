@@ -1,13 +1,11 @@
 import React from 'react';
 
+import PlusMinus from '../shared/PlusMinus';
 import Toggle from '../shared/Toggle';
 
 class AddDice extends React.Component {
   render() {
     console.log(this.props);
-    // TODO: onToggle - use the existing ROLL_SET_INFO action?
-    // Do we need to split between info and modifiers? Don't like
-    // parallel hash structure, but it might be the easiest thing to do.
     return (
       <ul id="roll-add-dice">
         <Toggle
@@ -23,6 +21,23 @@ class AddDice extends React.Component {
           disabled={this.props.disabledOptions.tapNature}
           active={this.props.modifiers.tapNature}
           onToggle={(value) => this.props.onSetProperty('tapNature', value)}
+          />
+        // Trait name
+        // Trait checks
+        <PlusMinus
+          name="Help"
+          subtext="Get help from your allies"
+          value={this.props.modifiers.help}
+          min={0}
+          onValueChange={(help) => this.props.onSetProperty('help', help)}
+          />
+        <PlusMinus
+          name="Persona Dice"
+          subtext="Spend up to three Persona to gain extra dice on any roll"
+          value={this.props.modifiers.personaDice}
+          min={0}
+          max={3}
+          onValueChange={(personaDice) => this.props.onSetProperty('personaDice', personaDice)}
           />
       </ul>
     );

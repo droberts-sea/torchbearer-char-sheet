@@ -7,7 +7,7 @@ import Checkbox from './Checkbox';
 const Toggle = ({ name, active, test, subtext, onToggle, disabled }) => {
   console.log(name);
   console.log(subtext);
-  let className = "toggle";
+  let className = "control toggle";
   if (active) {
     className += " active";
   }
