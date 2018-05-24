@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import Checkbox from '../shared/Checkbox';
 import PlusMinus from '../shared/PlusMinus';
 import Toggle from '../shared/Toggle';
 import SkillAbilityDropdown from './SkillAbilityDropdown';
@@ -60,6 +60,12 @@ class GatherInfo extends React.Component {
       </ul>
     );
   }
+}
+
+GatherInfo.propTypes = {
+  character: PropTypes.object.isRequired,
+  info: PropTypes.object.isRequired,
+  onSetProperty: PropTypes.func.isRequired,
 }
 
 export default GatherInfo;

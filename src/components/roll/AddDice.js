@@ -1,11 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import PlusMinus from '../shared/PlusMinus';
 import Toggle from '../shared/Toggle';
 
 class AddDice extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <ul id="roll-add-dice">
         <Toggle
@@ -22,8 +22,10 @@ class AddDice extends React.Component {
           active={this.props.modifiers.tapNature}
           onToggle={(value) => this.props.onSetProperty('tapNature', value)}
           />
-        // Trait name
-        // Trait checks
+        {
+          // Trait name
+          // Trait checks
+        }
         <PlusMinus
           name="Help"
           subtext="Get help from your allies"
@@ -44,6 +46,13 @@ class AddDice extends React.Component {
   }
 }
 
+AddDice.propTypes = {
+  // Explicit
+  disabledOptions: PropTypes.object.isRequired,
+  onSetProperty: PropTypes.func.isRequired,
 
+  // Passthrough via dice
+  modifiers: PropTypes.object.isRequired,
+};
 
 export default AddDice;

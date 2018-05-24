@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import RollNav from './RollNav';
 import RollSummary from './RollSummary';
@@ -61,5 +62,15 @@ class RollPage extends React.Component {
     );
   }
 }
+
+RollPage.propTypes = {
+  character: PropTypes.object.isRequired,
+  dice: PropTypes.object.isRequired,
+  derived: PropTypes.object.isRequired,
+  display: PropTypes.object.isRequired,
+  onGotoPage: PropTypes.func.isRequired,
+  onSetInfo: PropTypes.func.isRequired,
+  onSetModifier: PropTypes.func.isRequired,
+};
 
 export default RollPage;

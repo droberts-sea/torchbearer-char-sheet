@@ -37,6 +37,10 @@ button {
   border: 1px solid black;
 }
 
+/* button:not([disabled]) {
+  cursor: pointer;
+} */
+
 .checkbox {
   width: 2em;
   height: 2em;
