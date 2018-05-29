@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with a trained skill selected 1`] = `
+<li
+  className="skill-ability-dropdown"
+>
+  <h3>
+    Skill / Ability
+  </h3>
+  <select
+    onChange={[Function]}
+    value="ORATOR"
+  >
+    <option
+      disabled={true}
+      value="default"
+    >
+      -- Choose One --
+    </option>
+    <optgroup
+      label="Abilities"
+    >
+      <option
+        value="WILL"
+      >
+        Will
+         (
+        3
+        )
+      </option>
+      <option
+        value="HEALTH"
+      >
+        Health
+         (
+        5
+        )
+      </option>
+    </optgroup>
+    <optgroup
+      label="Trained Skills"
+    >
+      <option
+        value="FIGHTER"
+      >
+        Fighter
+         (
+        0
+        )
+      </option>
+      <option
+        value="ORATOR"
+      >
+        Orator
+         (
+        3
+        )
+      </option>
+    </optgroup>
+    <optgroup
+      label="Beginner's Luck"
+    >
+      <option
+        value="ALCHEMIST"
+      >
+        Alchemist
+          (
+        W
+         - 
+        3
+        )
+      </option>
+    </optgroup>
+  </select>
+</li>
+`;
+
+exports[`renders with no skill selected 1`] = `
+<li
+  className="skill-ability-dropdown"
+>
+  <h3>
+    Skill / Ability
+  </h3>
+  <select
+    onChange={[Function]}
+    value="default"
+  >
+    <option
+      disabled={true}
+      value="default"
+    >
+      -- Choose One --
+    </option>
+    <optgroup
+      label="Abilities"
+    >
+      <option
+        value="WILL"
+      >
+        Will
+         (
+        3
+        )
+      </option>
+      <option
+        value="HEALTH"
+      >
+        Health
+         (
+        5
+        )
+      </option>
+    </optgroup>
+    <optgroup
+      label="Trained Skills"
+    >
+      <option
+        value="FIGHTER"
+      >
+        Fighter
+         (
+        0
+        )
+      </option>
+      <option
+        value="ORATOR"
+      >
+        Orator
+         (
+        3
+        )
+      </option>
+    </optgroup>
+    <optgroup
+      label="Beginner's Luck"
+    >
+      <option
+        value="ALCHEMIST"
+      >
+        Alchemist
+          (
+        W
+         - 
+        3
+        )
+      </option>
+    </optgroup>
+  </select>
+</li>
+`;

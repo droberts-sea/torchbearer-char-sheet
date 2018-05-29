@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './SkillAbilityDropdown.css';
+import './styles/SkillAbilityDropdown.css';
 
 class SkillAbilityDropdown extends React.Component {
   abilities() {

@@ -1,4 +1,5 @@
 import disabledOptions from '../disabled_options';
+import fakeCharacter from '../../../mock/character.js';
 
 const fakeRoll = {
   dice: {
@@ -18,28 +19,6 @@ const fakeRoll = {
       traitChecks: 0,
       help: 0,
       personaDice: 0
-    }
-  }
-};
-
-const fakeCharacter = {
-  skills: {
-    ALCHEMIST: {
-      rating: 0,
-      open: false
-    },
-    FIGHTER: {
-      rating: 0,
-      open: true
-    },
-    ORATOR: {
-      rating: 3,
-      open: true
-    }
-  },
-  abilities: {
-    WILL: {
-      rating: 3
     }
   }
 };
