@@ -1,0 +1,13 @@
+.toggle > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2em;
+  align-items: end;
+}
+
+.toggle.notest h3 {
+  grid-column: 1 / 3;
+}
+
+.toggle .checkbox {
+  grid-column: 3;
+}

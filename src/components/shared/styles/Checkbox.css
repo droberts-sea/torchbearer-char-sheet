@@ -1,0 +1,13 @@
+.checkbox {
+  width: 2em;
+  height: 2em;
+  margin: 0px 2px;
+  border-bottom: black 1px solid;
+  background-size: contain;
+  display: inline-block;
+}
+
+/* TODO DPR: work on this style */
+.checkbox.disabled {
+  background-color: lightgrey;
+}
