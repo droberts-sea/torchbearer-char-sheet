@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './styles/PlusMinus.css';
+
 const PlusMinus = function({ name, subtext, value, min, max, onValueChange }) {
   return (
     <li className="control plus-minus">

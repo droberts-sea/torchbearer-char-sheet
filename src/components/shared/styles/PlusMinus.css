@@ -1,0 +1,15 @@
+.plus-minus > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.plus-minus button {
+  font-size: 1.4em;
+  width: 1.4em;
+  text-align: center;
+}
+
+.plus-minus .number {
+  margin: 0 .5em;
+}

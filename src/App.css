@@ -76,22 +76,6 @@ button {
   margin-bottom: .5em;
 }
 
-.plus-minus > div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.plus-minus button {
-  font-size: 1.4em;
-  width: 1.4em;
-  text-align: center;
-}
-
-.plus-minus .number {
-  margin: 0 .5em;
-}
-
 .toggle > div {
   display: grid;
   grid-template-columns: 1fr 1fr 2em;
