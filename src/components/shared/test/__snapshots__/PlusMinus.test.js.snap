@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`disables buttons at boundaries 1`] = `
+<div>
+  <li
+    className="control plus-minus"
+  >
+    <div>
+      <h3>
+        plus minus at min
+      </h3>
+      <div>
+        <button
+          disabled={true}
+          onClick={[Function]}
+        >
+          -
+        </button>
+        <span
+          className="number"
+        >
+          0
+        </span>
+        <button
+          disabled={false}
+          onClick={[Function]}
+        >
+          +
+        </button>
+      </div>
+    </div>
+    
+  </li>
+  <li
+    className="control plus-minus"
+  >
+    <div>
+      <h3>
+        plus minus at max
+      </h3>
+      <div>
+        <button
+          disabled={false}
+          onClick={[Function]}
+        >
+          -
+        </button>
+        <span
+          className="number"
+        >
+          4
+        </span>
+        <button
+          disabled={true}
+          onClick={[Function]}
+        >
+          +
+        </button>
+      </div>
+    </div>
+    
+  </li>
+</div>
+`;
+
+exports[`renders with all props 1`] = `
+<li
+  className="control plus-minus"
+>
+  <div>
+    <h3>
+      Test plus minus
+    </h3>
+    <div>
+      <button
+        disabled={false}
+        onClick={[Function]}
+      >
+        -
+      </button>
+      <span
+        className="number"
+      >
+        3
+      </span>
+      <button
+        disabled={false}
+        onClick={[Function]}
+      >
+        +
+      </button>
+    </div>
+  </div>
+  
+</li>
+`;
