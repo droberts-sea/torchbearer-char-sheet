@@ -36,7 +36,7 @@ exports[`renders when disabled 1`] = `
     
     <div
       className="checkbox disabled"
-      onClick={[Function]}
+      onClick={undefined}
       style={undefined}
     />
   </div>

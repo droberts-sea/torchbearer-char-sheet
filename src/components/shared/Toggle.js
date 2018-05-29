@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import Checkbox from './Checkbox';
 
+import './styles/Toggle.css';
+
 // TODO DPR: come up with a more generic way to pass in the test
 const Toggle = ({ name, active, test, subtext, onToggle, disabled }) => {
   let className = "control toggle";

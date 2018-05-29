@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import img_x from '../../images/letter-x.png';
+import './styles/Checkbox.css';
 
 const Checkbox = function({active, disabled, onToggle}) {
   let className = "checkbox";
@@ -10,7 +12,7 @@ const Checkbox = function({active, disabled, onToggle}) {
 
   // If they didn't give us an onToggle, keep onClick undefined
   let onClick;
-  if (onToggle) {
+  if (onToggle && !disabled) {
     onClick = () => {onToggle(!active)};
   }
 
