@@ -24,7 +24,7 @@ export function rollSetInfo(prop, value) {
       value: value
     }
   };
-};
+}
 
 const ROLL_MODIFIER_PROPS = [
   'natureInstead',
@@ -46,7 +46,7 @@ export function rollSetModifier(prop, value) {
       value: value
     }
   }
-};
+}
 
 export const ROLL_PAGES = ['GATHER INFO', 'ADD DICE', 'READY', 'RESULTS', 'AFTERMATH'];
 

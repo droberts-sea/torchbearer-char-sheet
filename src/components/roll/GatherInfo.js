@@ -40,22 +40,17 @@ class GatherInfo extends React.Component {
   render() {
     return (
       <ul id="roll-gather-info">
-        <li>
-          <h3>Obstacle</h3>
-          <PlusMinus
-            value={this.props.info.ob}
-            min={0}
-            onValueChange={(ob) => this.props.onSetProperty('ob', ob)}
-            />
-        </li>
-        <li>
-          <h3>Skill / Ability</h3>
-          <SkillAbilityDropdown
-            character={this.props.character}
-            current={this.props.info.skill}
-            onSelectSkill={(skill) => this.props.onSetProperty('skill', skill)}
-            />
-        </li>
+        <PlusMinus
+          name="Obstacle"
+          value={this.props.info.ob}
+          min={0}
+          onValueChange={(ob) => this.props.onSetProperty('ob', ob)}
+          />
+        <SkillAbilityDropdown
+          character={this.props.character}
+          current={this.props.info.skill}
+          onSelectSkill={(skill) => this.props.onSetProperty('skill', skill)}
+          />
         {this.propertyToggles()}
       </ul>
     );

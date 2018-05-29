@@ -1,0 +1,13 @@
+.skill-ability-dropdown {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skill-ability-dropdown li {
+  font-size: 1em;
+  direction: rtl;
+}
+.skill-ability-dropdown option {
+  direction: ltr;
+}

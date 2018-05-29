@@ -31,20 +31,6 @@
   padding-bottom: 3em;
 }
 
-#roll-gather-info li:not(.toggle) {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.skill-ability-dropdown {
-  font-size: 1em;
-  direction: rtl;
-}
-.skill-ability-dropdown option {
-  direction: ltr;
-}
-
 #roll-summary {
   display: grid;
   grid-template-columns: repeat(5, 1fr);

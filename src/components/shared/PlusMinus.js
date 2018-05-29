@@ -25,11 +25,11 @@ const PlusMinus = function({ name, subtext, value, min, max, onValueChange }) {
 
 PlusMinus.propTypes = {
   name: PropTypes.string.isRequired,
-  subtext: PropTypes.string,
   value: PropTypes.number.isRequired,
+  onValueChange: PropTypes.func.isRequired,
+  subtext: PropTypes.string,
   min: PropTypes.number,
   max: PropTypes.number,
-  onValueChange: PropTypes.func.isRequired
 };
 
 export default PlusMinus;
