@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Control from '../shared/Control';
+
 import './styles/SkillAbilityDropdown.css';
 
 class SkillAbilityDropdown extends React.Component {
@@ -72,21 +74,24 @@ class SkillAbilityDropdown extends React.Component {
     // but on a real mobile browser the default styles are pretty solid
     const value = this.props.current || "default";
     return (
-      <li className="skill-ability-dropdown">
-        <h3>Skill / Ability</h3>
-        <select
-          value={value}
-          onChange={(event) => {this.props.onSelectSkill(event.target.value)}}
-          >
-          <option key="default" value="default" disabled={true}>
-            -- Choose One --
-          </option>
+      <Control
+        className="skill-ability-dropdown"
+        name="Skill / Ability"
+        knob={(
+          <select
+            value={value}
+            onChange={(event) => {this.props.onSelectSkill(event.target.value)}}
+            >
+            <option key="default" value="default" disabled={true}>
+              -- Choose One --
+            </option>
 
-          {this.abilities()}
-          {this.trainedSkills()}
-          {this.untrainedSkills()}
-        </select>
-      </li>
+            {this.abilities()}
+            {this.trainedSkills()}
+            {this.untrainedSkills()}
+          </select>
+        )}
+        />
     );
   }
 }

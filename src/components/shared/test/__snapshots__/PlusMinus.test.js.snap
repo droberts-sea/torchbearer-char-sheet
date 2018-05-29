@@ -3,7 +3,7 @@
 exports[`disables buttons at boundaries 1`] = `
 <div>
   <li
-    className="control plus-minus"
+    className="plus-minus control"
   >
     <div>
       <h3>
@@ -32,7 +32,7 @@ exports[`disables buttons at boundaries 1`] = `
     
   </li>
   <li
-    className="control plus-minus"
+    className="plus-minus control"
   >
     <div>
       <h3>
@@ -65,7 +65,7 @@ exports[`disables buttons at boundaries 1`] = `
 
 exports[`renders with all props 1`] = `
 <li
-  className="control plus-minus"
+  className="plus-minus control"
 >
   <div>
     <h3>

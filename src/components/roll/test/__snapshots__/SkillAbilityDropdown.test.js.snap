@@ -2,150 +2,156 @@
 
 exports[`renders with a trained skill selected 1`] = `
 <li
-  className="skill-ability-dropdown"
+  className="skill-ability-dropdown control"
 >
-  <h3>
-    Skill / Ability
-  </h3>
-  <select
-    onChange={[Function]}
-    value="ORATOR"
-  >
-    <option
-      disabled={true}
-      value="default"
-    >
-      -- Choose One --
-    </option>
-    <optgroup
-      label="Abilities"
+  <div>
+    <h3>
+      Skill / Ability
+    </h3>
+    <select
+      onChange={[Function]}
+      value="ORATOR"
     >
       <option
-        value="WILL"
+        disabled={true}
+        value="default"
       >
-        Will
-         (
-        3
-        )
+        -- Choose One --
       </option>
-      <option
-        value="HEALTH"
+      <optgroup
+        label="Abilities"
       >
-        Health
-         (
-        5
-        )
-      </option>
-    </optgroup>
-    <optgroup
-      label="Trained Skills"
-    >
-      <option
-        value="FIGHTER"
+        <option
+          value="WILL"
+        >
+          Will
+           (
+          3
+          )
+        </option>
+        <option
+          value="HEALTH"
+        >
+          Health
+           (
+          5
+          )
+        </option>
+      </optgroup>
+      <optgroup
+        label="Trained Skills"
       >
-        Fighter
-         (
-        0
-        )
-      </option>
-      <option
-        value="ORATOR"
+        <option
+          value="FIGHTER"
+        >
+          Fighter
+           (
+          0
+          )
+        </option>
+        <option
+          value="ORATOR"
+        >
+          Orator
+           (
+          3
+          )
+        </option>
+      </optgroup>
+      <optgroup
+        label="Beginner's Luck"
       >
-        Orator
-         (
-        3
-        )
-      </option>
-    </optgroup>
-    <optgroup
-      label="Beginner's Luck"
-    >
-      <option
-        value="ALCHEMIST"
-      >
-        Alchemist
-          (
-        W
-         - 
-        3
-        )
-      </option>
-    </optgroup>
-  </select>
+        <option
+          value="ALCHEMIST"
+        >
+          Alchemist
+            (
+          W
+           - 
+          3
+          )
+        </option>
+      </optgroup>
+    </select>
+  </div>
+  
 </li>
 `;
 
 exports[`renders with no skill selected 1`] = `
 <li
-  className="skill-ability-dropdown"
+  className="skill-ability-dropdown control"
 >
-  <h3>
-    Skill / Ability
-  </h3>
-  <select
-    onChange={[Function]}
-    value="default"
-  >
-    <option
-      disabled={true}
+  <div>
+    <h3>
+      Skill / Ability
+    </h3>
+    <select
+      onChange={[Function]}
       value="default"
     >
-      -- Choose One --
-    </option>
-    <optgroup
-      label="Abilities"
-    >
       <option
-        value="WILL"
+        disabled={true}
+        value="default"
       >
-        Will
-         (
-        3
-        )
+        -- Choose One --
       </option>
-      <option
-        value="HEALTH"
+      <optgroup
+        label="Abilities"
       >
-        Health
-         (
-        5
-        )
-      </option>
-    </optgroup>
-    <optgroup
-      label="Trained Skills"
-    >
-      <option
-        value="FIGHTER"
+        <option
+          value="WILL"
+        >
+          Will
+           (
+          3
+          )
+        </option>
+        <option
+          value="HEALTH"
+        >
+          Health
+           (
+          5
+          )
+        </option>
+      </optgroup>
+      <optgroup
+        label="Trained Skills"
       >
-        Fighter
-         (
-        0
-        )
-      </option>
-      <option
-        value="ORATOR"
+        <option
+          value="FIGHTER"
+        >
+          Fighter
+           (
+          0
+          )
+        </option>
+        <option
+          value="ORATOR"
+        >
+          Orator
+           (
+          3
+          )
+        </option>
+      </optgroup>
+      <optgroup
+        label="Beginner's Luck"
       >
-        Orator
-         (
-        3
-        )
-      </option>
-    </optgroup>
-    <optgroup
-      label="Beginner's Luck"
-    >
-      <option
-        value="ALCHEMIST"
-      >
-        Alchemist
-          (
-        W
-         - 
-        3
-        )
-      </option>
-    </optgroup>
-  </select>
+        <option
+          value="ALCHEMIST"
+        >
+          Alchemist
+            (
+          W
+           - 
+          3
+          )
+        </option>
+      </optgroup>
+    </select>
+  </div>
+  
 </li>
 `;
