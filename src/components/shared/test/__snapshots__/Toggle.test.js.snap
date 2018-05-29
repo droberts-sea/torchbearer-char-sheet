@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders when active 1`] = `
+<li
+  className="control toggle active notest"
+>
+  <div>
+    <h3>
+      Test toggle
+    </h3>
+    
+    <div
+      className="checkbox"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundImage": "url(letter-x.png)",
+        }
+      }
+    />
+  </div>
+  <p>
+    some subtext for a toggle
+  </p>
+</li>
+`;
+
+exports[`renders when disabled 1`] = `
+<li
+  className="control toggle notest"
+>
+  <div>
+    <h3>
+      Test toggle
+    </h3>
+    
+    <div
+      className="checkbox disabled"
+      onClick={[Function]}
+      style={undefined}
+    />
+  </div>
+  <p>
+    some subtext for a toggle
+  </p>
+</li>
+`;
+
+exports[`renders when inactive 1`] = `
+<li
+  className="control toggle notest"
+>
+  <div>
+    <h3>
+      Test toggle
+    </h3>
+    
+    <div
+      className="checkbox"
+      onClick={[Function]}
+      style={undefined}
+    />
+  </div>
+  <p>
+    some subtext for a toggle
+  </p>
+</li>
+`;
