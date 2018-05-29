@@ -1,27 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Control from './Control';
+
 import './styles/PlusMinus.css';
 
 const PlusMinus = function({ name, subtext, value, min, max, onValueChange }) {
+  const knob = (
+    <div>
+      <button
+        onClick={() => onValueChange(value - 1)}
+        disabled={value <= min}
+        >-</button>
+      <span className="number">{value}</span>
+      <button
+        onClick={() => onValueChange(value + 1)}
+        disabled={value >= max}
+        >+</button>
+    </div>
+  );
   return (
-    <li className="control plus-minus">
-      <div>
-        <h3>{name}</h3>
-        <div>
-          <button
-            onClick={() => onValueChange(value - 1)}
-            disabled={value <= min}
-            >-</button>
-          <span className="number">{value}</span>
-          <button
-            onClick={() => onValueChange(value + 1)}
-            disabled={value >= max}
-            >+</button>
-        </div>
-      </div>
-      { subtext ? (<p>{subtext}</p>) : "" }
-    </li>
+    <Control
+      className="plus-minus"
+      name={name}
+      subtext={subtext}
+      knob={knob}
+      />
   );
 };
 
