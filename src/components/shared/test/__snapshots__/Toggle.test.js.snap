@@ -2,7 +2,7 @@
 
 exports[`renders when active 1`] = `
 <li
-  className="control toggle active notest"
+  className="toggle active notest control"
 >
   <div>
     <h3>
@@ -27,7 +27,7 @@ exports[`renders when active 1`] = `
 
 exports[`renders when disabled 1`] = `
 <li
-  className="control toggle notest"
+  className="toggle notest control"
 >
   <div>
     <h3>
@@ -48,7 +48,7 @@ exports[`renders when disabled 1`] = `
 
 exports[`renders when inactive 1`] = `
 <li
-  className="control toggle notest"
+  className="toggle notest control"
 >
   <div>
     <h3>
