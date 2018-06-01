@@ -9,7 +9,7 @@ import calculateDerivedRollState from './derived_state';
 
 const InitialRoll = {
   display: {
-    currentPage: ROLL_PAGES[1],
+    currentPage: ROLL_PAGES[0],
 
     back: {
       target: undefined,
@@ -38,7 +38,9 @@ const InitialRoll = {
       traitName: undefined,
       traitChecks: 0,
       help: 0,
-      personaDice: 0
+      personaDice: 0,
+      supplies: false,
+      gear: true,
     },
 
     locked: false,
@@ -57,9 +59,10 @@ const InitialRoll = {
 };
 
 const reduceDisplay = function(state, action, character) {
+  let pageIndex;
   switch(action.type) {
     case ROLL_GOTO_PAGE:
-    const pageIndex = ROLL_PAGES.indexOf(action.payload.page);
+    pageIndex = ROLL_PAGES.indexOf(action.payload.page);
     return {
       ...state,
       currentPage: action.payload.page,
@@ -81,9 +84,10 @@ const reduceDisplay = function(state, action, character) {
 };
 
 const reduceInfo = function(state, action, character) {
+  let newState;
   switch(action.type) {
     case ROLL_SET_INFO:
-    const newState = {...state};
+    newState = {...state};
     newState[action.payload.prop] = action.payload.value;
     return newState;
 
@@ -93,11 +97,29 @@ const reduceInfo = function(state, action, character) {
 }
 
 const reduceModifiers = function(state, action, character) {
+  let newState;
+  let skill;
   switch(action.type) {
     case ROLL_SET_MODIFIER:
-    const newState = {...state};
+    newState = {...state};
     newState[action.payload.prop] = action.payload.value;
     return newState;
+
+    case ROLL_SET_INFO:
+    if (action.payload.prop === 'skill') {
+      // Toggle gear based on beginner's luck
+      // TODO: default to false if no backpack (pg 34)
+      // TODO: exception for dwarves (always have tools if have backpack - pg 34)
+      newState = {...state};
+      skill = character.skills[action.payload.value];
+      if (skill && !skill.open && !state.natureInstead) {
+        newState.gear = false;
+      } else {
+        newState.gear = true;
+      }
+      return newState;
+    }
+    // falls through
 
     default:
     return state;
@@ -109,7 +131,7 @@ const reduceDice = function(state, action, character) {
     ...state,
     info: reduceInfo(state.info, action, character),
     modifiers: reduceModifiers(state.modifiers, action, character)
-  }
+  };
 };
 
 

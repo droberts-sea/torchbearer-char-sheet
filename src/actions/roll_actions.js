@@ -32,7 +32,9 @@ const ROLL_MODIFIER_PROPS = [
   'traitName',
   'traitChecks',
   'help',
-  'personaDice'
+  'personaDice',
+  'supplies',
+  'gear',
 ];
 
 export function rollSetModifier(prop, value) {

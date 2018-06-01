@@ -8,6 +8,7 @@ class AddDice extends React.Component {
   render() {
     return (
       <ul id="roll-add-dice">
+        <h2>Before Beginner&apos;s Luck</h2>
         <Toggle
           name="Roll using Nature"
           subtext="If you don't have the skill, you can roll with (full) Nature instead of using Beginner's Luck. If the test is outside your Nature, your Nature will be taxed by the margin of failure."
@@ -22,16 +23,27 @@ class AddDice extends React.Component {
           active={this.props.modifiers.tapNature}
           onToggle={(value) => this.props.onSetProperty('tapNature', value)}
           />
+        <PlusMinus
+          name="Help"
+          subtext="Get help from your allies, through wises or an appropriate skill"
+          value={this.props.modifiers.help}
+          min={0}
+          onValueChange={(help) => this.props.onSetProperty('help', help)}
+          />
+        <h2>After Beginner&apos;s Luck</h2>
         {
           // Trait name
           // Trait checks
         }
-        <PlusMinus
-          name="Help"
-          subtext="Get help from your allies"
-          value={this.props.modifiers.help}
-          min={0}
-          onValueChange={(help) => this.props.onSetProperty('help', help)}
+        <Toggle
+          name="Supplies"
+          active={this.props.modifiers.supplies}
+          onToggle={(value) => this.props.onSetProperty('supplies', value)}
+          />
+        <Toggle
+          name="Gear"
+          active={this.props.modifiers.gear}
+          onToggle={(value) => this.props.onSetProperty('gear', value)}
           />
         <PlusMinus
           name="Persona Dice"

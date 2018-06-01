@@ -8,6 +8,7 @@ import GatherInfo from './GatherInfo';
 import Ready from './Ready';
 
 import '../../styles/roll.css';
+import './styles/RollPage.css';
 
 class RollPage extends React.Component {
   currentAction() {
@@ -54,7 +55,7 @@ class RollPage extends React.Component {
           {...this.props.display}
           onGotoPage={this.props.onGotoPage}
           />
-        <div className="roll-page-container">
+        <div className="roll-page-action">
           { this.currentAction() }
         </div>
         <RollSummary {...this.props.derived.summary} />

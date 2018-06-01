@@ -1,6 +1,4 @@
-import math from 'mathjs';
-import _ from 'underscore';
-
+import diceMath from './dice_math';
 import disabledOptions from './disabled_options';
 
 const InitialState = {
@@ -18,25 +16,7 @@ const InitialState = {
   }
 }
 
-const conditionDice = function(state, character, summary, details) {
-  if (character.conditions.FRESH) {
-    summary.dice += 1;
-    details.push({
-      effect: '+1D',
-      source: 'Fresh'
-    });
-  }
-  if (
-    character.conditions.HUNGRY_AND_THIRSTY &&
-    state.dice.info.isDisposition
-  ) {
-    summary.successes -= 1;
-    details.push({
-      effect: '-1S',
-      source: 'Hungry and Thirsty',
-      reason: 'because this is a disposition test'
-    });
-  }
+const preBLConditionDice = function(state, character, summary, details) {
   if (
     !['RESOURCES', 'CIRCLES'].includes(state.dice.info.skill) &&
     !state.dice.info.isRecovery
@@ -76,6 +56,9 @@ export const skillDice = function(state, character, summary, details) {
   let rating;
   let source;
 
+  // Assume false until proven otherwise
+  summary.isBeginnersLuck = false;
+
   // Figure out which skill or ability applies
   if (state.dice.modifiers.natureInstead) {
     const nature = character.abilities['NATURE'];
@@ -88,16 +71,17 @@ export const skillDice = function(state, character, summary, details) {
       source = `${skill.name} rating`;
 
     } else {
-      // TODO: this should cut more than just skill dice in half.
+      // We cut the rating in half in calculateDerivedRollState below
+      summary.isBeginnersLuck = true;
       const blAbility = character.abilities[skill.beginnersLuck];
-      rating = Math.ceil(blAbility.rating / 2);
+      rating = blAbility.rating;
       source = `${blAbility.name} (BL for ${skill.name})`;
     }
 
   } else if (ability) {
     rating = ability.rating;
     source = `${ability.name} rating`;
-    
+
   } else {
     // Nothing to do
     return;
@@ -110,42 +94,53 @@ export const skillDice = function(state, character, summary, details) {
   });
 }
 
-export const expectedMargin = function(summary) {
-  const expected_success = (summary.dice / 2.0) + summary.successes;
-  let expected_bar;
-  if (summary.type === 'versus') {
-    expected_bar = summary.ob / 2;
-  } else {
-    expected_bar = summary.ob;
+const addPreBLDice = function(state, character, summary, details) {
+  // "dice for the ability, wises, help, supplies and gear"
+  preBLConditionDice(state, character, summary, details);
+  skillDice(state, character, summary, details);
+  summary.dice += state.dice.modifiers.help;
+  if (state.dice.modifiers.supplies) {
+    summary.dice += 1;
+    details.push({
+      effect: '+1D',
+      source: 'Supplies'
+    });
   }
-  return expected_success - expected_bar;
+  if (!state.dice.modifiers.gear) {
+    summary.dice -= 1;
+    details.push({
+      effect: '-1D',
+      source: 'No Gear'
+    })
+  }
 }
 
-export const oddsOfSuccess = function(summary) {
-  if (summary.type === 'versus') {
-    // TODO: versus tests - competing bernoulli processes
-    return NaN;
+const postBLConditionDice = function(state, character, summary, details) {
+  if (character.conditions.FRESH) {
+    summary.dice += 1;
+    details.push({
+      effect: '+1D',
+      source: 'Fresh'
+    });
   }
-
-  if (summary.ob - summary.successes <= 0) {
-    return 1;
+  if (
+    character.conditions.HUNGRY_AND_THIRSTY &&
+    state.dice.info.isDisposition
+  ) {
+    summary.successes -= 1;
+    details.push({
+      effect: '-1S',
+      source: 'Hungry and Thirsty',
+      reason: 'because this is a disposition test'
+    });
   }
-
-  // Sum from i=ob to number of dice d of
-  //   (d choose i) * .5^i * .5^(d-i)
-  const dice = summary.dice;
-  const base = summary.ob - summary.successes;
-  return math.sum(_.times(1 + dice - base, (j) => {
-    const i = j + base;
-    return math.combinations(dice, i) * (.5 ** i) * (.5 ** (dice-i));
-  }));
 }
 
-const diceMath = function(state, character, summary) {
-  summary.expected_margin = expectedMargin(summary);
-  summary.odds = oddsOfSuccess(summary);
+const addPostBLDice = function(state, character, summary, details) {
+  // "traits, persona points, tapped Nature, the fresh condition and any
+  // other special or magic bonus dice"
+  postBLConditionDice(state, character, summary, details);
 }
-
 
 
 const calculateDerivedRollState = function(state, character) {
@@ -159,15 +154,34 @@ const calculateDerivedRollState = function(state, character) {
     ob: state.dice.info.ob,
     odds: 50,
     expected_margin: 0,
+    isBeginnersLuck: false,
   }
   const details = [];
 
-  skillDice(state, character, summary, details);
-  conditionDice(state, character, summary, details);
+  // Beginner's Luck (page 26)
+  // Total up the dice for the ability, wises, help, supplies and
+  // gear, divide that by half and round up. Then add traits,
+  // persona points, tapped Nature, the fresh condition and any
+  // other special or magic bonus dice.
+  //
+  // My notes on conditions and BL:
+  // Exhausted adds a factor, so doesn't matter
+  // Injured and sick seem to subtract from the skill itself (language
+  //   elsewhere confirms this), so that would be _before_ BL?
+  // Fresh explicitly happens _after_ BL
+  // Hungry and Thirsty affects the disposition, which implies
+  // the test not the skill, so it would be after (same as fresh).
+  addPreBLDice(state, character, summary, details);
 
-  // TODO: beginner's luck
+  if (summary.isBeginnersLuck) {
+    summary.dice = Math.ceil(summary.dice / 2);
+    details.push({
+      effect: 'Halved',
+      source: "Beginner's Luck"
+    });
+  }
 
-  // TODO: dice from everything else
+  addPostBLDice(state, character, summary, details);
 
   diceMath(state, character, summary, details);
 

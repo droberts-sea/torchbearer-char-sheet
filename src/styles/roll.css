@@ -27,10 +27,6 @@
   height: 100%;
 }
 
-.roll-page-container {
-  padding-bottom: 3em;
-}
-
 #roll-summary {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -42,4 +38,6 @@
 
   position: fixed;
   bottom: 0px;
+
+  background-color: white;
 }
