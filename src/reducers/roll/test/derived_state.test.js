@@ -1,13 +1,82 @@
-import { expectedMargin, oddsOfSuccess } from '../derived_state';
+import { expectedMargin, oddsOfSuccess, skillDice } from '../derived_state';
+import character from '../../../mock/character';
 
-const fakeSummary = {
+const fakeSummary = Object.freeze({
   type: 'obstacle',
   dice: 0,
   ob: 0,
   successes: 0,
   odds: 0,
   expected_margin: 0
-};
+});
+
+describe('skillDice', () => {
+  let rollState;
+  let rollSummary;
+  beforeEach(() => {
+    rollState = {
+      dice: {
+        info: {
+          skill: undefined
+        },
+        modifiers: {
+          natureInstead: false
+        }
+      }
+    };
+
+    rollSummary = {
+      dice: 0
+    }
+  });
+
+  const checkRatingAdded = (skillName, expectedDice, natureInstead=false) => {
+    rollState.dice.info.skill = skillName;
+    rollState.dice.modifiers.natureInstead = natureInstead;
+
+    const details = [];
+    skillDice(rollState, character, rollSummary, details);
+
+    expect(rollSummary.dice).toBe(expectedDice);
+    expect(details.length).toBe(1);
+  }
+
+  test('Adds full dice for a trained skill', () => {
+    const skillName = 'ORATOR';
+    const skill = character.skills[skillName];
+
+    // Assumption: ORATOR is an open skill
+    expect(skill.open).toBe(true);
+
+    checkRatingAdded(skillName, skill.rating);
+  });
+
+  test('Adds full dice for an ability', () => {
+    const abilityName = 'WILL';
+    const ability = character.abilities[abilityName];
+
+    checkRatingAdded(abilityName, ability.rating);
+  });
+
+  test('Uses nature if rolling with nature', () => {
+    const nature = character.abilities['NATURE'];
+
+    checkRatingAdded('ALCHEMIST', nature.rating, true);
+  });
+
+  test('Uses BL ability / 2 for an untrained skill', () => {
+    const skillName = 'ALCHEMIST';
+    const skill = character.skills[skillName];
+
+    // Assumption: ALCHEMIST is not an open skill
+    expect(skill.open).toBe(false);
+
+    const blAbility = character.abilities[skill.beginnersLuck];
+    const expectedDice = Math.ceil(blAbility.rating / 2);
+
+    checkRatingAdded(skillName, expectedDice);
+  });
+});
 
 describe('expectedMargin', () => {
   test('is 0 for twice as many dice as ob', () => {

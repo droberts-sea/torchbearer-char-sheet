@@ -27,6 +27,10 @@ export default Object.freeze({
     HEALTH: {
       name: 'Health',
       rating: 5
+    },
+    NATURE: {
+      name: 'NATURE',
+      rating: 4
     }
   }
 });

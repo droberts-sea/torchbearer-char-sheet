@@ -65,24 +65,49 @@ const conditionDice = function(state, character, summary, details) {
   }
 }
 
-const skillDice = function(state, character, summary, details) {
+export const skillDice = function(state, character, summary, details) {
   const skillName = state.dice.info.skill;
-  if (skillName) {
-    let rating = 0;
-    let source = ' rating';
-    if (character && character.skills[skillName]) {
-      rating = character.skills[skillName].rating;
-      source = character.skills[skillName].name + source;
-    } else if (character && character.abilities[skillName]) {
-      rating = character.abilities[skillName].rating;
-      source = character.abilities[skillName].name + source;
-    }
-    summary.dice += rating;
-    details.push({
-      effect: `+${rating}D`,
-      source: source
-    });
+  if (!skillName || !character) {
+    return;
   }
+
+  const skill = character.skills[skillName];
+  const ability = character.abilities[skillName];
+  let rating;
+  let source;
+
+  // Figure out which skill or ability applies
+  if (state.dice.modifiers.natureInstead) {
+    const nature = character.abilities['NATURE'];
+    rating = nature.rating;
+    source = `Nature (instead of ${character.skills[skillName].name})`;
+
+  } else if (skill) {
+    if (skill.open) {
+      rating = skill.rating;
+      source = `${skill.name} rating`;
+
+    } else {
+      // TODO: this should cut more than just skill dice in half.
+      const blAbility = character.abilities[skill.beginnersLuck];
+      rating = Math.ceil(blAbility.rating / 2);
+      source = `${blAbility.name} (BL for ${skill.name})`;
+    }
+
+  } else if (ability) {
+    rating = ability.rating;
+    source = `${ability.name} rating`;
+    
+  } else {
+    // Nothing to do
+    return;
+  }
+
+  summary.dice += rating;
+  details.push({
+    effect: `+${rating}D`,
+    source: source
+  });
 }
 
 export const expectedMargin = function(summary) {
@@ -116,7 +141,7 @@ export const oddsOfSuccess = function(summary) {
   }));
 }
 
-const diceMath = function(state, character, summary, details) {
+const diceMath = function(state, character, summary) {
   summary.expected_margin = expectedMargin(summary);
   summary.odds = oddsOfSuccess(summary);
 }
