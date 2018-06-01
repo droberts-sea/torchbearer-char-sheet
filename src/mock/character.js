@@ -29,7 +29,7 @@ export default Object.freeze({
       rating: 5
     },
     NATURE: {
-      name: 'NATURE',
+      name: 'Nature',
       rating: 4
     }
   }

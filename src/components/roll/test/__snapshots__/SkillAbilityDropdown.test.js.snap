@@ -40,7 +40,7 @@ exports[`renders with a trained skill selected 1`] = `
         <option
           value="NATURE"
         >
-          NATURE
+          Nature
            (
           4
           )
@@ -126,7 +126,7 @@ exports[`renders with no skill selected 1`] = `
         <option
           value="NATURE"
         >
-          NATURE
+          Nature
            (
           4
           )
