@@ -8,6 +8,9 @@ class AddDice extends React.Component {
   render() {
     return (
       <ul id="roll-add-dice">
+        {
+          // TODO only display beginner's luck info if character does not have this skill
+        }
         <h2>Before Beginner&apos;s Luck</h2>
         <Toggle
           name="Roll using Nature"
@@ -16,13 +19,6 @@ class AddDice extends React.Component {
           active={this.props.modifiers.natureInstead}
           onToggle={(value) => this.props.onSetProperty('natureInstead', value)}
           />
-        <Toggle
-          name="Tap Nature"
-          subtext="Spend a Persona to add your Nature to this test. If the test is outside your Nature, Nature will be taxed by one."
-          disabled={this.props.disabledOptions.tapNature}
-          active={this.props.modifiers.tapNature}
-          onToggle={(value) => this.props.onSetProperty('tapNature', value)}
-          />
         <PlusMinus
           name="Help"
           subtext="Get help from your allies, through wises or an appropriate skill"
@@ -30,11 +26,6 @@ class AddDice extends React.Component {
           min={0}
           onValueChange={(help) => this.props.onSetProperty('help', help)}
           />
-        <h2>After Beginner&apos;s Luck</h2>
-        {
-          // Trait name
-          // Trait checks
-        }
         <Toggle
           name="Supplies"
           active={this.props.modifiers.supplies}
@@ -45,6 +36,11 @@ class AddDice extends React.Component {
           active={this.props.modifiers.gear}
           onToggle={(value) => this.props.onSetProperty('gear', value)}
           />
+        <h2>After Beginner&apos;s Luck</h2>
+        {
+          // Trait name
+          // Trait checks
+        }
         <PlusMinus
           name="Persona Dice"
           subtext="Spend up to three Persona to gain extra dice on any roll"
@@ -53,6 +49,16 @@ class AddDice extends React.Component {
           max={3}
           onValueChange={(personaDice) => this.props.onSetProperty('personaDice', personaDice)}
           />
+        <Toggle
+          name="Tap Nature"
+          subtext="Spend a Persona to add your Nature to this test. If the test is outside your Nature, Nature will be taxed by one."
+          disabled={this.props.disabledOptions.tapNature}
+          active={this.props.modifiers.tapNature}
+          onToggle={(value) => this.props.onSetProperty('tapNature', value)}
+          />
+        {
+          // TODO: indicator for fresh (non-interactive)
+        }
       </ul>
     );
   }
