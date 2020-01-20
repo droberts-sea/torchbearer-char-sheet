@@ -45,6 +45,22 @@ exports[`renders with a trained skill selected 1`] = `
           4
           )
         </option>
+        <option
+          value="RESOURCES"
+        >
+          Resources
+           (
+          3
+          )
+        </option>
+        <option
+          value="CIRCLES"
+        >
+          Circles
+           (
+          2
+          )
+        </option>
       </optgroup>
       <optgroup
         label="Trained Skills"
@@ -129,6 +145,22 @@ exports[`renders with no skill selected 1`] = `
           Nature
            (
           4
+          )
+        </option>
+        <option
+          value="RESOURCES"
+        >
+          Resources
+           (
+          3
+          )
+        </option>
+        <option
+          value="CIRCLES"
+        >
+          Circles
+           (
+          2
           )
         </option>
       </optgroup>

@@ -155,11 +155,38 @@ const addPostBLDice = function(state, character, summary, details) {
   // other special or magic bonus dice"
   postBLConditionDice(state, character, summary, details);
 
-  // traits
+  const modifiers = state.dice.modifiers;
 
-  // persona points
+  // traits (page 22)
+  // There are three levels for each trait:
+  //   Level 1 traits grant +1D to one roll per session.
+  //   Level 2 traits grant +1D to two rolls per session.
+  //   Level 3 traits grant +1s to a tied or successful test associated with the trait
 
-  // tapped nature
+  // persona advantage (page 110)
+  // You can spend up to three persona points on a single roll. Each point adds +1D to the roll
+  // TODO: not if the ability is 0?
+  if (modifiers.personaDice && modifiers.personaDice != 0) {
+    summary.dice += modifiers.personaDice;
+    details.push({
+      effect: `+${modifiers.personaDice}D`,
+      source: 'Persona dice'
+    });
+  }
+
+  // tapped nature (page 28)
+  // You may tap your character’s Nature to perform a heroic act. By spending a persona point, you may add your current Nature rating to your ability or skill test (except Resources or Circles)
+  //   If the test is within your character’s Nature and successful, then there is no tax.
+  //   If the test is outside your character’s Nature and successful, Nature is taxed by one.
+  //   If the test is failed, whether it was within or outside Nature, Nature is taxed by the margin of failure.
+  if (state.dice.info.skill != 'RESOURCES' && state.dice.info.skill != 'CIRCLES' && modifiers.tapNature) {
+    const nature = character.abilities.NATURE.rating
+    summary.dice += nature;
+    details.push({
+      effect: `+${nature}D`,
+      source: 'Tapping nature'
+    });
+  }
 }
 
 

@@ -33,6 +33,14 @@ const character = {
     NATURE: {
       name: 'Nature',
       rating: 4
+    },
+    RESOURCES: {
+      name: 'Resources',
+      rating: 3
+    },
+    CIRCLES: {
+      name: 'Circles',
+      rating: 2
     }
   },
   conditions: {}
