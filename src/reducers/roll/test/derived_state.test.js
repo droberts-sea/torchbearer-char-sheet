@@ -10,7 +10,8 @@ describe('Derived State', () => {
     rollState = {
       dice: {
         info: {
-          skill: undefined
+          skill: undefined,
+          ob: 3
         },
         modifiers: {
           natureInstead: false
@@ -79,6 +80,77 @@ describe('Derived State', () => {
     });
   });
 
+  describe("Modifiers", () => {
+    // Test on a trained skill (untrained is below)
+    let skillName = 'ORATOR';
+    beforeAll(() => {
+      expect(character.skills[skillName].open).toBe(true);
+    });
+
+    const checkModifierAdded = ({
+      modName,
+      detailsText,
+      beforeSetting=false,
+      afterSetting=true,
+      expectedDiceAdded=1
+    }) => {
+
+      rollState.dice.info.skill = skillName;
+
+      // Calculate state without this modifier
+      rollState.dice.modifiers[modName] = beforeSetting;
+      const beforeState = calculateDerivedRollState(rollState, character);
+
+      expect(
+        _.some(beforeState.details, (detail) => {
+          return detail.source.includes(detailsText);
+        })
+      ).toBe(false);
+
+      // Calculate state with this modifier
+      rollState.dice.modifiers[modName] = afterSetting;
+      const afterState = calculateDerivedRollState(rollState, character);
+
+      const expectedDice = beforeState.summary.dice + expectedDiceAdded;
+      expect(afterState.summary.dice).toBe(expectedDice);
+
+      expect(
+        _.some(afterState.details, (detail) => {
+          return detail.source.includes(detailsText);
+        })
+      ).toBe(true);
+    }
+
+    test("help", () => {
+      const helpDice = 4;
+
+      checkModifierAdded({
+        modName: 'help',
+        detailsText: 'Help',
+        beforeSetting: 0,
+        afterSetting: helpDice,
+        expectedDiceAdded: helpDice
+      });
+    });
+
+    test("supplies", () => {
+      checkModifierAdded({
+        modName: 'supplies',
+        detailsText: 'Supplies'
+      });
+    });
+
+    test("supplies", () => {
+      checkModifierAdded({
+        modName: 'gear',
+        detailsText: 'No Gear',
+        beforeSetting: true,
+        afterSetting: false,
+        expectedDiceAdded: -1
+      });
+    });
+  });
+
   describe("Beginner's Luck", () => {
     let blSkillName = 'ALCHEMIST';
     let trainedSkillName = 'ORATOR';
@@ -97,7 +169,6 @@ describe('Derived State', () => {
         const helpDice = 4;
 
         rollState.dice.info.skill = blSkillName;
-        rollState.dice.modifiers.natureInstead = false;
         rollState.dice.modifiers.help = 0;
 
         const beforeState = calculateDerivedRollState(rollState, character);
@@ -106,16 +177,8 @@ describe('Derived State', () => {
 
         const afterState = calculateDerivedRollState(rollState, character);
 
-        console.log(beforeState);
-        console.log(afterState);
         const expectedDice = beforeState.summary.dice + helpDice / 2;
         expect(afterState.summary.dice).toBe(expectedDice);
-
-        expect(
-          _.any(details, (detail) => {
-            detail.source.includes('Help');
-          })
-        ).toBe(true);
       })
     });
 

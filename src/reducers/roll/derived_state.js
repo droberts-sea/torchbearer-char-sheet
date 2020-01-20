@@ -94,25 +94,36 @@ export const skillDice = function(state, character, summary, details) {
   });
 }
 
-const addPreBLDice = function(state, character, summary, details) {
-  // "dice for the ability, wises, help, supplies and gear"
-  preBLConditionDice(state, character, summary, details);
-  skillDice(state, character, summary, details);
-  summary.dice += state.dice.modifiers.help;
-  if (state.dice.modifiers.supplies) {
+const modifierDice = function(state, character, summary, details) {
+  const modifiers = state.dice.modifiers;
+  if (modifiers.help && modifiers.help != 0) {
+    summary.dice += modifiers.help;
+    details.push({
+      effect: `+${modifiers.help}D`,
+      source: 'Help'
+    });
+  }
+  if (modifiers.supplies) {
     summary.dice += 1;
     details.push({
       effect: '+1D',
       source: 'Supplies'
     });
   }
-  if (!state.dice.modifiers.gear) {
+  if (!modifiers.gear) {
     summary.dice -= 1;
     details.push({
       effect: '-1D',
       source: 'No Gear'
     })
   }
+}
+
+const addPreBLDice = function(state, character, summary, details) {
+  // "dice for the ability, wises, help, supplies and gear"
+  preBLConditionDice(state, character, summary, details);
+  skillDice(state, character, summary, details);
+  modifierDice(state, character, summary, details);
 }
 
 const postBLConditionDice = function(state, character, summary, details) {
@@ -143,7 +154,7 @@ const addPostBLDice = function(state, character, summary, details) {
 }
 
 
-const calculateDerivedRollState = function(state, character) {
+export const calculateDerivedRollState = function(state, character) {
   if (!character) {
     return InitialState;
   }
@@ -185,7 +196,7 @@ const calculateDerivedRollState = function(state, character) {
 
   diceMath(state, character, summary, details);
 
-  console.log(details);
+  // console.log(details);
 
   return {
     summary: summary,
