@@ -1,4 +1,6 @@
-export default Object.freeze({
+import { ConditionRules } from '../rules/conditions';
+
+const character = {
   skills: {
     ALCHEMIST: {
       name: 'Alchemist',
@@ -32,5 +34,12 @@ export default Object.freeze({
       name: 'Nature',
       rating: 4
     }
-  }
+  },
+  conditions: {}
+};
+
+Object.keys(ConditionRules).forEach((name) => {
+  character.conditions[name] = ConditionRules[name].default_state;
 });
+
+export default Object.freeze(character);
