@@ -20,22 +20,29 @@ The roll page has two types of state. The first is the state provided by the use
 
 **Functionality**
 
+Roughly in order of importance
+
 - Roll page (half finished)
   - Dice math (statistics and junk)
-- Bio page
-- Gear page
+  - Feed results back into character sheet after roll
 - Character creation / input
 - Edit mode for a character (possibly same as ^^)
-- Undo / redo
-- Character saved to cloud
+- Bio page
+- Gear page
+- Class features
+- Leveling
+- Character saved to cloud (firebase?)
 - Multiple characters
-- Join game with others in party
-  - Be able to contribute to rolls and have things update
 - Hamburger menu
   - Log in
   - Switch characters
   - Join game?
   - Export character as JSON
+- Undo / redo (less important with edit mode)
+- Join game with others in party
+  - Be able to contribute to rolls and have things update
+
+
 
 **Rules**
 
