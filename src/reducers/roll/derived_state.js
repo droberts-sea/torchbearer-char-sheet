@@ -56,21 +56,24 @@ export const skillDice = function(state, character, summary, details) {
   let rating;
   let source;
 
-  // Assume false until proven otherwise
+  // Assume not beginner's luck
   summary.isBeginnersLuck = false;
 
   // Figure out which skill or ability applies
-  if (state.dice.modifiers.natureInstead) {
-    const nature = character.abilities['NATURE'];
-    rating = nature.rating;
-    source = `Nature (instead of ${character.skills[skillName].name})`;
-
-  } else if (skill) {
+  if (skill) {
     if (skill.open) {
+      // open skill -> just use it
       rating = skill.rating;
       source = `${skill.name} rating`;
 
+    } else if (state.dice.modifiers.natureInstead) {
+      // non-open skill and the player has opted to use their nature instead
+      const nature = character.abilities['NATURE'];
+      rating = nature.rating;
+      source = `Nature (instead of ${character.skills[skillName].name})`;
+  
     } else {
+      // non-open skill without nature -> beginner's luck
       // We cut the rating in half in calculateDerivedRollState below
       summary.isBeginnersLuck = true;
       const blAbility = character.abilities[skill.beginnersLuck];
@@ -151,6 +154,12 @@ const addPostBLDice = function(state, character, summary, details) {
   // "traits, persona points, tapped Nature, the fresh condition and any
   // other special or magic bonus dice"
   postBLConditionDice(state, character, summary, details);
+
+  // traits
+
+  // persona points
+
+  // tapped nature
 }
 
 

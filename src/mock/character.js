@@ -42,4 +42,7 @@ Object.keys(ConditionRules).forEach((name) => {
   character.conditions[name] = ConditionRules[name].default_state;
 });
 
+// mock character is not fresh (makes things tricky)
+character.conditions["FRESH"] = false;
+
 export default Object.freeze(character);

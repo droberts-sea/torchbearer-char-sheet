@@ -14,7 +14,8 @@ describe('Derived State', () => {
           ob: 3
         },
         modifiers: {
-          natureInstead: false
+          natureInstead: false,
+          gear: true // gear is on by default
         }
       }
     };
@@ -73,6 +74,9 @@ describe('Derived State', () => {
       expect(skill.open).toBe(false);
 
       const blAbility = character.abilities[skill.beginnersLuck];
+
+      // Note: we don't divide by 2 b/c the skillDice function tested here happens before the BL division
+      // ugh testing private functions
       const expectedDice = blAbility.rating;
 
       checkRatingAdded(skillName, expectedDice);
@@ -152,20 +156,30 @@ describe('Derived State', () => {
   });
 
   describe("Beginner's Luck", () => {
-    let blSkillName = 'ALCHEMIST';
-    let trainedSkillName = 'ORATOR';
+    const blSkillName = 'ALCHEMIST';
+    const blAbilityName = character.skills[blSkillName].beginnersLuck;
+    const blAbilityRating = character.abilities[blAbilityName].rating;
+
+    const trainedSkillName = 'ORATOR';
     beforeAll(() => {
       expect(character.skills[blSkillName].open).toBe(false);
       expect(character.skills[trainedSkillName].open).toBe(true);
     });
 
     describe("Affected by BL", () => {
-      test.skip("wises", () => {
+      test("ability", () => {
+        // using the relevant ability instead of the skill
+        // should also divide by 2
+        rollState.dice.info.skill = blSkillName;
+        
+        const afterState = calculateDerivedRollState(rollState, character);
+        
+        const expectedDice = Math.ceil(blAbilityRating / 2);
 
+        expect(afterState.summary.dice).toBe(expectedDice);
       });
 
       test("help", () => {
-        const skill = character.skills[blSkillName];
         const helpDice = 4;
 
         rollState.dice.info.skill = blSkillName;
@@ -179,11 +193,71 @@ describe('Derived State', () => {
 
         const expectedDice = beforeState.summary.dice + helpDice / 2;
         expect(afterState.summary.dice).toBe(expectedDice);
+      });
+
+      // TODO
+      
+      test("supplies and gear", () => {
+        // This one is tricky!
+        // I don't want the individual test to depend heavily on the data. However, the affect of adding one die does depend on how many dice were already there, because the total is divided by 2 and rounded up.
+        // In other words, adding 1D may or may not change the total.
+        // Here we use help and gear modifiers together to pad, and check both sides of the corner case. Ugly but functional.
+        rollState.dice.info.skill = blSkillName;
+        rollState.dice.modifiers.gear = false;
+        rollState.dice.modifiers.supplies = false;
+
+        const beforeState = calculateDerivedRollState(rollState, character);
+
+        // Assumption: the only thing that applies is the ability and the lack of gear
+        expect(beforeState.summary.dice).toBe(Math.ceil((blAbilityRating - 1) / 2));
+
+        // Just supplies
+        rollState.dice.modifiers.supplies = true;
+        rollState.dice.modifiers.gear = false;
+
+        const withSuppliesState = calculateDerivedRollState(rollState, character);
+
+        let expectedDice = beforeState.summary.dice;
+        if (blAbilityRating % 2 == 1) {
+          expectedDice += 1;
+        }
+        expect(withSuppliesState.summary.dice).toBe(expectedDice);
+
+        // Just gear
+        rollState.dice.modifiers.supplies = false;
+        rollState.dice.modifiers.gear = true;
+
+        const withGearState = calculateDerivedRollState(rollState, character);
+        expect(withGearState.summary.dice).toBe(expectedDice);
+
+        // Both supplies and gear
+        rollState.dice.modifiers.supplies = true;
+        rollState.dice.modifiers.gear = true;
+
+        const withSuppliesAndGearState = calculateDerivedRollState(rollState, character);
+
+        expectedDice = beforeState.summary.dice + 1;
+        expect(withSuppliesAndGearState.summary.dice).toBe(expectedDice);
+      });
+
+      test.skip("conditions", () => {
+        // injured and sick subtract dice
+        // h&t subtracts 1 only on dispo
+        // afriad -> can't use BL at all
+      });
+      test.skip("Use nature instead", () => {
+        // use nature, no bl
       })
     });
 
     describe("Not affected by BL", () => {
-
+      test.skip("traits", () => {});
+      test.skip("persona points", () => {});
+      test.skip("tapped nature", () => {});
+      test.skip("conditions", () => {
+        // fresh adds a die after
+        // h&t, exhausted should not impact
+      });
     });
   });
 });
