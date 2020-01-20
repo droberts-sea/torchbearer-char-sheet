@@ -99,7 +99,7 @@ export const skillDice = function(state, character, summary, details) {
 
 const modifierDice = function(state, character, summary, details) {
   const modifiers = state.dice.modifiers;
-  if (modifiers.help && modifiers.help != 0) {
+  if (modifiers.help && modifiers.help !== 0) {
     summary.dice += modifiers.help;
     details.push({
       effect: `+${modifiers.help}D`,
@@ -170,7 +170,7 @@ const addPostBLDice = function(state, character, summary, details) {
   // persona advantage (page 110)
   // You can spend up to three persona points on a single roll. Each point adds +1D to the roll
   // TODO: not if the ability is 0?
-  if (modifiers.personaDice && modifiers.personaDice != 0) {
+  if (modifiers.personaDice && modifiers.personaDice !== 0) {
     summary.dice += modifiers.personaDice;
     details.push({
       effect: `+${modifiers.personaDice}D`,
@@ -183,7 +183,7 @@ const addPostBLDice = function(state, character, summary, details) {
   //   If the test is within your character’s Nature and successful, then there is no tax.
   //   If the test is outside your character’s Nature and successful, Nature is taxed by one.
   //   If the test is failed, whether it was within or outside Nature, Nature is taxed by the margin of failure.
-  if (state.dice.info.skill != 'RESOURCES' && state.dice.info.skill != 'CIRCLES' && modifiers.tapNature) {
+  if (state.dice.info.skill !== 'RESOURCES' && state.dice.info.skill !== 'CIRCLES' && modifiers.tapNature) {
     const nature = character.abilities.NATURE.rating
     summary.dice += nature;
     details.push({
