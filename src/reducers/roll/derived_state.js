@@ -162,6 +162,10 @@ const addPostBLDice = function(state, character, summary, details) {
   //   Level 1 traits grant +1D to one roll per session.
   //   Level 2 traits grant +1D to two rolls per session.
   //   Level 3 traits grant +1s to a tied or successful test associated with the trait
+  // If you use a trait against yourself, you earn a resource called a check
+  //   Taking a -1D penalty to your roll earns you one check.
+  //   Granting +2D to your opponent’s roll earns you two checks.
+  //   Breaking a tie in your opponent’s favor earns two checks.
 
   // persona advantage (page 110)
   // You can spend up to three persona points on a single roll. Each point adds +1D to the roll
