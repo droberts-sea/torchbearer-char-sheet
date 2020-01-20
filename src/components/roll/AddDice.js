@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import PlusMinus from '../shared/PlusMinus';
 import Toggle from '../shared/Toggle';
+import TraitDropdown from './TraitDropdown';
 
 class AddDice extends React.Component {
   render() {
@@ -41,6 +42,7 @@ class AddDice extends React.Component {
           // Trait name
           // Trait checks
         }
+        <TraitDropdown />
         <PlusMinus
           name="Persona Dice"
           subtext="Spend up to three Persona to gain extra dice on any roll"

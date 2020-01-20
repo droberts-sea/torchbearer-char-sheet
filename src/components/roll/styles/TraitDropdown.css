@@ -1,0 +1,15 @@
+.trait-dropdown > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.trait-dropdown select {
+  grid-column: span 2;
+}
+
+.trait-dropdown .trait-option {
+  display: grid;
+  grid-template-columns: 2em 1fr;
+  align-items: center;
+  grid-gap: .4em;
+}
