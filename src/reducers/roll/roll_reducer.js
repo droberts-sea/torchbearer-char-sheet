@@ -35,8 +35,8 @@ const InitialRoll = {
     modifiers: {
       natureInstead: false,
       tapNature: false,
-      traitName: undefined,
-      traitChecks: 0,
+      traitName: 'Jaded',
+      traitEffect: undefined,
       help: 0,
       personaDice: 0,
       supplies: false,

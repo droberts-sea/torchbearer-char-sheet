@@ -21,32 +21,46 @@ const TraitOption = ({ name, text, ...props }) => {
       <label htmlFor={name}>{text}</label>
     </div>
   );
+};
+
+const traitIsAvailable = (trait) => {
+  return !(trait.level < 3 && trait.uses >= trait.level);
 }
 
-const TraitOptions = (props) => {
+const TraitOptions = ({ traitName, traitEffect, currentTrait, isVersus }) => {
+  // Don't show trait options unless the a trait has been selected
+  if (!traitName) {
+    return null;
+  }
+
+  // TODO: should enabled/disabled come in through disabledOptions?
+
   return (
     <React.Fragment>
       <TraitOption
         name="benefit"
         text="+1D Benefit"
-        active={true}
+        active={traitEffect === 'benefit'}
+        disabled={!traitIsAvailable(currentTrait)}
       />
       <TraitOption
         name="penalty"
         text="-1D Penalty"
-        active={false}
+        active={traitEffect === 'penalty'}
       />
       <TraitOption
         name="opponent"
         text="+2D to Opponent"
-        active={false}
+        active={traitEffect === 'opponent'}
+        disabled={!isVersus}
       />
     </React.Fragment>
   );
 }
 
-const TraitDropdown = (props) => {
-  const value = props.current || "none";
+const TraitDropdown = ({ traitName, traitEffect, characterTraits, isVersus }) => {
+  const value = traitName || "none";
+  const currentTrait = characterTraits.find(trait => trait.name == traitName);
   return (
     <Control
       className="trait-dropdown"
@@ -62,12 +76,37 @@ const TraitDropdown = (props) => {
             <option key="none" value="none">
               None
             </option>
+            {
+              characterTraits.map((trait) => {
+                const availability = traitIsAvailable(trait) ? "available" : "unavailable";
+                return (
+                  <option
+                    key={`td_${trait.name}`}
+                    value={trait.name}
+                  >
+                    {`${trait.name} (lv.${trait.level}) - ${availability}`}
+                  </option>
+                );
+              })
+            }
           </select>
-          <TraitOptions {...props} />
+          <TraitOptions
+            traitName={traitName}
+            traitEffect={traitEffect}
+            currentTrait={currentTrait}
+            isVersus={isVersus}
+          />
         </React.Fragment>
       )}
     />
   );
 };
+
+TraitDropdown.propTypes = {
+  traitName: PropTypes.string,
+  traitEffect: PropTypes.string,
+  characterTraits: PropTypes.array.isRequired,
+  isVersus: PropTypes.bool.isRequired,
+}
 
 export default TraitDropdown;

@@ -24,6 +24,7 @@ class RollPage extends React.Component {
       return (
         <AddDice
           {...this.props.dice}
+          character={this.props.character}
           onSetProperty={this.props.onSetModifier}
           disabledOptions={this.props.derived.disabledOptions} />
       );

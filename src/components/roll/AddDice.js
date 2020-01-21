@@ -10,7 +10,7 @@ class AddDice extends React.Component {
     return (
       <ul id="roll-add-dice">
         {
-          // TODO only display beginner's luck info if character does not have this skill
+          // TODO only display beginner's luck info and "roll using nature" if character does not have this skill
         }
         <h2>Before Beginner&apos;s Luck</h2>
         <Toggle
@@ -42,7 +42,12 @@ class AddDice extends React.Component {
           // Trait name
           // Trait checks
         }
-        <TraitDropdown />
+        <TraitDropdown 
+          traitName={this.props.modifiers.traitName}
+          traitEffect={this.props.modifiers.traitEffect}
+          characterTraits={this.props.character.traits}
+          isVersus={this.props.info.isVersus}
+          />
         <PlusMinus
           name="Persona Dice"
           subtext="Spend up to three Persona to gain extra dice on any roll"
@@ -67,12 +72,11 @@ class AddDice extends React.Component {
 }
 
 AddDice.propTypes = {
-  // Explicit
   disabledOptions: PropTypes.object.isRequired,
   onSetProperty: PropTypes.func.isRequired,
-
-  // Passthrough via dice
+  info: PropTypes.object.isRequired,
   modifiers: PropTypes.object.isRequired,
+  character: PropTypes.object.isRequired,
 };
 
 export default AddDice;
