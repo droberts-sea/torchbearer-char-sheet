@@ -106,11 +106,10 @@ const reduceTrait = function (state, action, character) {
     newState.traitName = undefined;
     newState.traitEffect = undefined;
 
-    // special case: switch to an unavailable trait
-  } else if (prop === 'traitName') {
-    const traitName = value
-    newState.traitName = traitName;
-    const trait = character.traits.find(trait => trait.name === traitName);
+    // special case: switch to a trait where the benefit is unavailable
+  } else if (prop === 'traitName' && state.traitEffect === 'benefit') {
+    newState.traitName = value;
+    const trait = character.traits.find(trait => trait.name === value);
     if (!traitIsAvailable(trait)) {
       newState.traitEffect = undefined;
     }
