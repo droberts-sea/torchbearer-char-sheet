@@ -5,50 +5,61 @@ import PlusMinus from '../shared/PlusMinus';
 import Toggle from '../shared/Toggle';
 import TraitDropdown from './TraitDropdown';
 
+import './styles/AddDice.css';
+
 class AddDice extends React.Component {
   render() {
+    let blHeaderStyle = "";
+    if (this.props.disabledOptions.natureInstead) {
+      blHeaderStyle = "hidden";
+    } else if (this.props.disabledOptions.beginnersLuck) {
+      blHeaderStyle = "struck";
+    }
     return (
       <ul id="roll-add-dice">
         {
           // TODO only display beginner's luck info and "roll using nature" if character does not have this skill
         }
-        <h2>Before Beginner&apos;s Luck</h2>
         <Toggle
           name="Roll using Nature"
           subtext="If you don't have the skill, you can roll with (full) Nature instead of using Beginner's Luck. If the test is outside your Nature, your Nature will be taxed by the margin of failure."
           disabled={this.props.disabledOptions.natureInstead}
           active={this.props.modifiers.natureInstead}
           onToggle={(value) => this.props.onSetProperty('natureInstead', value)}
-          />
+          className={
+            this.props.disabledOptions.natureInstead ? "hidden" : ""
+          }
+        />
+        <li className={blHeaderStyle}>
+          <h2>Before Beginner&apos;s Luck</h2>
+        </li>
         <PlusMinus
           name="Help"
           subtext="Get help from your allies, through wises or an appropriate skill"
           value={this.props.modifiers.help}
           min={0}
           onValueChange={(help) => this.props.onSetProperty('help', help)}
-          />
+        />
         <Toggle
           name="Supplies"
           active={this.props.modifiers.supplies}
           onToggle={(value) => this.props.onSetProperty('supplies', value)}
-          />
+        />
         <Toggle
           name="Gear"
           active={this.props.modifiers.gear}
           onToggle={(value) => this.props.onSetProperty('gear', value)}
-          />
-        <h2>After Beginner&apos;s Luck</h2>
-        {
-          // Trait name
-          // Trait checks
-        }
-        <TraitDropdown 
+        />
+        <li className={blHeaderStyle}>
+          <h2>After Beginner&apos;s Luck</h2>
+        </li>
+        <TraitDropdown
           traitName={this.props.modifiers.traitName}
           traitEffect={this.props.modifiers.traitEffect}
           characterTraits={this.props.character.traits}
           isVersus={this.props.info.isVersus}
           onSetProperty={this.props.onSetProperty}
-          />
+        />
         <PlusMinus
           name="Persona Dice"
           subtext="Spend up to three Persona to gain extra dice on any roll"
@@ -56,14 +67,14 @@ class AddDice extends React.Component {
           min={0}
           max={3}
           onValueChange={(personaDice) => this.props.onSetProperty('personaDice', personaDice)}
-          />
+        />
         <Toggle
           name="Tap Nature"
           subtext="Spend a Persona to add your Nature to this test. If the test is outside your Nature, Nature will be taxed by one."
           disabled={this.props.disabledOptions.tapNature}
           active={this.props.modifiers.tapNature}
           onToggle={(value) => this.props.onSetProperty('tapNature', value)}
-          />
+        />
         {
           // TODO: indicator for fresh (non-interactive)
         }

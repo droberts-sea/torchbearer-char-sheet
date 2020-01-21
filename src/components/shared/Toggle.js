@@ -7,8 +7,8 @@ import Checkbox from './Checkbox';
 import './styles/Toggle.css';
 
 // TODO DPR: come up with a more generic way to pass in the test
-const Toggle = ({ name, active, test, subtext, onToggle, disabled }) => {
-  let className = "toggle";
+const Toggle = ({ name, active, test, subtext, onToggle, disabled, className }) => {
+  className = (className || "") + " toggle";
   if (active) {
     className += " active";
   }

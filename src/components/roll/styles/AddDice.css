@@ -1,0 +1,7 @@
+#roll-add-dice .hidden {
+  display: none;
+}
+
+#roll-add-dice .struck {
+  text-decoration: line-through;
+}
