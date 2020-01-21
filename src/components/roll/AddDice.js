@@ -47,6 +47,7 @@ class AddDice extends React.Component {
           traitEffect={this.props.modifiers.traitEffect}
           characterTraits={this.props.character.traits}
           isVersus={this.props.info.isVersus}
+          onSetProperty={this.props.onSetProperty}
           />
         <PlusMinus
           name="Persona Dice"

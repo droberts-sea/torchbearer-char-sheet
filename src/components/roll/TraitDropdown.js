@@ -10,12 +10,12 @@ const checkboxClickHandler = (value, checked) => {
   console.log(`someone clicked on ${value}, setting it to ${checked}`);
 }
 
-const TraitOption = ({ name, text, ...props }) => {
+const TraitOption = ({ name, text, onSetProperty, ...props }) => {
   return (
     <div className="trait-option">
       <Checkbox
         {...props}
-        onToggle={(checked) => checkboxClickHandler(name, checked)}
+        onToggle={() => onSetProperty('traitEffect', name)}
         id={name}
       />
       <label htmlFor={name}>{text}</label>
@@ -27,7 +27,7 @@ const traitIsAvailable = (trait) => {
   return !(trait.level < 3 && trait.uses >= trait.level);
 }
 
-const TraitOptions = ({ traitName, traitEffect, currentTrait, isVersus }) => {
+const TraitOptions = ({ traitName, traitEffect, currentTrait, isVersus, onSetProperty }) => {
   // Don't show trait options unless the a trait has been selected
   if (!traitName) {
     return null;
@@ -42,25 +42,28 @@ const TraitOptions = ({ traitName, traitEffect, currentTrait, isVersus }) => {
         text="+1D Benefit"
         active={traitEffect === 'benefit'}
         disabled={!traitIsAvailable(currentTrait)}
+        onSetProperty={onSetProperty}
       />
       <TraitOption
         name="penalty"
         text="-1D Penalty"
         active={traitEffect === 'penalty'}
+        onSetProperty={onSetProperty}
       />
       <TraitOption
         name="opponent"
         text="+2D to Opponent"
         active={traitEffect === 'opponent'}
         disabled={!isVersus}
+        onSetProperty={onSetProperty}
       />
     </React.Fragment>
   );
 }
 
-const TraitDropdown = ({ traitName, traitEffect, characterTraits, isVersus }) => {
-  const value = traitName || "none";
-  const currentTrait = characterTraits.find(trait => trait.name == traitName);
+const TraitDropdown = (props) => {
+  const value = props.traitName || "none";
+  const currentTrait = props.characterTraits.find(trait => trait.name == props.traitName);
   return (
     <Control
       className="trait-dropdown"
@@ -70,14 +73,15 @@ const TraitDropdown = ({ traitName, traitEffect, characterTraits, isVersus }) =>
           <select
             value={value}
             onChange={(event) => {
-              console.log("trait selected");
+              console.log(`trait selected: ${event.target.value}`);
+              props.onSetProperty('traitName', event.target.value)
             }}
           >
             <option key="none" value="none">
               None
             </option>
             {
-              characterTraits.map((trait) => {
+              props.characterTraits.map((trait) => {
                 const availability = traitIsAvailable(trait) ? "available" : "unavailable";
                 return (
                   <option
@@ -91,10 +95,8 @@ const TraitDropdown = ({ traitName, traitEffect, characterTraits, isVersus }) =>
             }
           </select>
           <TraitOptions
-            traitName={traitName}
-            traitEffect={traitEffect}
+            {...props}
             currentTrait={currentTrait}
-            isVersus={isVersus}
           />
         </React.Fragment>
       )}
@@ -107,6 +109,7 @@ TraitDropdown.propTypes = {
   traitEffect: PropTypes.string,
   characterTraits: PropTypes.array.isRequired,
   isVersus: PropTypes.bool.isRequired,
+  onSetProperty: PropTypes.func.isRequired,
 }
 
 export default TraitDropdown;
