@@ -1,3 +1,5 @@
+import { traitIsAvailable } from '../../rules/traits';
+
 const disabledOptions = function(state, character) {
   const disabledOptions = {};
 
@@ -8,6 +10,12 @@ const disabledOptions = function(state, character) {
   
   // beginner's luck only applies if the skill is not open AND natureInstead has not been selected
   disabledOptions.beginnersLuck = disabledOptions.natureInstead || state.dice.modifiers.natureInstead;
+
+  if (state.dice.modifiers.traitName) {
+    const trait = character.traits.find(trait => trait.name == state.dice.modifiers.traitName);
+    disabledOptions.traitBenefit = !traitIsAvailable(trait);
+    disabledOptions.traitOpponent = !state.dice.info.isVersus;
+  }
   return disabledOptions;
 };
 

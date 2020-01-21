@@ -57,7 +57,7 @@ class AddDice extends React.Component {
           traitName={this.props.modifiers.traitName}
           traitEffect={this.props.modifiers.traitEffect}
           characterTraits={this.props.character.traits}
-          isVersus={this.props.info.isVersus}
+          disabledOptions={this.props.disabledOptions}
           onSetProperty={this.props.onSetProperty}
         />
         <PlusMinus

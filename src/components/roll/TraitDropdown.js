@@ -21,13 +21,11 @@ const TraitOption = ({ name, text, onSetProperty, ...props }) => {
   );
 };
 
-const TraitOptions = ({ traitName, traitEffect, currentTrait, isVersus, onSetProperty }) => {
+const TraitOptions = ({ traitName, traitEffect, currentTrait, onSetProperty, disabledOptions }) => {
   // Don't show trait options unless the a trait has been selected
   if (!traitName) {
     return null;
   }
-
-  // TODO: should enabled/disabled come in through disabledOptions?
 
   const benefit = currentTrait.level === 3 ? "+1S" : "+1D";
 
@@ -37,7 +35,7 @@ const TraitOptions = ({ traitName, traitEffect, currentTrait, isVersus, onSetPro
         name="benefit"
         text={`${benefit} benefit`}
         active={traitEffect === 'benefit'}
-        disabled={!traitIsAvailable(currentTrait)}
+        disabled={disabledOptions.traitBenefit}
         onSetProperty={onSetProperty}
       />
       <TraitOption
@@ -50,7 +48,7 @@ const TraitOptions = ({ traitName, traitEffect, currentTrait, isVersus, onSetPro
         name="opponent"
         text="+2D to opponent (two checks)"
         active={traitEffect === 'opponent'}
-        disabled={!isVersus}
+        disabled={disabledOptions.traitOpponent}
         onSetProperty={onSetProperty}
       />
     </React.Fragment>
@@ -105,7 +103,7 @@ TraitDropdown.propTypes = {
   traitName: PropTypes.string,
   traitEffect: PropTypes.string,
   characterTraits: PropTypes.array.isRequired,
-  isVersus: PropTypes.bool.isRequired,
+  disabledOptions: PropTypes.object.isRequired,
   onSetProperty: PropTypes.func.isRequired,
 }
 
