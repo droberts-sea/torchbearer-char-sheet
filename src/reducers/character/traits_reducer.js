@@ -1,4 +1,4 @@
-const InitialTraits = [
+export const InitialTraits = [
   {
     name: "Firey",
     level: 1,

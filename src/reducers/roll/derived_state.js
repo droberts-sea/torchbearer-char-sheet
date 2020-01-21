@@ -166,6 +166,22 @@ const addPostBLDice = function(state, character, summary, details) {
   //   Taking a -1D penalty to your roll earns you one check.
   //   Granting +2D to your opponent’s roll earns you two checks.
   //   Breaking a tie in your opponent’s favor earns two checks.
+  if (modifiers.traitName && modifiers.traitEffect) {
+    const trait = character.traits.find(trait => trait.name === modifiers.traitName);
+    if (!trait) {
+      throw new Error(`Asked for trait ${modifiers.traitName}, but character does not have that trait`);
+    }
+
+    if (modifiers.traitEffect === 'benefit') {
+      if (trait.level === 1) {
+        summary.dice += 1;
+        details.push({
+          effect: `+1D`,
+          source: `${modifiers.traitName} trait (benefit)`
+        });
+      }
+    }
+  }
 
   // persona advantage (page 110)
   // You can spend up to three persona points on a single roll. Each point adds +1D to the roll

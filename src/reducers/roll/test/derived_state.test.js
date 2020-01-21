@@ -251,11 +251,13 @@ describe('Derived State', () => {
       });
     });
 
-    describe.skip("traits", () => {
-      test('beneficial trait use adds 1D', () => {
-        const expectedDelta = 1;
-        const detailsText = "Jaded trait (benefit)"
-        rollState.dice.info.skill = trainedSkillName;
+    describe("traits", () => {
+      const rollWithoutAndWithTrait = ({
+        traitName,
+        traitEffect,
+        skillName=trainedSkillName
+      }) => {
+        rollState.dice.info.skill = skillName;
 
         // Calculate state without this modifier
         rollState.dice.modifiers.traitName = undefined;
@@ -263,24 +265,24 @@ describe('Derived State', () => {
         const beforeState = calculateDerivedRollState(rollState, character);
 
         // Calculate state with this modifier
-        rollState.dice.modifiers.traitName = 'Jaded';
-        rollState.dice.modifiers.traitEffect = 'benefit';
+        rollState.dice.modifiers.traitName = traitName;
+        rollState.dice.modifiers.traitEffect = traitEffect;
         const afterState = calculateDerivedRollState(rollState, character);
 
-        expect(
-          _.some(beforeState.details, (detail) => {
-            return detail.source.includes(detailsText);
-          })
-        ).toBe(false);
+        return [beforeState, afterState];
+      };
 
-        expect(
-          _.some(afterState.details, (detail) => {
-            return detail.source.includes(detailsText);
-          })
-        ).toBe(true);
-
-        const expectedDice = beforeState.summary.dice + expectedDelta;
-        expect(afterState.summary.dice).toBe(expectedDice);
+      test('beneficial trait at lv1 adds 1D', () => {
+        const traitName = 'Firey';
+        const [beforeState, afterState] = rollWithoutAndWithTrait({
+          traitName,
+          traitEffect: 'benefit'
+        });
+        // console.log(afterState.details);
+        checkModifierAdded({
+          beforeState, afterState,
+          detailsText: `${traitName} trait (benefit)`
+        });
       });
     });
   });
