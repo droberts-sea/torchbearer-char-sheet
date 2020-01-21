@@ -8,7 +8,6 @@ import {
 import calculateDerivedRollState from './derived_state';
 
 import { traitIsAvailable } from '../../rules/traits';
-import { log } from 'util';
 
 const InitialRoll = {
   display: {

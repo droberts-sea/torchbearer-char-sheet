@@ -6,7 +6,7 @@ const fakeSummary = Object.freeze({
   ob: 0,
   successes: 0,
   odds: 0,
-  expected_margin: 0
+  expectedMargin: 0
 });
 
 describe('expectedMargin', () => {

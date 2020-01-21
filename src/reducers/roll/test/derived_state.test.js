@@ -114,8 +114,12 @@ describe('Derived State', () => {
       beforeState,
       afterState,
       detailsText,
-      expectedDelta = 1
+      effectType='dice',
+      expectedDelta=1
     }) => {
+      const expectedEffect = beforeState.summary[effectType] + expectedDelta;
+      expect(afterState.summary[effectType]).toBe(expectedEffect);
+
       expect(
         _.some(beforeState.details, (detail) => {
           return detail.source.includes(detailsText);
@@ -127,16 +131,16 @@ describe('Derived State', () => {
           return detail.source.includes(detailsText);
         })
       ).toBe(true);
-
-      const expectedDice = beforeState.summary.dice + expectedDelta;
-      expect(afterState.summary.dice).toBe(expectedDice);
     }
 
     const checkModifierNotAdded = ({
       beforeState,
       afterState,
       detailsText,
+      effectType="dice"
     }) => {
+      expect(afterState.summary[effectType]).toBe(beforeState.summary[effectType]);
+
       expect(
         _.some(beforeState.details, (detail) => {
           return detail.source.includes(detailsText);
@@ -148,8 +152,6 @@ describe('Derived State', () => {
           return detail.source.includes(detailsText);
         })
       ).toBe(false);
-
-      expect(afterState.summary.dice).toBe(beforeState.summary.dice);
     }
 
     test("help", () => {
@@ -255,9 +257,11 @@ describe('Derived State', () => {
       const rollWithoutAndWithTrait = ({
         traitName,
         traitEffect,
-        skillName=trainedSkillName
+        skillName=trainedSkillName,
+        isVersus=false
       }) => {
         rollState.dice.info.skill = skillName;
+        rollState.dice.info.isVersus = isVersus;
 
         // Calculate state without this modifier
         rollState.dice.modifiers.traitName = undefined;
@@ -274,14 +278,69 @@ describe('Derived State', () => {
 
       test('beneficial trait at lv1 adds 1D', () => {
         const traitName = 'Firey';
+        expect(character.traits.find(trait => trait.name == traitName).level).toBe(1);
         const [beforeState, afterState] = rollWithoutAndWithTrait({
           traitName,
           traitEffect: 'benefit'
         });
-        // console.log(afterState.details);
         checkModifierAdded({
           beforeState, afterState,
           detailsText: `${traitName} trait (benefit)`
+        });
+      });
+
+      test('beneficial trait at lv2 adds 1D', () => {
+        const traitName = 'Jaded';
+        expect(character.traits.find(trait => trait.name == traitName).level).toBe(2);
+        const [beforeState, afterState] = rollWithoutAndWithTrait({
+          traitName,
+          traitEffect: 'benefit'
+        });
+        checkModifierAdded({
+          beforeState, afterState,
+          detailsText: `${traitName} trait (benefit)`
+        });
+      });
+
+      test('beneficial trait at lv3 adds 1S', () => {
+        const traitName = 'Curious';
+        expect(character.traits.find(trait => trait.name == traitName).level).toBe(3);
+        const [beforeState, afterState] = rollWithoutAndWithTrait({
+          traitName,
+          traitEffect: 'benefit'
+        });
+        checkModifierAdded({
+          beforeState, afterState,
+          detailsText: `${traitName} trait (benefit)`,
+          effectType: 'successes'
+        });
+      });
+
+      test('penalty trait subtracts 1D', () => {
+        const traitName = 'Firey';
+        const [beforeState, afterState] = rollWithoutAndWithTrait({
+          traitName,
+          traitEffect: 'penalty'
+        });
+        checkModifierAdded({
+          beforeState, afterState,
+          expectedDelta: -1,
+          detailsText: `${traitName} trait (penalty)`
+        });
+      });
+
+      test('opponent trait adds 2D to opponent roll', () => {
+        const traitName = 'Firey';
+        const [beforeState, afterState] = rollWithoutAndWithTrait({
+          traitName,
+          isVersus: true,
+          traitEffect: 'opponent'
+        });
+        checkModifierAdded({
+          beforeState, afterState,
+          effectType: 'opponentDice',
+          expectedDelta: 2,
+          detailsText: `${traitName} trait (aid opponent)`
         });
       });
     });

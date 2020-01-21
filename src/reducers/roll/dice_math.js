@@ -33,7 +33,7 @@ export const oddsOfSuccess = function(summary) {
 }
 
 const diceMath = function(state, character, summary) {
-  summary.expected_margin = expectedMargin(summary);
+  summary.expectedMargin = expectedMargin(summary);
   summary.odds = oddsOfSuccess(summary);
 }
 

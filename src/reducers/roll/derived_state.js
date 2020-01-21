@@ -8,7 +8,7 @@ const InitialState = {
     ob: 0,
     successes: 0,
     odds: 0,
-    expected_margin: 0
+    expectedMargin: 0
   },
   details: [],
   disabledOptions: {
@@ -16,7 +16,7 @@ const InitialState = {
   }
 }
 
-const preBLConditionDice = function(state, character, summary, details) {
+const preBLConditionDice = function (state, character, summary, details) {
   if (
     !['RESOURCES', 'CIRCLES'].includes(state.dice.info.skill) &&
     !state.dice.info.isRecovery
@@ -45,7 +45,7 @@ const preBLConditionDice = function(state, character, summary, details) {
   }
 }
 
-export const skillDice = function(state, character, summary, details) {
+export const skillDice = function (state, character, summary, details) {
   const skillName = state.dice.info.skill;
   if (!skillName || !character) {
     return;
@@ -71,7 +71,7 @@ export const skillDice = function(state, character, summary, details) {
       const nature = character.abilities['NATURE'];
       rating = nature.rating;
       source = `Nature (instead of ${character.skills[skillName].name})`;
-  
+
     } else {
       // non-open skill without nature -> beginner's luck
       // We cut the rating in half in calculateDerivedRollState below
@@ -97,7 +97,7 @@ export const skillDice = function(state, character, summary, details) {
   });
 }
 
-const modifierDice = function(state, character, summary, details) {
+const modifierDice = function (state, character, summary, details) {
   const modifiers = state.dice.modifiers;
   if (modifiers.help && modifiers.help !== 0) {
     summary.dice += modifiers.help;
@@ -122,14 +122,14 @@ const modifierDice = function(state, character, summary, details) {
   }
 }
 
-const addPreBLDice = function(state, character, summary, details) {
+const addPreBLDice = function (state, character, summary, details) {
   // "dice for the ability, wises, help, supplies and gear"
   preBLConditionDice(state, character, summary, details);
   skillDice(state, character, summary, details);
   modifierDice(state, character, summary, details);
 }
 
-const postBLConditionDice = function(state, character, summary, details) {
+const postBLConditionDice = function (state, character, summary, details) {
   if (character.conditions.FRESH) {
     summary.dice += 1;
     details.push({
@@ -150,7 +150,7 @@ const postBLConditionDice = function(state, character, summary, details) {
   }
 }
 
-const addPostBLDice = function(state, character, summary, details) {
+const addPostBLDice = function (state, character, summary, details) {
   // "traits, persona points, tapped Nature, the fresh condition and any
   // other special or magic bonus dice"
   postBLConditionDice(state, character, summary, details);
@@ -172,14 +172,44 @@ const addPostBLDice = function(state, character, summary, details) {
       throw new Error(`Asked for trait ${modifiers.traitName}, but character does not have that trait`);
     }
 
-    if (modifiers.traitEffect === 'benefit') {
-      if (trait.level === 1) {
-        summary.dice += 1;
+    switch (modifiers.traitEffect) {
+      case 'benefit':
+        if (trait.level < 3) {
+          summary.dice += 1;
+          details.push({
+            effect: `+1D`,
+            source: `${modifiers.traitName} trait (benefit)`
+          });
+        } else if (trait.level === 3) {
+          summary.successes += 1;
+          details.push({
+            effect: `+1S`,
+            source: `${modifiers.traitName} trait (benefit)`
+          });
+        }
+        break;
+
+      case 'penalty':
+        summary.dice -= 1;
         details.push({
-          effect: `+1D`,
-          source: `${modifiers.traitName} trait (benefit)`
+          effect: `-1D`,
+          source: `${modifiers.traitName} trait (penalty)`
         });
-      }
+        break;
+
+      case 'opponent':
+        if (!state.dice.info.isVersus) {
+          throw new Error('Attempting to add opponent dice to a non-versus roll');
+        }
+        summary.opponentDice += 2;
+        details.push({
+          effect: `+2D for opponent`,
+          source: `${modifiers.traitName} trait (aid opponent)`
+        });
+        break;
+
+      default:
+        throw new Error(`Invalid trait effect ${modifiers.traitEffect}`);
     }
   }
 
@@ -210,7 +240,7 @@ const addPostBLDice = function(state, character, summary, details) {
 }
 
 
-export const calculateDerivedRollState = function(state, character) {
+export const calculateDerivedRollState = function (state, character) {
   if (!character) {
     return InitialState;
   }
@@ -219,8 +249,9 @@ export const calculateDerivedRollState = function(state, character) {
     dice: 0,
     successes: 0,
     ob: state.dice.info.ob,
+    opponentDice: 0,
     odds: 50,
-    expected_margin: 0,
+    expectedMargin: 0,
     isBeginnersLuck: false,
   }
   const details = [];
