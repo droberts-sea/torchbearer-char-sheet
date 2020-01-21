@@ -12,7 +12,7 @@ const disabledOptions = function(state, character) {
   disabledOptions.beginnersLuck = disabledOptions.natureInstead || state.dice.modifiers.natureInstead;
 
   if (state.dice.modifiers.traitName) {
-    const trait = character.traits.find(trait => trait.name == state.dice.modifiers.traitName);
+    const trait = character.traits.find(trait => trait.name === state.dice.modifiers.traitName);
     disabledOptions.traitBenefit = !traitIsAvailable(trait);
     disabledOptions.traitOpponent = !state.dice.info.isVersus;
   }
