@@ -29,7 +29,7 @@ describe('Derived State', () => {
   describe('skillDice', () => {
 
 
-    const checkRatingAdded = (skillName, expectedDice, natureInstead=false) => {
+    const checkRatingAdded = (skillName, expectedDice, natureInstead = false) => {
       rollState.dice.info.skill = skillName;
       rollState.dice.modifiers.natureInstead = natureInstead;
 
@@ -91,12 +91,12 @@ describe('Derived State', () => {
       expect(character.skills[trainedSkillName].open).toBe(true);
     });
 
-    const rollWithoutAndWithModifier = (
+    const rollWithoutAndWithModifier = ({
       modName,
-      beforeSetting,
-      afterSetting,
-      skillName
-    ) => {
+      beforeSetting = false,
+      afterSetting = true,
+      skillName = trainedSkillName
+    }) => {
       rollState.dice.info.skill = skillName;
 
       // Calculate state without this modifier
@@ -111,15 +111,11 @@ describe('Derived State', () => {
     }
 
     const checkModifierAdded = ({
-      modName,
+      beforeState,
+      afterState,
       detailsText,
-      beforeSetting=false,
-      afterSetting=true,
-      expectedDiceAdded=1,
-      skillName=trainedSkillName
+      expectedDelta = 1
     }) => {
-      const [beforeState, afterState] = rollWithoutAndWithModifier(modName, beforeSetting, afterSetting, skillName);
-
       expect(
         _.some(beforeState.details, (detail) => {
           return detail.source.includes(detailsText);
@@ -132,19 +128,15 @@ describe('Derived State', () => {
         })
       ).toBe(true);
 
-      const expectedDice = beforeState.summary.dice + expectedDiceAdded;
+      const expectedDice = beforeState.summary.dice + expectedDelta;
       expect(afterState.summary.dice).toBe(expectedDice);
     }
 
     const checkModifierNotAdded = ({
-      modName,
+      beforeState,
+      afterState,
       detailsText,
-      beforeSetting=false,
-      afterSetting=true,
-      skillName=trainedSkillName
     }) => {
-      const [beforeState, afterState] = rollWithoutAndWithModifier(modName, beforeSetting, afterSetting, skillName);
-
       expect(
         _.some(beforeState.details, (detail) => {
           return detail.source.includes(detailsText);
@@ -163,59 +155,132 @@ describe('Derived State', () => {
     test("help", () => {
       const helpDice = 4;
 
-      checkModifierAdded({
+      const [beforeState, afterState] = rollWithoutAndWithModifier({
         modName: 'help',
-        detailsText: 'Help',
         beforeSetting: 0,
-        afterSetting: helpDice,
-        expectedDiceAdded: helpDice
+        afterSetting: helpDice
+      });
+
+      checkModifierAdded({
+        beforeState,
+        afterState,
+        detailsText: 'Help',
+        expectedDelta: helpDice
       });
     });
 
     test("supplies", () => {
+      const [beforeState, afterState] = rollWithoutAndWithModifier({
+        modName: 'supplies'
+      });
+
       checkModifierAdded({
-        modName: 'supplies',
-        detailsText: 'Supplies'
+        beforeState,
+        afterState,
+        detailsText:'Supplies'
       });
     });
 
     test("gear", () => {
-      checkModifierAdded({
+      const [beforeState, afterState] = rollWithoutAndWithModifier({
         modName: 'gear',
-        detailsText: 'No Gear',
         beforeSetting: true,
-        afterSetting: false,
-        expectedDiceAdded: -1
+        afterSetting: false
+      });
+
+      checkModifierAdded({
+        beforeState,
+        afterState,
+        detailsText:'Gear',
+        expectedDelta: -1
       });
     });
 
     test("persona dice", () => {
-      checkModifierAdded({
+      const [beforeState, afterState] = rollWithoutAndWithModifier({
         modName: 'personaDice',
-        detailsText: 'Persona dice',
         beforeSetting: 0,
         afterSetting: 3,
-        expectedDiceAdded: 3
+      });
+
+      checkModifierAdded({
+        beforeState,
+        afterState,
+        detailsText: 'Persona dice',
+        expectedDelta: 3
       });
     });
 
     test("tap nature", () => {
-      checkModifierAdded({
+      const [beforeState, afterState] = rollWithoutAndWithModifier({
         modName: 'tapNature',
-        detailsText: 'Tapping nature',
-        expectedDiceAdded: character.abilities.NATURE.rating
       });
 
-      // Doesn't apply to resources or circles
-      checkModifierNotAdded({
-        modName: 'tapNature',
+      checkModifierAdded({
+        beforeState,
+        afterState,
         detailsText: 'Tapping nature',
+        expectedDelta: character.abilities.NATURE.rating
+      });
+    });
+
+    test('tap nature resources', () => {
+      // Doesn't apply to resources or circles
+      const [beforeState, afterState] = rollWithoutAndWithModifier({
+        modName: 'tapNature',
         skillName: 'RESOURCES'
       });
+
       checkModifierNotAdded({
+        beforeState,
+        afterState,
+        detailsText: 'Tapping nature'
+      });
+    });
+      
+    test('tap nature circles', () => {
+      const [beforeState, afterState] = rollWithoutAndWithModifier({
         modName: 'tapNature',
-        detailsText: 'Tapping nature',
         skillName: 'CIRCLES'
+      });
+
+      checkModifierNotAdded({
+        beforeState,
+        afterState,
+        detailsText: 'Tapping nature'
+      });
+    });
+
+    describe.skip("traits", () => {
+      test('beneficial trait use adds 1D', () => {
+        const expectedDelta = 1;
+        const detailsText = "Jaded trait (benefit)"
+        rollState.dice.info.skill = trainedSkillName;
+
+        // Calculate state without this modifier
+        rollState.dice.modifiers.traitName = undefined;
+        rollState.dice.modifiers.traitEffect = undefined;
+        const beforeState = calculateDerivedRollState(rollState, character);
+
+        // Calculate state with this modifier
+        rollState.dice.modifiers.traitName = 'Jaded';
+        rollState.dice.modifiers.traitEffect = 'benefit';
+        const afterState = calculateDerivedRollState(rollState, character);
+
+        expect(
+          _.some(beforeState.details, (detail) => {
+            return detail.source.includes(detailsText);
+          })
+        ).toBe(false);
+
+        expect(
+          _.some(afterState.details, (detail) => {
+            return detail.source.includes(detailsText);
+          })
+        ).toBe(true);
+
+        const expectedDice = beforeState.summary.dice + expectedDelta;
+        expect(afterState.summary.dice).toBe(expectedDice);
       });
     });
   });
@@ -236,9 +301,9 @@ describe('Derived State', () => {
         // using the relevant ability instead of the skill
         // should also divide by 2
         rollState.dice.info.skill = blSkillName;
-        
+
         const afterState = calculateDerivedRollState(rollState, character);
-        
+
         const expectedDice = Math.ceil(blAbilityRating / 2);
 
         expect(afterState.summary.dice).toBe(expectedDice);
@@ -259,7 +324,7 @@ describe('Derived State', () => {
         const expectedDice = beforeState.summary.dice + helpDice / 2;
         expect(afterState.summary.dice).toBe(expectedDice);
       });
-      
+
       test("supplies and gear", () => {
         // This one is tricky!
         // I don't want the individual test to depend heavily on the data. However, the affect of adding one die does depend on how many dice were already there, because the total is divided by 2 and rounded up.
@@ -314,7 +379,7 @@ describe('Derived State', () => {
     });
 
     describe("Not affected by BL", () => {
-      test.skip("traits", () => {});
+      test.skip("traits", () => { });
       test("persona points", () => {
         const personaDice = 3;
         rollState.dice.info.skill = blSkillName;
@@ -329,7 +394,7 @@ describe('Derived State', () => {
         const expectedDice = beforeState.summary.dice + personaDice;
         expect(afterState.summary.dice).toBe(expectedDice);
       });
-      test.skip("tapped nature", () => {});
+      test.skip("tapped nature", () => { });
       test.skip("conditions", () => {
         // fresh adds a die after
         // h&t, exhausted should not impact

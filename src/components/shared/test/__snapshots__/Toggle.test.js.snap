@@ -10,7 +10,7 @@ exports[`renders when active 1`] = `
     </h3>
     
     <div
-      className="checkbox"
+      className=" checkbox"
       onClick={[Function]}
       style={
         Object {
@@ -35,7 +35,7 @@ exports[`renders when disabled 1`] = `
     </h3>
     
     <div
-      className="checkbox disabled"
+      className=" checkbox disabled"
     />
   </div>
   <p>
@@ -54,7 +54,7 @@ exports[`renders when inactive 1`] = `
     </h3>
     
     <div
-      className="checkbox"
+      className=" checkbox"
       onClick={[Function]}
     />
   </div>
