@@ -4,11 +4,9 @@ import PropTypes from 'prop-types';
 import Control from '../shared/Control';
 import Checkbox from '../shared/Checkbox';
 
-import './styles/TraitDropdown.css';
+import { traitIsAvailable } from '../../rules/traits';
 
-const checkboxClickHandler = (value, checked) => {
-  console.log(`someone clicked on ${value}, setting it to ${checked}`);
-}
+import './styles/TraitDropdown.css';
 
 const TraitOption = ({ name, text, onSetProperty, ...props }) => {
   return (
@@ -23,10 +21,6 @@ const TraitOption = ({ name, text, onSetProperty, ...props }) => {
   );
 };
 
-const traitIsAvailable = (trait) => {
-  return !(trait.level < 3 && trait.uses >= trait.level);
-}
-
 const TraitOptions = ({ traitName, traitEffect, currentTrait, isVersus, onSetProperty }) => {
   // Don't show trait options unless the a trait has been selected
   if (!traitName) {
@@ -35,24 +29,26 @@ const TraitOptions = ({ traitName, traitEffect, currentTrait, isVersus, onSetPro
 
   // TODO: should enabled/disabled come in through disabledOptions?
 
+  const benefit = currentTrait.level === 3 ? "+1S" : "+1D";
+
   return (
     <React.Fragment>
       <TraitOption
         name="benefit"
-        text="+1D Benefit"
+        text={`${benefit} benefit`}
         active={traitEffect === 'benefit'}
         disabled={!traitIsAvailable(currentTrait)}
         onSetProperty={onSetProperty}
       />
       <TraitOption
         name="penalty"
-        text="-1D Penalty"
+        text="-1D penalty (one check)"
         active={traitEffect === 'penalty'}
         onSetProperty={onSetProperty}
       />
       <TraitOption
         name="opponent"
-        text="+2D to Opponent"
+        text="+2D to opponent (two checks)"
         active={traitEffect === 'opponent'}
         disabled={!isVersus}
         onSetProperty={onSetProperty}
@@ -63,11 +59,12 @@ const TraitOptions = ({ traitName, traitEffect, currentTrait, isVersus, onSetPro
 
 const TraitDropdown = (props) => {
   const value = props.traitName || "none";
-  const currentTrait = props.characterTraits.find(trait => trait.name == props.traitName);
+  const currentTrait = props.characterTraits.find(trait => trait.name === props.traitName);
   return (
     <Control
       className="trait-dropdown"
       name="Trait"
+      subtext="Use a trait to help you (limited uses per session) or hurt you (and gain a check) on this roll."
       knob={(
         <React.Fragment>
           <select

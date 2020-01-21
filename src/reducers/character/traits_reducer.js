@@ -7,7 +7,7 @@ const InitialTraits = [
   {
     name: "Jaded",
     level: 2,
-    uses: 1
+    uses: 2
   },
   {
     name: "Curious",

@@ -1,6 +1,14 @@
 .trait-dropdown > div {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  row-gap: .5em;
+
+  margin-top: 1em;
+}
+
+.trait-dropdown h3 {
+  margin-top: 0;
 }
 
 .trait-dropdown select {

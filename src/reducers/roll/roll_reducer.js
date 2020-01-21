@@ -7,6 +7,9 @@ import {
 
 import calculateDerivedRollState from './derived_state';
 
+import { traitIsAvailable } from '../../rules/traits';
+import { log } from 'util';
+
 const InitialRoll = {
   display: {
     currentPage: ROLL_PAGES[0],
@@ -58,75 +61,117 @@ const InitialRoll = {
   }
 };
 
-const reduceDisplay = function(state, action, character) {
+const reduceDisplay = function (state, action, character) {
   let pageIndex;
-  switch(action.type) {
+  switch (action.type) {
     case ROLL_GOTO_PAGE:
-    pageIndex = ROLL_PAGES.indexOf(action.payload.page);
-    return {
-      ...state,
-      currentPage: action.payload.page,
-      back: {
-        target: ROLL_PAGES[pageIndex-1],
-        // TODO some transitions have extra reqs
-        enabled: !!ROLL_PAGES[pageIndex-1]
-      },
-      forward: {
-        target: ROLL_PAGES[pageIndex+1],
-        // TODO some transitions have extra reqs
-        enabled: !!ROLL_PAGES[pageIndex+1]
-      }
-    };
+      pageIndex = ROLL_PAGES.indexOf(action.payload.page);
+      return {
+        ...state,
+        currentPage: action.payload.page,
+        back: {
+          target: ROLL_PAGES[pageIndex - 1],
+          // TODO some transitions have extra reqs
+          enabled: !!ROLL_PAGES[pageIndex - 1]
+        },
+        forward: {
+          target: ROLL_PAGES[pageIndex + 1],
+          // TODO some transitions have extra reqs
+          enabled: !!ROLL_PAGES[pageIndex + 1]
+        }
+      };
 
     default:
-    return state;
+      return state;
   }
 };
 
-const reduceInfo = function(state, action, character) {
-  let newState;
-  switch(action.type) {
+const reduceInfo = function (state, action, character) {
+  switch (action.type) {
     case ROLL_SET_INFO:
-    newState = {...state};
-    newState[action.payload.prop] = action.payload.value;
-    return newState;
+      const newState = { ...state };
+      newState[action.payload.prop] = action.payload.value;
+      return newState;
 
     default:
-    return state;
+      return state;
   }
+};
+
+const reduceTrait = function (state, action, character) {
+  const {prop, value} = action.payload;
+  const newState = { ...state };
+
+  // special case: resetting the trait dropdown
+  if (prop === 'traitName' && value === 'none') {
+    newState.traitName = undefined;
+    newState.traitEffect = undefined;
+
+    // special case: switch to an unavailable trait
+  } else if (prop === 'traitName') {
+    const traitName = value
+    newState.traitName = traitName;
+    const trait = character.traits.find(trait => trait.name === traitName);
+    if (!traitIsAvailable(trait)) {
+      newState.traitEffect = undefined;
+    }
+    
+    // special case: un-click a trait selection
+  } else if (prop === 'traitEffect' && value === state.traitEffect) {
+    newState.traitEffect = undefined;
+
+  } else {
+    newState[prop] = value;
+  }
+
+  return newState;
 }
 
-const reduceModifiers = function(state, action, character) {
+const reduceModifiers = function (state, action, character) {
   let newState;
   let skill;
-  switch(action.type) {
+  switch (action.type) {
     case ROLL_SET_MODIFIER:
-    newState = {...state};
-    newState[action.payload.prop] = action.payload.value;
-    return newState;
+
+      if (action.payload.prop === 'traitName' || action.payload.prop === 'traitEffect') {
+        newState = reduceTrait(state, action, character);
+      } else {
+        newState = { ...state };
+        newState[action.payload.prop] = action.payload.value;
+      }
+
+      return newState;
 
     case ROLL_SET_INFO:
-    if (action.payload.prop === 'skill') {
-      // Toggle gear based on beginner's luck
-      // TODO: default to false if no backpack (pg 34)
-      // TODO: exception for dwarves (always have tools if have backpack - pg 34)
-      newState = {...state};
-      skill = character.skills[action.payload.value];
-      if (skill && !skill.open && !state.natureInstead) {
-        newState.gear = false;
-      } else {
-        newState.gear = true;
+      // Special cases where the modifiers change when the basic roll info changes
+      if (action.payload.prop === 'skill') {
+        // Toggle gear based on beginner's luck
+        // TODO: default to false if no backpack (pg 34)
+        // TODO: exception for dwarves (always have tools if have backpack - pg 34)
+        newState = { ...state };
+        skill = character.skills[action.payload.value];
+        if (skill && !skill.open && !state.natureInstead) {
+          newState.gear = false;
+        } else {
+          newState.gear = true;
+        }
+        return newState;
+
+      } else if (action.payload.prop === 'isVersus') {
+        if (state.traitEffect === 'opponent') {
+          newState = { ...state };
+          newState.traitEffect = undefined;
+          return newState;
+        }
       }
-      return newState;
-    }
     // falls through
 
     default:
-    return state;
+      return state;
   }
 }
 
-const reduceDice = function(state, action, character) {
+const reduceDice = function (state, action, character) {
   return {
     ...state,
     info: reduceInfo(state.info, action, character),
@@ -136,7 +181,7 @@ const reduceDice = function(state, action, character) {
 
 
 
-const rollReducer = function(state=InitialRoll, action, character) {
+const rollReducer = function (state = InitialRoll, action, character) {
   state = {
     display: reduceDisplay(state.display, action, character),
     dice: reduceDice(state.dice, action, character),

@@ -30,7 +30,7 @@ const ROLL_MODIFIER_PROPS = [
   'natureInstead',
   'tapNature',
   'traitName',
-  'traitChecks',
+  'traitEffect',
   'help',
   'personaDice',
   'supplies',
