@@ -22,6 +22,8 @@ The roll page has two types of state. The first is the state provided by the use
 
 Roughly in order of importance
 
+_MVP_
+
 - Roll page (half finished)
   - Dice math for opposed rolls
   - Actually do the roll
@@ -29,7 +31,12 @@ Roughly in order of importance
   - Cancel button
 - Character creation / input
 - Edit mode for a character (possibly same as ^^)
-- Character saved (local / cloud)
+- Character saved (local)
+- End of session (reset traits, other per-session resources)
+
+_Post-MVP_
+
+- Character saved (cloud)
 - Undo / redo (less important with edit mode)
 - Bio page
 - Gear page
@@ -40,10 +47,11 @@ Roughly in order of importance
 - Class features
 - Multiple characters
 - Hamburger menu
+  - About
   - Log in
   - Switch characters
   - Join game?
-  - Export character as JSON
+  - Export / import character as JSON
 - Join game with others in party
   - Be able to contribute to rolls and have things update
   - GM view?
