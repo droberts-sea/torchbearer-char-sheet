@@ -23,8 +23,10 @@ The roll page has two types of state. The first is the state provided by the use
 Roughly in order of importance
 
 - Roll page (half finished)
-  - Dice math (statistics and junk)
+  - Dice math for opposed rolls
+  - Actually do the roll
   - Feed results back into character sheet after roll
+  - Cancel button
 - Character creation / input
 - Edit mode for a character (possibly same as ^^)
 - Character saved (local / cloud)
@@ -44,6 +46,7 @@ Roughly in order of importance
   - Export character as JSON
 - Join game with others in party
   - Be able to contribute to rolls and have things update
+  - GM view?
 
 
 
