@@ -56,6 +56,7 @@ Roughly in order of importance
 - Swipe left / right to change page
   - Animation for page changes
 
-### Notes
+### Resources
 
-https://www.reddit.com/r/Torchbearer/comments/drng4p/my_checklist_for_tests/
+Reddit - checklist for tests https://www.reddit.com/r/Torchbearer/comments/drng4p/my_checklist_for_tests/
+Burning wheel - dice roll cheat sheet - https://www.torchbearerrpg.com/wp-content/uploads/2016/10/Torchbearer-Cheat-Sheets-Dice-Rolls.pdf
