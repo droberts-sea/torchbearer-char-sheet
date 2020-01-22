@@ -31,6 +31,7 @@ Roughly in order of importance
 - Undo / redo (less important with edit mode)
 - Bio page
 - Gear page
+- Session end / start
 - Camp
 - Town
 - Leveling

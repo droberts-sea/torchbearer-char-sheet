@@ -5,15 +5,24 @@ const disabledOptions = function(state, character) {
 
   const skillName = state.dice.info.skill;
 
-  // The natureInstead option is only available if the character does not have the skill open
+  // BEGINNER'S LUCK
+  // The natureInstead option is only available if the character does not have the skill open (page 27)
   disabledOptions.natureInstead = !(character && character.skills[skillName] && !character.skills[skillName].open);
   
   // beginner's luck only applies if the skill is not open AND natureInstead has not been selected
   disabledOptions.beginnersLuck = disabledOptions.natureInstead || state.dice.modifiers.natureInstead;
 
+  // TRAITS
   if (state.dice.modifiers.traitName) {
-    const trait = character.traits.find(trait => trait.name === state.dice.modifiers.traitName);
-    disabledOptions.traitBenefit = !traitIsAvailable(trait);
+    const trait = character.traits.find(
+      trait => {
+        return trait.name === state.dice.modifiers.traitName;
+      });
+
+    // Level 1 and 2 traits have limited beneficial uses (per session). In addition, if you're angry you can't use beneficial traits.
+    disabledOptions.traitBenefit = !traitIsAvailable(trait) || character.conditions.ANGRY;
+
+    // Helping your opponent only works if you have one.
     disabledOptions.traitOpponent = !state.dice.info.isVersus;
   }
   return disabledOptions;

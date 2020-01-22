@@ -7,6 +7,9 @@ import SkillAbilityDropdown from './SkillAbilityDropdown';
 
 class GatherInfo extends React.Component {
   propertyToggles() {
+    // TODO:
+    // - isInstinct (doesn't affect grind, won't matter until party mode exists)
+    // - inHometown (+1D to resources)
     const properties = [
       {
         name: 'inNature',
