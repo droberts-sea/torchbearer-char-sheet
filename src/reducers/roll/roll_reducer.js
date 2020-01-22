@@ -8,6 +8,7 @@ import {
 import calculateDerivedRollState from './derived_state';
 
 import { traitIsAvailable } from '../../rules/traits';
+import { SET_CONDITION } from '../../actions';
 
 const InitialRoll = {
   display: {
@@ -98,7 +99,7 @@ const reduceInfo = function (state, action, character) {
 };
 
 const reduceTrait = function (state, action, character) {
-  const {prop, value} = action.payload;
+  const { prop, value } = action.payload;
   const newState = { ...state };
 
   // special case: resetting the trait dropdown
@@ -113,7 +114,7 @@ const reduceTrait = function (state, action, character) {
     if (!traitIsAvailable(trait)) {
       newState.traitEffect = undefined;
     }
-    
+
     // special case: un-click a trait selection
   } else if (prop === 'traitEffect' && value === state.traitEffect) {
     newState.traitEffect = undefined;
@@ -125,7 +126,7 @@ const reduceTrait = function (state, action, character) {
   return newState;
 }
 
-const reduceModifiers = function (state, action, character) {
+const reduceModifiers = function (state, action, character, rollInfo) {
   let newState;
   let skill;
   switch (action.type) {
@@ -143,16 +144,26 @@ const reduceModifiers = function (state, action, character) {
     case ROLL_SET_INFO:
       // Special cases where the modifiers change when the basic roll info changes
       if (action.payload.prop === 'skill') {
+        newState = { ...state };
+        skill = character.skills[action.payload.value];
+        if (!skill) {
+          return newState;
+        }
+
+        // Can't use BL when Afraid - must roll w/ nature instead
+        if (!skill.open && character.conditions.AFRAID) {
+          newState.natureInstead = true;
+        }
+
         // Toggle gear based on beginner's luck
         // TODO: default to false if no backpack (pg 34)
         // TODO: exception for dwarves (always have tools if have backpack - pg 34)
-        newState = { ...state };
-        skill = character.skills[action.payload.value];
-        if (skill && !skill.open && !state.natureInstead) {
+        if (!skill.open && !newState.natureInstead) {
           newState.gear = false;
         } else {
           newState.gear = true;
         }
+
         return newState;
 
       } else if (action.payload.prop === 'isVersus') {
@@ -162,7 +173,19 @@ const reduceModifiers = function (state, action, character) {
           return newState;
         }
       }
-    // falls through
+      return state;
+
+    case SET_CONDITION:
+      // Whether or not you can use beginner's luck or are forced to use Nature is affected by the afraid condition, so we have to listen for when that changes.
+      if (action.payload.condition === 'AFRAID' && action.payload.isActive) {
+        skill = character.skills[rollInfo.skill];
+        if (skill && !skill.open) {
+          newState = { ...state };
+          newState.natureInstead = true;
+          return newState;
+        }
+      }
+      return state;
 
     default:
       return state;
@@ -173,7 +196,7 @@ const reduceDice = function (state, action, character) {
   return {
     ...state,
     info: reduceInfo(state.info, action, character),
-    modifiers: reduceModifiers(state.modifiers, action, character)
+    modifiers: reduceModifiers(state.modifiers, action, character, state.info)
   };
 };
 

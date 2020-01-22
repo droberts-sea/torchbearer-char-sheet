@@ -12,7 +12,7 @@ class AddDice extends React.Component {
     let blHeaderStyle = "";
     if (this.props.disabledOptions.natureInstead) {
       blHeaderStyle = "hidden";
-    } else if (this.props.disabledOptions.beginnersLuck) {
+    } else if (this.props.disabledOptions.beginnersLuckHeaders) {
       blHeaderStyle = "struck";
     }
     return (
@@ -22,8 +22,8 @@ class AddDice extends React.Component {
         }
         <Toggle
           name="Roll using Nature"
-          subtext="If you don't have the skill, you can roll with (full) Nature instead of using Beginner's Luck. If the test is outside your Nature, your Nature will be taxed by the margin of failure."
-          disabled={this.props.disabledOptions.natureInstead}
+          subtext="If you don't have the skill, you can roll with (full) Nature instead of using Beginner's Luck. If the test is outside your Nature, your Nature will be taxed by the margin of failure. If you are Afraid, this option will be selected automatically."
+          disabled={this.props.disabledOptions.natureInstead || this.props.disabledOptions.unselectNatureInstead}
           active={this.props.modifiers.natureInstead}
           onToggle={(value) => this.props.onSetProperty('natureInstead', value)}
           className={

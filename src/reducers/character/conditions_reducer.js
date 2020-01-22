@@ -1,4 +1,4 @@
-import { TOGGLE_CONDITION } from '../../actions';
+import { SET_CONDITION } from '../../actions';
 import { Conditions, ConditionRules } from '../../rules/conditions';
 
 const InitialConditions = {};
@@ -8,10 +8,10 @@ Object.keys(ConditionRules).forEach((name) => {
 
 const conditionsReducer = function(state=InitialConditions, action) {
   switch (action.type) {
-    case TOGGLE_CONDITION:
+    case SET_CONDITION:
     const name = action.payload.condition;
     const newConditions = {...state};
-    newConditions[name] = !state[name];
+    newConditions[name] = action.payload.isActive;
 
     // Getting another condition removes fresh
     if (name !== Conditions.FRESH && newConditions[name]) {

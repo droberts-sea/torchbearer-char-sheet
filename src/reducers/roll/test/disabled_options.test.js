@@ -70,6 +70,42 @@ describe('disabledOptions', () => {
     });
   });
 
+  describe("unselectNatureInstead", () => {
+    let roll, character;
+    beforeEach(() => {
+      roll = deepCopy(fakeRoll);
+      character = deepCopy(fakeCharacter);
+    });
+    test("can unselect with open skill", () => {
+      const skillName = 'Orator';
+      expect(character.skills.ORATOR.open).toBeTruthy();
+
+      roll.dice.info.skill = skillName;
+      const disabled = disabledOptions(roll, character);
+      expect(disabled.unselectNatureInstead).toBeFalsy();
+    });
+
+    test("can unselect if not Afraid", () => {
+      const skillName = 'Alchemist';
+      expect(character.skills.ALCHEMIST.open).toBeFalsy();
+
+      roll.dice.info.skill = skillName;
+      character.conditions.AFRAID = false;
+      const disabled = disabledOptions(roll, character);
+      expect(disabled.unselectNatureInstead).toBeFalsy();
+    });
+
+    test("cannot unselect if untrained and afraid", () => {
+      const skillName = 'Alchemist';
+      expect(character.skills.ALCHEMIST.open).toBeFalsy();
+
+      roll.dice.info.skill = skillName;
+      character.conditions.AFRAID = true;
+      const disabled = disabledOptions(roll, character);
+      expect(disabled.unselectNatureInstead).toBeFalsy();
+    });
+  });
+
   describe("traits", () => {
     let roll, character, trait;
     beforeEach(() => {

@@ -11,8 +11,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onConditionToggle: (name) => {
-      dispatch(toggleCondition(name));
+    onSetCondition: (name, isActive) => {
+      dispatch(toggleCondition(name, isActive));
     },
     onPointAdd: (category) => {
       dispatch(addPoint(category));

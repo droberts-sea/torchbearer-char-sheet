@@ -6,7 +6,7 @@
 export const SHOW_TAB = 'SHOW_TAB';
 
 // INFO
-export const TOGGLE_CONDITION = 'TOGGLE_CONDITION';
+export const SET_CONDITION = 'SET_CONDITION';
 export const ADD_POINT = 'ADD_POINT';
 export const SPEND_POINT = 'SPEND_POINT';
 
@@ -35,12 +35,13 @@ export const PointCategories = {
 
 /* Action Creators */
 
-export function toggleCondition(condition) {
+export function toggleCondition(condition, isActive) {
   console.log(`action create: ${condition} condition toggle`);
   return {
-    type: TOGGLE_CONDITION,
+    type: SET_CONDITION,
     payload: {
-      condition: condition
+      condition: condition,
+      isActive: isActive,
     }
   };
 }

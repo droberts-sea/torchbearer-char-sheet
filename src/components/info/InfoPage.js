@@ -35,7 +35,7 @@ class InfoPage extends React.Component {
                     {...ConditionRules[name]}
                     subtext={ConditionRules[name].effect}
                     active={this.props.conditions[name]}
-                    onToggle={() => this.props.onConditionToggle(name)}
+                    onToggle={(newStatus) => this.props.onSetCondition(name, newStatus)}
                     />
                 );
               })
