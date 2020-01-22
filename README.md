@@ -27,18 +27,20 @@ Roughly in order of importance
   - Feed results back into character sheet after roll
 - Character creation / input
 - Edit mode for a character (possibly same as ^^)
+- Character saved (local / cloud)
+- Undo / redo (less important with edit mode)
 - Bio page
 - Gear page
-- Class features
+- Camp
+- Town
 - Leveling
-- Character saved to cloud (firebase?)
+- Class features
 - Multiple characters
 - Hamburger menu
   - Log in
   - Switch characters
   - Join game?
   - Export character as JSON
-- Undo / redo (less important with edit mode)
 - Join game with others in party
   - Be able to contribute to rolls and have things update
 
@@ -52,3 +54,7 @@ Roughly in order of importance
 
 - Swipe left / right to change page
   - Animation for page changes
+
+### Notes
+
+https://www.reddit.com/r/Torchbearer/comments/drng4p/my_checklist_for_tests/
