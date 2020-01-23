@@ -27,7 +27,9 @@ _MVP_
 - Roll page (half finished)
   - Dice math for opposed rolls
   - Actually do the roll
+  - React / reroll
   - Feed results back into character sheet after roll
+    - Call these "resources"?
   - Cancel button
 - Character creation / input
 - Edit mode for a character (possibly same as ^^)
