@@ -55,6 +55,7 @@ class RollPage extends React.Component {
         <RollNav
           {...this.props.display}
           onGotoPage={this.props.onGotoPage}
+          reset={this.props.operations.reset}
           />
         <div className="roll-page-action">
           { this.currentAction() }
@@ -73,6 +74,7 @@ RollPage.propTypes = {
   onGotoPage: PropTypes.func.isRequired,
   onSetInfo: PropTypes.func.isRequired,
   onSetModifier: PropTypes.func.isRequired,
+  operations: PropTypes.object.isRequired,
 };
 
 export default RollPage;

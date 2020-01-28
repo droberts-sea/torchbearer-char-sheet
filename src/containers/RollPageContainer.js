@@ -1,8 +1,10 @@
 import { connect } from 'react-redux';
 import {
+  rollDoOperation,
   rollSetInfo,
   rollSetModifier,
-  rollGotoPage
+  rollGotoPage,
+  ROLL_OPERATIONS
 } from '../actions/roll_actions';
 import RollPage from '../components/roll/RollPage';
 import calculateDerivedRollState from '../derivers/roll/derived_state';
@@ -17,6 +19,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    operations: {
+      reset: () => {
+        dispatch(rollDoOperation('RESET'));
+      },
+      rollDice: () => {
+        dispatch(rollDoOperation('ROLL_DICE'));
+      },
+      commit: () => {
+        dispatch(rollDoOperation('COMMIT'));
+      },
+    },
     onGotoPage: (page) => {
       dispatch(rollGotoPage(page));
     },

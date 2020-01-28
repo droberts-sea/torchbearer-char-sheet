@@ -10,7 +10,10 @@ const RollNav = function(props) {
         >&lt;</button>
 
       <h2>{props.currentPage}</h2>
-      <button className="reset">Reset</button>
+      <button
+        className="reset"
+        onClick={props.reset}
+        >Reset</button>
 
       <button
         className="arrow"
@@ -19,6 +22,8 @@ const RollNav = function(props) {
         >&gt;</button>
     </nav>
   );
-}
+};
+
+
 
 export default RollNav;

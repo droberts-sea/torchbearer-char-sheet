@@ -2,7 +2,8 @@ import {
   ROLL_SET_INFO,
   ROLL_SET_MODIFIER,
   ROLL_GOTO_PAGE,
-  ROLL_PAGES
+  ROLL_PAGES,
+  ROLL_DO_OPERATION
 } from '../../actions/roll_actions';
 
 import { traitIsAvailable } from '../../rules/traits';
@@ -202,6 +203,11 @@ const rollReducer = function (state = InitialRoll, action, character) {
   state = {
     display: reduceDisplay(state.display, action, character),
     dice: reduceDice(state.dice, action, character),
+  }
+
+  if (action.type === ROLL_DO_OPERATION) {
+    console.log("Requested to do roll operation");
+    console.log(action);
   }
 
   return state;
