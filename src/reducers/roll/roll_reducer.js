@@ -1,3 +1,5 @@
+import _ from 'underscore';
+
 import {
   ROLL_SET_INFO,
   ROLL_SET_MODIFIER,
@@ -10,10 +12,11 @@ import {
 
 import { traitIsAvailable } from '../../rules/traits';
 import { SET_CONDITION } from '../../actions';
+import calculateDerivedRollState from '../../derivers/roll/derived_state';
 
 const InitialRoll = {
   display: {
-    currentPage: ROLL_PAGES[0],
+    currentPage: ROLL_PAGES[2],
 
     back: {
       target: undefined,
@@ -21,14 +24,14 @@ const InitialRoll = {
     },
 
     forward: {
-      target: 'ADD DICE',
+      target: 'RESULTS',
       enabled: true
     }
   },
   dice: {
     info: {
       isVersus: false,
-      skill: undefined,
+      skill: 'WILL',
       ob: 3,
       inNature: false,
       isInstinct: false,
@@ -41,7 +44,7 @@ const InitialRoll = {
       tapNature: false,
       traitName: 'Jaded',
       traitEffect: undefined,
-      help: 0,
+      help: 3,
       personaDice: 0,
       supplies: false,
       gear: true,
@@ -53,12 +56,15 @@ const InitialRoll = {
   },
   results: {
     rolledDice: [
-      // { face: 3, rerolled: false }
+      // { id: 1, face: 3, rerolled: false }
     ],
 
-    rerolls: {
+    reactions: {
+      totalDiceRolled: 0,
       explodeSixes: false,
+      deeperUnderstandingWise: undefined,
       deeperUnderstandingUsed: false,
+      ofCourseWise: undefined,
       ofCourseUsed: false,
       fateSpent: 0,
       personaSpent: 0
@@ -205,10 +211,31 @@ const reduceDice = function (state, action, character) {
   };
 };
 
-const reduceResults = function(state, action, character) {
+const reduceResults = function(state, action, character, roll) {
   switch(action.type) {
     case ROLL_ROLL_DICE:
       console.log("Rolling dice");
+      const newState = {...state};
+
+      // This almost feels like a layering violation, but we need access to the same computed numbers
+      const rollSummary = calculateDerivedRollState(roll, character).summary;
+
+      // Is there a name for this pattern?
+      const rolledDice = [];
+      _.times(rollSummary.dice, (i) => {
+        rolledDice.push({
+          id: i,
+          face: Math.ceil(Math.random() * 6),
+          rerolled: false
+        });
+      });
+
+      newState.rolledDice = rolledDice;
+
+      newState.reactions.totalDiceRolled = rolledDice.length;
+
+      return newState;
+
       break;
 
     default:
@@ -220,7 +247,7 @@ const rollReducer = function (state = InitialRoll, action, character) {
   state = {
     display: reduceDisplay(state.display, action, character),
     dice: reduceDice(state.dice, action, character),
-    results: reduceResults(state.results, action, character),
+    results: reduceResults(state.results, action, character, state),
   };
 
   return state;

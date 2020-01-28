@@ -5,6 +5,7 @@ import {
   rollCommit,
   rollSetInfo,
   rollSetModifier,
+  rollSetReaction,
   rollGotoPage,
 } from '../actions/roll_actions';
 import RollPage from '../components/roll/RollPage';
@@ -39,6 +40,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSetModifier: (prop, value) => {
       dispatch(rollSetModifier(prop, value));
+    },
+    onSetReaction: (prop, value) => {
+      dispatch(rollSetReaction(prop, value));
     }
   };
 };

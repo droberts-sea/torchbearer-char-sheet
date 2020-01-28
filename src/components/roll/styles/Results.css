@@ -1,0 +1,27 @@
+.roll-results .dice-list h2 {
+  /* text-align: left; */
+}
+
+.roll-results .die-image {
+  width: 4em;
+}
+
+.roll-results .die-image-container {
+  display: inline-block;
+  margin-left: .5em;
+  margin-right: .5em;
+  margin-bottom: .25em;
+  margin-top: .25em;
+}
+
+.roll-results .roll-reaction {
+  width: 100%;
+}
+
+.roll-results .reaction-button {
+  font-size: 1.5em;
+  display: block;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}

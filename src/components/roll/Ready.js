@@ -28,7 +28,10 @@ class Ready extends React.Component {
         </ul>
         <button
           className="roll-engage"
-          onClick={this.props.operations.rollDice}
+          onClick={() => {
+            this.props.operations.rollDice();
+            this.props.onGotoPage('RESULTS');
+          }}
           >
           Roll the dice!
         </button>

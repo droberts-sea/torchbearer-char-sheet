@@ -37,7 +37,11 @@ class RollPage extends React.Component {
 
       case 'RESULTS':
       return (
-        <Results {...this.props} />
+        <Results
+          {...this.props.results}
+          characterWises={this.props.character.wises}
+          onSetReaction={this.props.onSetReaction}
+          />
       );
       
       // case 'AFTERMATH':
@@ -72,10 +76,12 @@ RollPage.propTypes = {
   dice: PropTypes.object.isRequired,
   derived: PropTypes.object.isRequired,
   display: PropTypes.object.isRequired,
+  results: PropTypes.object.isRequired,
   onGotoPage: PropTypes.func.isRequired,
   onSetInfo: PropTypes.func.isRequired,
   onSetModifier: PropTypes.func.isRequired,
   operations: PropTypes.object.isRequired,
+  onSetReaction: PropTypes.func.isRequired,
 };
 
 export default RollPage;

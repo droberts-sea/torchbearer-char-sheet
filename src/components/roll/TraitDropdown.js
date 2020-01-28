@@ -68,7 +68,6 @@ const TraitDropdown = (props) => {
           <select
             value={value}
             onChange={(event) => {
-              console.log(`trait selected: ${event.target.value}`);
               props.onSetProperty('traitName', event.target.value)
             }}
           >

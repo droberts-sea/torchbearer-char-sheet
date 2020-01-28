@@ -1,10 +1,11 @@
-export const ROLL_SET_INFO = 'ROLL_SET_INFO';
-export const ROLL_SET_MODIFIER = 'ROLL_SET_MODIFIER';
-export const ROLL_GOTO_PAGE = 'ROLL_GOTO_PAGE';
-
 export const ROLL_RESET = 'ROLL_RESET';
 export const ROLL_ROLL_DICE = 'ROLL_ROLL_DICE';
 export const ROLL_COMMIT = 'ROLL_COMMIT';
+
+export const ROLL_SET_INFO = 'ROLL_SET_INFO';
+export const ROLL_SET_MODIFIER = 'ROLL_SET_MODIFIER';
+export const ROLL_SET_REACTION = 'ROLL_SET_REACTION';
+export const ROLL_GOTO_PAGE = 'ROLL_GOTO_PAGE';
 
 export function rollReset() {
   return {
@@ -73,6 +74,17 @@ export function rollSetModifier(prop, value) {
       value: value
     }
   }
+}
+
+export function rollSetReaction(prop, value) {
+  // TODO validation
+  return {
+    type: ROLL_SET_REACTION,
+    payload: {
+      prop: prop,
+      value: value
+    }
+  };
 }
 
 export const ROLL_PAGES = ['GATHER INFO', 'ADD DICE', 'READY', 'RESULTS', 'AFTERMATH'];
