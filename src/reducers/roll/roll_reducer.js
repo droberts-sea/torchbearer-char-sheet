@@ -5,8 +5,6 @@ import {
   ROLL_PAGES
 } from '../../actions/roll_actions';
 
-import calculateDerivedRollState from './derived_state';
-
 import { traitIsAvailable } from '../../rules/traits';
 import { SET_CONDITION } from '../../actions';
 
@@ -206,12 +204,6 @@ const rollReducer = function (state = InitialRoll, action, character) {
     dice: reduceDice(state.dice, action, character),
   }
 
-  // BUG: because this looks at the old character state rather than having diret access to the action, changes to the character take an extra reduce cycle to show up in the derived roll state. Fortunately you can't edit the character from the roll page, which means there's always at least one more action (switch to the roll page) before any derived state is visible.
-  // Two fixes could work:
-  // - pass in the _new_ global state and character info instead of the old (this violates the principle that reducers are independent, and probably is bad for other theoretical reasons)
-  // - have the derived state reducer respond independently to all actions, which would be a GIANT pain in the rear
-  // or we just leave it, and say "it's probably fine"
-  state.derived = calculateDerivedRollState(state, character);
   return state;
 }
 

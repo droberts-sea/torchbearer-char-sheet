@@ -5,11 +5,13 @@ import {
   rollGotoPage
 } from '../actions/roll_actions';
 import RollPage from '../components/roll/RollPage';
+import calculateDerivedRollState from '../derivers/roll/derived_state';
 
 const mapStateToProps = (state) => {
   return {
     ...state.roll,
-    character: state.character
+    character: state.character,
+    derived: calculateDerivedRollState(state.roll, state.character)
   };
 };
 
