@@ -12,7 +12,7 @@ This project is a work-in-progress! It's partly me trying to solve a problem I h
 
 **Roll Page**
 
-The roll page has two types of state. The first is the state provided by the user: toggled options describing how the roll should proceed. The second is called _derived state_, and describes what the roll will look like. Based on what we know about the character and what the user has told us about the roll, how many dice do we get, what are the odds of success, etc.
+The roll page needs to make a lot of calculations about what the roll will look like, what options are enabled, what are the odds of success, etc. I have called this _derived state_ (that may change later, maybe derived props would be a better term). The functions to make this work live in the `derivers/roll` folder.
 
 ### Current Work
 
