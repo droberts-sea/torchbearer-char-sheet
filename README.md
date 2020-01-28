@@ -71,5 +71,11 @@ _Post-MVP_
 
 ### Resources
 
-Reddit - checklist for tests https://www.reddit.com/r/Torchbearer/comments/drng4p/my_checklist_for_tests/
-Burning wheel - dice roll cheat sheet - https://www.torchbearerrpg.com/wp-content/uploads/2016/10/Torchbearer-Cheat-Sheets-Dice-Rolls.pdf
+#### Torchbearer
+
+- Reddit - checklist for tests https://www.reddit.com/r/Torchbearer/comments/drng4p/my_checklist_for_tests/
+- Burning wheel - dice roll cheat sheet - https://www.torchbearerrpg.com/wp-content/uploads/2016/10/Torchbearer-Cheat-Sheets-Dice-Rolls.pdf
+
+#### Programming Stuff
+
+- If recalculating derived state is too slow, consider using something like https://github.com/reduxjs/reselect

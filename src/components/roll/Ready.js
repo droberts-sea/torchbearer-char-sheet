@@ -1,5 +1,7 @@
 import React from 'react';
 
+import "./styles/Ready.css";
+
 class Ready extends React.Component {
 
   buildDetail(detail, i) {
@@ -20,9 +22,14 @@ class Ready extends React.Component {
   render() {
     const details = this.props.derived.details;
     return (
-      <ul id="roll-ready">
-        {details.map(this.buildDetail)}
-      </ul>
+      <div id="roll-ready">
+        <ul>
+          {details.map(this.buildDetail)}
+        </ul>
+        <button className="roll-engage">
+          Roll the dice!
+        </button>
+      </div>
     );
   }
 }

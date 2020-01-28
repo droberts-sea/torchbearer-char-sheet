@@ -10,7 +10,7 @@ const RollNav = function(props) {
         >&lt;</button>
 
       <h2>{props.currentPage}</h2>
-      <button className="cancel">Cancel</button>
+      <button className="reset">Reset</button>
 
       <button
         className="arrow"
