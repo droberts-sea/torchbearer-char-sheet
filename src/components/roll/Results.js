@@ -35,6 +35,17 @@ const DiceList = ({ dice, name }) => {
   );
 };
 
+const UseButton = ({name, reactions, onSetReaction}) => {
+  return (
+    <button
+      disabled={reactions[name]}
+      onClick={() => onSetReaction(name, true)}
+    >
+      Use
+    </button>
+  )
+}
+
 const WiseList = ({ characterWises, selectedWise, onSelectWise }) => {
   return (
     <select
@@ -42,7 +53,7 @@ const WiseList = ({ characterWises, selectedWise, onSelectWise }) => {
       onChange={event => onSelectWise(event.target.value)}
     >
       <option key="none" value="none">
-        None
+        Wise - None
       </option>
       {
         characterWises.map(wise => {
@@ -75,11 +86,11 @@ const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, 
               onSetReaction(reactionName + 'Wise', wise)
             }}
           />
-          <button
-            onClick={() => onSetReaction(reactionName + 'Used', true)}
-          >
-            Use
-          </button>
+          <UseButton
+            name={reactionName + 'Used'}
+            reactions={reactions}
+            onSetReaction={onSetReaction}
+          />
         </React.Fragment>
       )}
     />
@@ -87,6 +98,8 @@ const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, 
 };
 
 const Results = ({ rolledDice, reactions, characterWises, onSetReaction }) => {
+  console.log("Rendering results");
+  console.log(reactions);
   let dice = rolledDice.sort(
     (a, b) => Math.sign(b.face - a.face)
   );
@@ -111,9 +124,11 @@ const Results = ({ rolledDice, reactions, characterWises, onSetReaction }) => {
           name="Fate for Luck"
           subtext="Spend one fate to explode all sixes. Sixes rolled this way also explode. Describe the Luck!"
           knob={(
-            <React.Fragment>
-              <button onClick={() => onSetReaction('explodeSixes', true)}>Use</button>
-            </React.Fragment>
+            <UseButton
+              name="explodeSixes"
+              reactions={reactions}
+              onSetReaction={onSetReaction}
+            />
           )}
         />
         <WiseReaction
@@ -124,16 +139,15 @@ const Results = ({ rolledDice, reactions, characterWises, onSetReaction }) => {
           characterWises={characterWises}
           onSetReaction={onSetReaction}
         />
-        {/* <Reaction
+        <WiseReaction
           name="Of Course"
           subtext="Spend a persona point and reroll all failed dice on a test related to your wise. Declare, “Of course!” and indicate that you were wrong before but you have it all correct now."
-          characterWises={this.props.characterWises}
-        /> */}
+          reactionName="ofCourse"
+          reactions={reactions}
+          characterWises={characterWises}
+          onSetReaction={onSetReaction}
+        />
       </ul>
-      {}
-      {/* <button>Fate for Luck</button>
-        <button>Deeper Understanding</button>
-        <button>Of Course!</button> */}
       {/* TODO: tiebreakers */}
       {/* <button>Accept Results</button> */}
     </div>

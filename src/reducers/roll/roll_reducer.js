@@ -3,6 +3,7 @@ import _ from 'underscore';
 import {
   ROLL_SET_INFO,
   ROLL_SET_MODIFIER,
+  ROLL_SET_REACTION,
   ROLL_GOTO_PAGE,
   ROLL_PAGES,
   ROLL_RESET,
@@ -212,10 +213,10 @@ const reduceDice = function (state, action, character) {
 };
 
 const reduceResults = function(state, action, character, roll) {
+  const newState = {...state};
   switch(action.type) {
     case ROLL_ROLL_DICE:
       console.log("Rolling dice");
-      const newState = {...state};
 
       // This almost feels like a layering violation, but we need access to the same computed numbers
       const rollSummary = calculateDerivedRollState(roll, character).summary;
@@ -236,7 +237,16 @@ const reduceResults = function(state, action, character, roll) {
 
       return newState;
 
-      break;
+    case ROLL_SET_REACTION:
+      const newReactions = {...newState.reactions};
+      console.log("Setting reaction")
+      console.log(action.payload);
+      const {prop, value} = action.payload;
+      newReactions[prop] = value;
+
+      newState.reactions = newReactions;
+      
+      return newState;
 
     default:
       return state;
