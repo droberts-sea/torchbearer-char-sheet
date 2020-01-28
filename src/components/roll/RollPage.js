@@ -6,6 +6,7 @@ import RollSummary from './RollSummary';
 import AddDice from './AddDice';
 import GatherInfo from './GatherInfo';
 import Ready from './Ready';
+import Results from './Results';
 
 import '../../styles/roll.css';
 import './styles/RollPage.css';
@@ -34,11 +35,11 @@ class RollPage extends React.Component {
         <Ready {...this.props} />
       );
 
-      // case 'RESULTS':
-      // return (
-      //   <Results {...this.props} />
-      // );
-      //
+      case 'RESULTS':
+      return (
+        <Results {...this.props} />
+      );
+      
       // case 'AFTERMATH':
       // return (
       //   <Aftermath {...this.props} />

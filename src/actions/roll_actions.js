@@ -1,25 +1,31 @@
-export const ROLL_DO_OPERATION = 'ROLL_OPERATION';
 export const ROLL_SET_INFO = 'ROLL_SET_INFO';
 export const ROLL_SET_MODIFIER = 'ROLL_SET_MODIFIER';
 export const ROLL_GOTO_PAGE = 'ROLL_GOTO_PAGE';
 
-const ROLL_OPERATIONS = [
-  'RESET',
-  'ROLL_DICE',
-  'COMMIT',
-];
+export const ROLL_RESET = 'ROLL_RESET';
+export const ROLL_ROLL_DICE = 'ROLL_ROLL_DICE';
+export const ROLL_COMMIT = 'ROLL_COMMIT';
 
-export function rollDoOperation(op) {
-  if (!ROLL_OPERATIONS.includes(op)) {
-    throw new Error(`Invalid roll operation: ${op}`);
-  }
+export function rollReset() {
   return {
-    type: ROLL_DO_OPERATION,
-    payload: {
-      operation: op
-    }
-  };
-}
+    type: ROLL_RESET,
+    payload: {}
+  }
+};
+
+export function rollRollDice() {
+  return {
+    type: ROLL_ROLL_DICE,
+    payload: {}
+  }
+};
+
+export function rollCommit() {
+  return {
+    type: ROLL_COMMIT,
+    payload: {}
+  }
+};
 
 const ROLL_INFO_PROPS = [
   'ob',

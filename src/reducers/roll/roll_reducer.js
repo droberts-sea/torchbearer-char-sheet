@@ -3,7 +3,9 @@ import {
   ROLL_SET_MODIFIER,
   ROLL_GOTO_PAGE,
   ROLL_PAGES,
-  ROLL_DO_OPERATION
+  ROLL_RESET,
+  ROLL_ROLL_DICE,
+  ROLL_COMMIT
 } from '../../actions/roll_actions';
 
 import { traitIsAvailable } from '../../rules/traits';
@@ -47,16 +49,20 @@ const InitialRoll = {
 
     locked: false,
 
+    
+  },
+  results: {
     rolledDice: [
       // { face: 3, rerolled: false }
     ],
 
     rerolls: {
       explodeSixes: false,
+      deeperUnderstandingUsed: false,
       ofCourseUsed: false,
       fateSpent: 0,
       personaSpent: 0
-    }
+    },
   }
 };
 
@@ -199,16 +205,23 @@ const reduceDice = function (state, action, character) {
   };
 };
 
+const reduceResults = function(state, action, character) {
+  switch(action.type) {
+    case ROLL_ROLL_DICE:
+      console.log("Rolling dice");
+      break;
+
+    default:
+      return state;
+  }
+}
+
 const rollReducer = function (state = InitialRoll, action, character) {
   state = {
     display: reduceDisplay(state.display, action, character),
     dice: reduceDice(state.dice, action, character),
-  }
-
-  if (action.type === ROLL_DO_OPERATION) {
-    console.log("Requested to do roll operation");
-    console.log(action);
-  }
+    results: reduceResults(state.results, action, character),
+  };
 
   return state;
 }
