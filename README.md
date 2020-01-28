@@ -79,3 +79,9 @@ _Post-MVP_
 #### Programming Stuff
 
 - If recalculating derived state is too slow, consider using something like https://github.com/reduxjs/reselect
+
+## Legal stuff
+
+### Dice images
+
+derivative work: PhJDie_Faces.png: Nanami Kamimura [CC BY-SA (https://creativecommons.org/licenses/by-sa/3.0)]
