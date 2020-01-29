@@ -328,7 +328,7 @@ const reduceResults = function (state, action, character, roll) {
           // Each wise can be used only once per roll (pg 21)
           newState.reactions.wisesUsed = state.reactions.wisesUsed.concat([state.reactions.deeperUnderstandingWise]);
 
-          const logString = logDiceDetails(`Used "Deeper Understanding" with wise "${state.reactions.deeperUnderstandingWise} to reroll the lowest die (value ${lowDie.face}), yielding `, [newDie]);
+          const logString = logDiceDetails(`Used "Deeper Understanding" with wise "${state.reactions.deeperUnderstandingWise}" to reroll the lowest die (value ${lowDie.face}), yielding `, [newDie]);
           newState.reactions.log = state.reactions.log.concat([logString]);
 
           // TODO: impact - spend one fate, mark wise used
@@ -362,7 +362,7 @@ const reduceResults = function (state, action, character, roll) {
           // Each wise can be used only once per roll (pg 21)
           newState.reactions.wisesUsed = state.reactions.wisesUsed.concat([state.reactions.ofCourseWise]);
 
-          const logString = logDiceDetails(`Used "Of Course" with wise "${state.reactions.ofCourseWise} to reroll ${rerolls.length} failures, yielding `, rerolls);
+          const logString = logDiceDetails(`Used "Of Course" with wise "${state.reactions.ofCourseWise}" to reroll ${rerolls.length} failures, yielding `, rerolls);
           newState.reactions.log = state.reactions.log.concat([logString]);
 
           // TODO impact - spend one persona, mark wise used

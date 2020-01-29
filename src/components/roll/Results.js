@@ -83,7 +83,6 @@ const WiseList = ({ disabled, characterWises, wisesUsed, selectedWise, onSelectW
 
 const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, onSetReaction }) => {
   const selectedWise = reactions[reactionName + 'Wise'];
-  console.log(reactions);
   return (
     <Control
       className="roll-reaction"
@@ -199,8 +198,8 @@ const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReac
           <section className="reaction-log">
             <h3>Log</h3>
             <ul>{
-              reactions.log.map(logLine => (
-                <li className="log-line">{logLine}</li>
+              reactions.log.map((logLine, i) => (
+                <li className="log-line" key={i}>{logLine}</li>
               ))
             }</ul>
           </section>
