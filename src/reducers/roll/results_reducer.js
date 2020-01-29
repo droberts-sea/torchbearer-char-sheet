@@ -128,6 +128,9 @@ const deeperUnderstanding = (state, newState) => {
 
   // Each wise can be used only once per roll (pg 21)
   newState.reactions.wisesUsed = state.reactions.wisesUsed.concat([state.reactions.deeperUnderstandingWise]);
+  if (state.reactions.deeperUnderstandingWise === state.reactions.ofCourseWise && !state.reactions.ofCourseUsed) {
+    newState.reactions.ofCourseWise = undefined;
+  }
 
   const logString = logDiceDetails(`Used "Deeper Understanding" with wise "${state.reactions.deeperUnderstandingWise}" to reroll the lowest die (value ${lowDie.face}), yielding `, [newDie]);
   newState.reactions.log = state.reactions.log.concat([logString]);
@@ -162,6 +165,9 @@ const ofCourse = (state, newState) => {
 
   // Each wise can be used only once per roll (pg 21)
   newState.reactions.wisesUsed = state.reactions.wisesUsed.concat([state.reactions.ofCourseWise]);
+  if (state.reactions.deeperUnderstandingWise === state.reactions.ofCourseWise && !state.reactions.deeperUnderstandingUsed) {
+    newState.reactions.deeperUnderstandingWise = undefined;
+  }
 
   const logString = logDiceDetails(`Used "Of Course" with wise "${state.reactions.ofCourseWise}" to reroll ${rerolls.length} failures, yielding `, rerolls);
   newState.reactions.log = state.reactions.log.concat([logString]);

@@ -54,7 +54,7 @@ const UseButton = ({ name, reactions, onSetReaction, disabled = false }) => {
   )
 };
 
-const WiseList = ({ disabled, characterWises, wisesUsed, selectedWise, onSelectWise }) => {
+const WiseList = ({ disabled, characterWises, wisesUsed, selectedWise="none", onSelectWise }) => {
   return (
     <select
       value={selectedWise}
