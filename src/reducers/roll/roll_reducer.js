@@ -69,7 +69,8 @@ const InitialRoll = {
       ofCourseUsed: false,
       fateSpent: 0,
       personaSpent: 0,
-      wisesUsed: []
+      wisesUsed: [],
+      log: []
     },
   }
 };
@@ -221,6 +222,17 @@ const rollDie = (id) => {
   };
 }
 
+const logDiceDetails = (prelude, dice) => {
+  const faces = dice.map(die => die.face);
+  const successes = faces.filter(f => f > 3).length;
+
+  let logString = prelude;
+  logString += '[' + faces.sort().reverse().join(', ') + ']';
+  logString += ` (${successes} successes)`;
+
+  return logString;
+}
+
 const reduceResults = function (state, action, character, roll) {
   const newState = { ...state };
   switch (action.type) {
@@ -240,6 +252,11 @@ const reduceResults = function (state, action, character, roll) {
       // Reset reactions
       newState.reactions = { ...InitialRoll.results.reactions };
 
+      // Tell what happened
+      let logString = logDiceDetails(`Initial roll of ${rolledDice.length} dice yielded `, rolledDice);
+
+      newState.reactions.log = [logString];
+
       return newState;
 
     case ROLL_SET_REACTION:
@@ -255,11 +272,14 @@ const reduceResults = function (state, action, character, roll) {
           const rerolls = [];
           const newRolledDice = [];
 
+          let sixCount = 0;
+
           state.rolledDice.forEach(die => {
             // Make a copy, if needed, for state mgmt
             if (die.face === 6 && !die.rerolled) {
               die = { ...die };
               die.rerolled = true;
+              sixCount += 1;
             }
             newRolledDice.push(die);
 
@@ -272,6 +292,10 @@ const reduceResults = function (state, action, character, roll) {
           });
 
           newState.rolledDice = newRolledDice.concat(rerolls);
+
+          const sortedRerolls = rerolls.map(die => die.face).sort().reverse();
+          let logString = logDiceDetails(`Used "Fate for Luck" to cascade-reroll ${sixCount} sixes, yielding `, rerolls);
+          newState.reactions.log = state.reactions.log.concat([logString]);
 
           // TODO: impact - spend one fate
 
@@ -309,6 +333,24 @@ const reduceResults = function (state, action, character, roll) {
           break;
         }
         case 'ofCourseUsed': {
+          let nextId = state.rolledDice.length;
+          const rerolls = [];
+          const newRolledDice = [];
+
+          state.rolledDice.forEach(die => {
+            // Make a copy, if needed, for state mgmt
+            if (die.face < 4 && !die.rerolled) {
+              die = { ...die };
+              die.rerolled = true;
+
+              const newDie = rollDie(nextId)
+              rerolls.push(die);
+              nextId += 1;
+            }
+            newRolledDice.push(die);
+          });
+
+          newState.rolledDice = newRolledDice.concat(rerolls);
           break;
 
         }

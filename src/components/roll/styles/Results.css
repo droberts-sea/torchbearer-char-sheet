@@ -63,5 +63,13 @@
 }
 
 .roll-results .pre-footer {
-  padding-bottom: 5em;
+  padding-bottom: 3em;
+}
+
+.roll-results .reaction-log {
+  border-top: 1px solid black;
+}
+
+.roll-results .reaction-log .log-line {
+  margin: .5em 0;
 }

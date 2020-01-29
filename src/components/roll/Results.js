@@ -33,7 +33,7 @@ const DiceList = ({ dice, name, extra }) => {
                 <img
                   src={diceImages[die.face]}
                   alt={`die-${die.face}`}
-                  />
+                />
               </li>
             );
           })
@@ -43,7 +43,7 @@ const DiceList = ({ dice, name, extra }) => {
   );
 };
 
-const UseButton = ({ name, reactions, onSetReaction, disabled=false }) => {
+const UseButton = ({ name, reactions, onSetReaction, disabled = false }) => {
   return (
     <button
       disabled={disabled || reactions[name]}
@@ -196,6 +196,14 @@ const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReac
             characterWises={characterWises}
             onSetReaction={onSetReaction}
           />
+          <section className="reaction-log">
+            <h3>Log</h3>
+            <ul>{
+              reactions.log.map(logLine => (
+                <li className="log-line">{logLine}</li>
+              ))
+            }</ul>
+          </section>
         </ul>
         {/* TODO: tiebreakers */}
       </section>
