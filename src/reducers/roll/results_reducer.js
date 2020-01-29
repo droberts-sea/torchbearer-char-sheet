@@ -13,7 +13,6 @@ const InitialResults = Object.freeze({
   ],
 
   reactions: {
-    totalDiceRolled: 0,
     explodeSixes: false,
     deeperUnderstandingWise: undefined,
     deeperUnderstandingUsed: false,
