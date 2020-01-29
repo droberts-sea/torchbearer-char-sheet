@@ -35,8 +35,11 @@ const DiceList = ({ dice, name, extra }) => {
       <ul>
         {successDice}
         {
-          dice.map(die => {
-            const className = "die-image-container" + (die.rerolled ? " rerolled" : "");
+          dice.map((die, i) => {
+            let className = "die-image-container" + (die.rerolled ? " rerolled" : "");
+            if (i >= dice.length + extra) {
+              className += " cancelled";
+            }
             return (
               <li
                 className={className}

@@ -35,6 +35,21 @@
   border-radius: 1rem;
 }
 
+.roll-results .die-image-container.cancelled:before {
+  content: "X";
+  display: block;
+  position: absolute;
+  top: -.6rem;
+  left: 50%;
+  width: 4rem;
+  margin-left: -1.5rem;
+
+  font-size: 5em;
+  font-family: 'Macondo', fantasy, cursive, sans-serif;
+  
+  color: rgba(86.3%, 15.3%, 15.3%, 90%);
+}
+
 .roll-results .die-image-container.free-success {
   /* display: block; */
   height: 4rem;
