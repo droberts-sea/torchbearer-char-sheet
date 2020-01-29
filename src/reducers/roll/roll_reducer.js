@@ -68,7 +68,8 @@ const InitialRoll = {
       ofCourseWise: undefined,
       ofCourseUsed: false,
       fateSpent: 0,
-      personaSpent: 0
+      personaSpent: 0,
+      wisesUsed: []
     },
   }
 };
@@ -237,7 +238,7 @@ const reduceResults = function (state, action, character, roll) {
       newState.rolledDice = rolledDice;
 
       // Reset reactions
-      newState.reactions = {...InitialRoll.results.reactions};
+      newState.reactions = { ...InitialRoll.results.reactions };
 
       return newState;
 
@@ -249,19 +250,19 @@ const reduceResults = function (state, action, character, roll) {
       newState.reactions = newReactions;
 
       switch (prop) {
-        case 'explodeSixes':
-          const rerolls = [];
+        case 'explodeSixes': {
           let nextId = state.rolledDice.length;
-          let newRolledDice = [];
+          const rerolls = [];
+          const newRolledDice = [];
 
           state.rolledDice.forEach(die => {
             // Make a copy, if needed, for state mgmt
             if (die.face === 6 && !die.rerolled) {
-              die = {...die};
+              die = { ...die };
               die.rerolled = true;
             }
             newRolledDice.push(die);
-            
+
             while (die.face === 6) {
               die.rerolled = true;
               die = rollDie(nextId)
@@ -272,15 +273,48 @@ const reduceResults = function (state, action, character, roll) {
 
           newState.rolledDice = newRolledDice.concat(rerolls);
 
+          // TODO: impact - spend one fate
+
           break;
 
-        case 'deeperUnderstandingUsed':
+        }
+        case 'deeperUnderstandingUsed': {
+          if (!state.reactions.deeperUnderstandingWise) {
+            throw new Error("Deeper understanding was used, but no wise was selected!");
+          }
+          let nextId = state.rolledDice.length;
+          let lowDie = { face: Infinity };
+          let lowDieIndex = undefined;
+
+          state.rolledDice.forEach((die, index) => {
+            if (die.face < lowDie.face) {
+              lowDie = die;
+              lowDieIndex = index;
+            }
+          });
+
+          const newRolledDice = [...state.rolledDice];
+          newRolledDice.splice(lowDieIndex, 1);
+          const newDie = { ...lowDie, rerolled: true }
+          newRolledDice.push(newDie);
+          newRolledDice.push(rollDie(nextId));
+
+          newState.rolledDice = newRolledDice;
+
+          // Each wise can be used only once per roll (pg 21)
+          newState.reactions.wisesUsed = state.reactions.wisesUsed.concat([state.reactions.deeperUnderstandingWise]);
+
+          // TODO: impact - spend one fate, mark wise used
+
           break;
-        case 'ofCourseUsed':
+        }
+        case 'ofCourseUsed': {
           break;
 
-        default:
+        }
+        default: {
           break;
+        }
       }
 
       return newState;

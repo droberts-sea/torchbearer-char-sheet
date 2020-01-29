@@ -30,7 +30,10 @@ const DiceList = ({ dice, name, extra }) => {
                 className={className}
                 key={die.id}
               >
-                <img src={diceImages[die.face]} />
+                <img
+                  src={diceImages[die.face]}
+                  alt={`die-${die.face}`}
+                  />
               </li>
             );
           })
@@ -40,10 +43,10 @@ const DiceList = ({ dice, name, extra }) => {
   );
 };
 
-const UseButton = ({ name, reactions, onSetReaction }) => {
+const UseButton = ({ name, reactions, onSetReaction, disabled=false }) => {
   return (
     <button
-      disabled={reactions[name]}
+      disabled={disabled || reactions[name]}
       onClick={() => onSetReaction(name, true)}
     >
       Use
@@ -51,11 +54,12 @@ const UseButton = ({ name, reactions, onSetReaction }) => {
   )
 }
 
-const WiseList = ({ characterWises, selectedWise, onSelectWise }) => {
+const WiseList = ({ disabled, characterWises, wisesUsed, selectedWise, onSelectWise }) => {
   return (
     <select
       value={selectedWise}
       onChange={event => onSelectWise(event.target.value)}
+      disabled={disabled}
     >
       <option key="none" value="none">
         Wise - None
@@ -66,6 +70,7 @@ const WiseList = ({ characterWises, selectedWise, onSelectWise }) => {
             <option
               key={`wise_${wise.name}`}
               value={wise.name}
+              disabled={wisesUsed.includes(wise.name)}
             >
               {wise.name}
             </option>
@@ -77,6 +82,8 @@ const WiseList = ({ characterWises, selectedWise, onSelectWise }) => {
 };
 
 const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, onSetReaction }) => {
+  const selectedWise = reactions[reactionName + 'Wise'];
+  console.log(reactions);
   return (
     <Control
       className="roll-reaction"
@@ -85,8 +92,10 @@ const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, 
       knob={(
         <React.Fragment>
           <WiseList
+            disabled={reactions[reactionName + 'Used']}
             characterWises={characterWises}
-            selectedWise={reactions[reactionName + 'Wise']}
+            wisesUsed={reactions.wisesUsed}
+            selectedWise={selectedWise}
             onSelectWise={wise => {
               onSetReaction(reactionName + 'Wise', wise)
             }}
@@ -95,6 +104,7 @@ const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, 
             name={reactionName + 'Used'}
             reactions={reactions}
             onSetReaction={onSetReaction}
+            disabled={!selectedWise}
           />
         </React.Fragment>
       )}
@@ -161,7 +171,7 @@ const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReac
           <Control
             className="roll-reaction"
             name="Fate for Luck"
-            subtext="Spend one fate to explode all sixes. Sixes rolled this way also explode. Describe the Luck!"
+            subtext="Spend one fate to reroll all sixes. Sixes rolled this way keep rerolling. Describe the Luck!"
             knob={(
               <UseButton
                 name="explodeSixes"
