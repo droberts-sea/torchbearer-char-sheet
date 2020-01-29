@@ -1,5 +1,3 @@
-import _ from 'underscore';
-
 import {
   ROLL_SET_INFO,
   ROLL_SET_MODIFIER,

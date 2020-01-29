@@ -52,7 +52,7 @@ const UseButton = ({ name, reactions, onSetReaction, disabled = false }) => {
       Use
     </button>
   )
-}
+};
 
 const WiseList = ({ disabled, characterWises, wisesUsed, selectedWise, onSelectWise }) => {
   return (
@@ -140,7 +140,7 @@ const Outcome = ({ outcome, rollSummary, totalSuccesses }) => {
       <button>Accept Results</button>
     </footer>
   )
-}
+};
 
 const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReaction }) => {
   let dice = rolledDice.sort(
@@ -212,10 +212,14 @@ const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReac
         rollSummary={rollSummary} />
     </div>
   );
-}
+};
 
 Results.propTypes = {
-
+  rolledDice: PropTypes.array.isRequired,
+  reactions: PropTypes.object.isRequired,
+  rollSummary: PropTypes.object.isRequired,
+  characterWises: PropTypes.array.isRequired,
+  onSetReaction: PropTypes.func.isRequired,
 };
 
 export default Results;
