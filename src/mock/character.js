@@ -1,5 +1,6 @@
 import { ConditionRules } from '../rules/conditions';
-import { IntitialTraits, InitialTraits } from '../reducers/character/traits_reducer';
+import { InitialTraits } from '../reducers/character/traits_reducer';
+import {InitialWises} from '../reducers/character/wises_reducer';
 
 const character = {
   skills: {
@@ -45,7 +46,8 @@ const character = {
     }
   },
   conditions: {},
-  traits: InitialTraits
+  traits: InitialTraits,
+  wises: InitialWises,
 };
 
 Object.keys(ConditionRules).forEach((name) => {

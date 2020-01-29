@@ -1,6 +1,6 @@
 import { MARK_WISE } from '../../actions';
 
-const InitialWises = [
+export const InitialWises = [
   {
     name: "Deepest Heart of Darkness",
     advancement: {

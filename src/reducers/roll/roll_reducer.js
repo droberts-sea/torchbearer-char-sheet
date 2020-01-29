@@ -10,7 +10,7 @@ import { SET_CONDITION } from '../../actions';
 
 import reduceResults from './results_reducer';
 
-const InitialRoll = {
+export const InitialRoll = {
   display: {
     currentPage: ROLL_PAGES[2],
 

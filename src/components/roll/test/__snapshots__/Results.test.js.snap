@@ -1,0 +1,269 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Roll Results page renders with a typical roll / character setup 1`] = `
+<div
+  className="roll-results"
+>
+  <section
+    className="pre-footer"
+  >
+    <div
+      className="dice-list"
+    >
+      <h2>
+        Successes 
+        (
+        5
+        )
+      </h2>
+      <ul>
+        
+        <li
+          className="die-image-container"
+        >
+          <img
+            alt="die-6"
+            src="dice-6.png"
+          />
+        </li>
+        <li
+          className="die-image-container"
+        >
+          <img
+            alt="die-6"
+            src="dice-6.png"
+          />
+        </li>
+        <li
+          className="die-image-container"
+        >
+          <img
+            alt="die-5"
+            src="dice-5.png"
+          />
+        </li>
+        <li
+          className="die-image-container"
+        >
+          <img
+            alt="die-5"
+            src="dice-5.png"
+          />
+        </li>
+        <li
+          className="die-image-container"
+        >
+          <img
+            alt="die-4"
+            src="dice-4.png"
+          />
+        </li>
+      </ul>
+    </div>
+    <div
+      className="dice-list"
+    >
+      <h2>
+        Scoundrels 
+        (
+        4
+        )
+      </h2>
+      <ul>
+        
+        <li
+          className="die-image-container"
+        >
+          <img
+            alt="die-2"
+            src="dice-2.png"
+          />
+        </li>
+        <li
+          className="die-image-container"
+        >
+          <img
+            alt="die-2"
+            src="dice-2.png"
+          />
+        </li>
+        <li
+          className="die-image-container"
+        >
+          <img
+            alt="die-2"
+            src="dice-2.png"
+          />
+        </li>
+        <li
+          className="die-image-container"
+        >
+          <img
+            alt="die-1"
+            src="dice-1.png"
+          />
+        </li>
+      </ul>
+    </div>
+    <h2>
+      Reactions
+    </h2>
+    <ul>
+      <li
+        className="roll-reaction control"
+      >
+        <div>
+          <h3>
+            Deeper Understanding
+          </h3>
+          <select
+            disabled={false}
+            onChange={[Function]}
+            value="none"
+          >
+            <option
+              value="none"
+            >
+              Wise - None
+            </option>
+            <option
+              disabled={false}
+              value="Deepest Heart of Darkness"
+            >
+              Deepest Heart of Darkness
+            </option>
+            <option
+              disabled={false}
+              value="Home"
+            >
+              Home
+            </option>
+          </select>
+          <button
+            disabled={true}
+            onClick={[Function]}
+          >
+            Use
+          </button>
+        </div>
+        <p>
+          Spend a fate point and reroll any single failed die on a test related to your wise. State, “Ah hah!” and gesture that you understand everything now.
+        </p>
+      </li>
+      <li
+        className="roll-reaction control"
+      >
+        <div>
+          <h3>
+            Of Course
+          </h3>
+          <select
+            disabled={false}
+            onChange={[Function]}
+            value="none"
+          >
+            <option
+              value="none"
+            >
+              Wise - None
+            </option>
+            <option
+              disabled={false}
+              value="Deepest Heart of Darkness"
+            >
+              Deepest Heart of Darkness
+            </option>
+            <option
+              disabled={false}
+              value="Home"
+            >
+              Home
+            </option>
+          </select>
+          <button
+            disabled={true}
+            onClick={[Function]}
+          >
+            Use
+          </button>
+        </div>
+        <p>
+          Spend a persona point and reroll all failed dice on a test related to your wise. Declare, “Of course!” and indicate that you were wrong before but you have it all correct now.
+        </p>
+      </li>
+      <li
+        className="roll-reaction control"
+      >
+        <div>
+          <h3>
+            Fate for Luck
+          </h3>
+          <button
+            disabled={false}
+            onClick={[Function]}
+          >
+            Use
+          </button>
+        </div>
+        <p>
+          Spend one fate to reroll all sixes. Sixes rolled this way keep rerolling. Describe the Luck!
+        </p>
+      </li>
+      <section
+        className="reaction-log"
+      >
+        <h3>
+          Log
+        </h3>
+        <ul />
+      </section>
+    </ul>
+  </section>
+  <footer
+    className="outcome"
+  >
+    <h2>
+      Outcome: 
+      failure
+    </h2>
+    <div
+      className="outcome-stats"
+    >
+      <label
+        htmlFor="ob"
+      >
+        Obstacle
+      </label>
+      <label
+        htmlFor="successes"
+      >
+        Successes
+      </label>
+      <label
+        htmlFor="margin"
+      >
+        Margin
+      </label>
+      <span
+        className="number"
+        name="ob"
+      />
+      <span
+        className="number"
+        name="successes"
+      >
+        NaN
+      </span>
+      <span
+        className="number"
+        name="margin"
+      >
+        NaN
+      </span>
+    </div>
+    <button>
+      Accept Results
+    </button>
+  </footer>
+</div>
+`;

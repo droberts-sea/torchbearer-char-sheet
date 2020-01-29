@@ -7,7 +7,7 @@ import {
 
 import calculateDerivedRollState from '../../derivers/roll/derived_state';
 
-const InitialResults = Object.freeze({
+export const InitialResults = Object.freeze({
   rolledDice: [
     // { id: 1, face: 3, rerolled: false }
   ],

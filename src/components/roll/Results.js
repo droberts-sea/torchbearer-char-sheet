@@ -2,61 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'underscore';
 
-import diceImages from './images/diceImages';
-
 import './styles/Results.css';
 import Control from '../shared/Control';
-
-const DiceList = ({ dice, name, extra }) => {
-  let count = dice.length.toString();
-  let successDice = "";
-  if (extra || extra === 0) {
-    count += ' ';
-    count += extra >= 0 ? '+' : '-';
-    count += ' ' + Math.abs(extra);
-    count += ' = ' + (dice.length + extra);
-    if (extra > 0) {
-      successDice = _.times(extra, i => (
-        <li
-          className="die-image-container free-success"
-          key={'s_' + i}
-        >
-          <label>S</label>
-        </li>
-      ))
-    }
-  }
-  return (
-    <div className="dice-list">
-      <h2>
-        {name + ' '}
-        ({count})
-      </h2>
-      <ul>
-        {successDice}
-        {
-          dice.map((die, i) => {
-            let className = "die-image-container" + (die.rerolled ? " rerolled" : "");
-            if (i >= dice.length + extra) {
-              className += " cancelled";
-            }
-            return (
-              <li
-                className={className}
-                key={die.id}
-              >
-                <img
-                  src={diceImages[die.face]}
-                  alt={`die-${die.face}`}
-                />
-              </li>
-            );
-          })
-        }
-      </ul>
-    </div>
-  );
-};
+import DiceList from './DiceList';
 
 const UseButton = ({ name, reactions, onSetReaction, disabled = false }) => {
   return (
