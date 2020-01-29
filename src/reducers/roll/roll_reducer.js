@@ -53,7 +53,7 @@ const InitialRoll = {
 
     locked: false,
 
-    
+
   },
   results: {
     rolledDice: [
@@ -212,11 +212,18 @@ const reduceDice = function (state, action, character) {
   };
 };
 
-const reduceResults = function(state, action, character, roll) {
-  const newState = {...state};
-  switch(action.type) {
+const rollDie = (id) => {
+  return {
+    id: id,
+    face: Math.ceil(Math.random() * 6),
+    rerolled: false
+  };
+}
+
+const reduceResults = function (state, action, character, roll) {
+  const newState = { ...state };
+  switch (action.type) {
     case ROLL_ROLL_DICE:
-      console.log("Rolling dice");
 
       // This almost feels like a layering violation, but we need access to the same computed numbers
       const rollSummary = calculateDerivedRollState(roll, character).summary;
@@ -224,28 +231,58 @@ const reduceResults = function(state, action, character, roll) {
       // Is there a name for this pattern?
       const rolledDice = [];
       _.times(rollSummary.dice, (i) => {
-        rolledDice.push({
-          id: i,
-          face: Math.ceil(Math.random() * 6),
-          rerolled: false
-        });
+        rolledDice.push(rollDie(i));
       });
 
       newState.rolledDice = rolledDice;
 
-      newState.reactions.totalDiceRolled = rolledDice.length;
+      // Reset reactions
+      newState.reactions = {...InitialRoll.results.reactions};
 
       return newState;
 
     case ROLL_SET_REACTION:
-      const newReactions = {...newState.reactions};
-      console.log("Setting reaction")
-      console.log(action.payload);
-      const {prop, value} = action.payload;
+      const newReactions = { ...newState.reactions };
+      const { prop, value } = action.payload;
       newReactions[prop] = value;
 
       newState.reactions = newReactions;
-      
+
+      switch (prop) {
+        case 'explodeSixes':
+          const rerolls = [];
+          let nextId = state.rolledDice.length;
+          let newRolledDice = [];
+
+          state.rolledDice.forEach(die => {
+            // Make a copy, if needed, for state mgmt
+            if (die.face === 6 && !die.rerolled) {
+              die = {...die};
+              die.rerolled = true;
+            }
+            newRolledDice.push(die);
+            
+            while (die.face === 6) {
+              die.rerolled = true;
+              die = rollDie(nextId)
+              rerolls.push(die);
+              nextId += 1;
+            }
+          });
+
+          newState.rolledDice = newRolledDice.concat(rerolls);
+
+          break;
+
+        case 'deeperUnderstandingUsed':
+          break;
+        case 'ofCourseUsed':
+          break;
+
+        default:
+          break;
+      }
+
       return newState;
 
     default:

@@ -24,15 +24,13 @@ const DiceList = ({ dice, name, extra }) => {
       <ul>
         {
           dice.map(die => {
+            const className = "die-image-container" + (die.rerolled ? " rerolled" : "");
             return (
               <li
-                className="die-image-container"
+                className={className}
                 key={die.id}
               >
-                <img
-                  src={diceImages[die.face]}
-                  className="die-image"
-                />
+                <img src={diceImages[die.face]} />
               </li>
             );
           })
@@ -136,8 +134,6 @@ const Outcome = ({ outcome, rollSummary, totalSuccesses }) => {
 }
 
 const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReaction }) => {
-  console.log("Rendering results");
-  console.log(reactions);
   let dice = rolledDice.sort(
     (a, b) => Math.sign(b.face - a.face)
   );

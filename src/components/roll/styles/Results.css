@@ -2,16 +2,32 @@
   /* text-align: left; */
 }
 
-.roll-results .die-image {
-  width: 4em;
+.roll-results .die-image-container img {
+  height: 4em;
 }
 
 .roll-results .die-image-container {
+  height: 4em;
+  
   display: inline-block;
-  margin-left: .5em;
-  margin-right: .5em;
+  margin-left: .4em;
+  margin-right: .4em;
   margin-bottom: .25em;
   margin-top: .25em;
+
+  position: relative;
+}
+
+.roll-results .die-image-container.rerolled:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0, 0.25);
+  border-radius: 1em;
 }
 
 .roll-results .outcome {
