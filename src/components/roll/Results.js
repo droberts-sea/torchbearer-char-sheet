@@ -9,11 +9,22 @@ import Control from '../shared/Control';
 
 const DiceList = ({ dice, name, extra }) => {
   let count = dice.length.toString();
+  let successDice = "";
   if (extra || extra === 0) {
     count += ' ';
     count += extra >= 0 ? '+' : '-';
-    count += ' ' + extra;
+    count += ' ' + Math.abs(extra);
     count += ' = ' + (dice.length + extra);
+    if (extra > 0) {
+      successDice = _.times(extra, i => (
+        <li
+          className="die-image-container free-success"
+          key={'s_' + i}
+        >
+          <label>S</label>
+        </li>
+      ))
+    }
   }
   return (
     <div className="dice-list">
@@ -22,6 +33,7 @@ const DiceList = ({ dice, name, extra }) => {
         ({count})
       </h2>
       <ul>
+        {successDice}
         {
           dice.map(die => {
             const className = "die-image-container" + (die.rerolled ? " rerolled" : "");
@@ -54,7 +66,7 @@ const UseButton = ({ name, reactions, onSetReaction, disabled = false }) => {
   )
 };
 
-const WiseList = ({ disabled, characterWises, wisesUsed, selectedWise="none", onSelectWise }) => {
+const WiseList = ({ disabled, characterWises, wisesUsed, selectedWise = "none", onSelectWise }) => {
   return (
     <select
       value={selectedWise}

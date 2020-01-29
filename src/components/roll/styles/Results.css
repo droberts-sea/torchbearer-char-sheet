@@ -2,18 +2,23 @@
   /* text-align: left; */
 }
 
+.roll-results .dice-list ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .roll-results .die-image-container img {
-  height: 4em;
+  height: 4rem;
 }
 
 .roll-results .die-image-container {
-  height: 4em;
+  height: 4rem;
   
   display: inline-block;
-  margin-left: .4em;
-  margin-right: .4em;
-  margin-bottom: .25em;
-  margin-top: .25em;
+  margin-left: .4rem;
+  margin-right: .4rem;
+  margin-bottom: .25rem;
+  margin-top: .25rem;
 
   position: relative;
 }
@@ -27,7 +32,25 @@
   left: 0;
   right: 0;
   background: rgba(0,0,0, 0.25);
-  border-radius: 1em;
+  border-radius: 1rem;
+}
+
+.roll-results .die-image-container.free-success {
+  /* display: block; */
+  height: 4rem;
+  width: 4rem;
+  flex-shrink: 0;
+
+  box-sizing: border-box;
+  border-radius: .8rem;
+  border: 1px solid black;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2.5em;
+  font-family: 'Macondo', fantasy, cursive, sans-serif;
 }
 
 .roll-results .outcome {
