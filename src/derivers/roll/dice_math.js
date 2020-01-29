@@ -2,7 +2,7 @@ import math from 'mathjs';
 import _ from 'underscore';
 
 export const expectedMargin = function(summary) {
-  const expected_success = (summary.dice / 2.0) + summary.successes;
+  const expected_success = (summary.dice / 2.0) + summary.addSuccesses;
   let expected_bar;
   if (summary.type === 'versus') {
     expected_bar = summary.ob / 2;
@@ -18,14 +18,14 @@ export const oddsOfSuccess = function(summary) {
     return NaN;
   }
 
-  if (summary.ob - summary.successes <= 0) {
+  if (summary.ob - summary.addSuccesses <= 0) {
     return 1;
   }
 
   // Sum from i=ob to number of dice d of
   //   (d choose i) * .5^i * .5^(d-i)
   const dice = summary.dice;
-  const base = summary.ob - summary.successes;
+  const base = summary.ob - summary.addSuccesses;
   return math.sum(_.times(1 + dice - base, (j) => {
     const i = j + base;
     return math.combinations(dice, i) * (.5 ** i) * (.5 ** (dice-i));

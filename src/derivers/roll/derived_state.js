@@ -6,7 +6,7 @@ const InitialState = {
     type: 'obstacle',
     dice: 0,
     ob: 0,
-    successes: 0,
+    addSuccesses: 0,
     odds: 0,
     expectedMargin: 0
   },
@@ -22,7 +22,7 @@ const preBLConditionDice = function (state, character, summary, details) {
     !state.dice.info.isRecovery
   ) {
     if (character.conditions.EXHAUSTED) {
-      summary.successes -= 1;
+      summary.addSuccesses -= 1;
       details.push({
         effect: '-1S',
         source: 'Exhausted'
@@ -141,7 +141,7 @@ const postBLConditionDice = function (state, character, summary, details) {
     character.conditions.HUNGRY_AND_THIRSTY &&
     state.dice.info.isDisposition
   ) {
-    summary.successes -= 1;
+    summary.addSuccesses -= 1;
     details.push({
       effect: '-1S',
       source: 'Hungry and Thirsty',
@@ -181,7 +181,7 @@ const addPostBLDice = function (state, character, summary, details) {
             source: `${modifiers.traitName} trait (benefit)`
           });
         } else if (trait.level === 3) {
-          summary.successes += 1;
+          summary.addSuccesses += 1;
           details.push({
             effect: `+1S`,
             source: `${modifiers.traitName} trait (benefit)`
@@ -247,7 +247,7 @@ export const calculateDerivedRollState = function (state, character) {
   const summary = {
     type: state.dice.info.isVersus ? 'versus' : 'obstacle',
     dice: 0,
-    successes: 0,
+    addSuccesses: 0,
     ob: state.dice.info.ob,
     opponentDice: 0,
     odds: 50,

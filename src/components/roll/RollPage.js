@@ -39,6 +39,7 @@ class RollPage extends React.Component {
       return (
         <Results
           {...this.props.results}
+          rollSummary={this.props.derived.summary}
           characterWises={this.props.character.wises}
           onSetReaction={this.props.onSetReaction}
           />
@@ -55,6 +56,7 @@ class RollPage extends React.Component {
     }
   }
   render() {
+    const showSummary = ['GATHER INFO', 'ADD DICE', 'READY'].includes(this.props.display.currentPage);
     return (
       <div id="roll-page">
         <RollNav
@@ -65,7 +67,11 @@ class RollPage extends React.Component {
         <div className="roll-page-action">
           { this.currentAction() }
         </div>
-        <RollSummary {...this.props.derived.summary} />
+        {
+          showSummary ? (
+            <RollSummary {...this.props.derived.summary} />
+          ) : ""
+        }
       </div>
     );
   }

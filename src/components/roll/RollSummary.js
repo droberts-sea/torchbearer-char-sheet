@@ -12,8 +12,8 @@ const RollSummary = function(props) {
       <span className="number" name="ob">{props.ob}</span>
       <span className="number" name="dice">{props.dice}</span>
       <span className="number" name="successes">
-        {props.successes >= 0 ? '+' : '-' }
-        {props.successes}
+        {props.addSuccesses >= 0 ? '+' : '-' }
+        {props.addSuccesses}
       </span>
       <span className="number" name="odds">{(props.odds * 100).toFixed()}%</span>
       <span className="number" name="expected_margin">{props.expectedMargin}</span>

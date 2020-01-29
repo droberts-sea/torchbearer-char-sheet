@@ -4,7 +4,7 @@ const fakeSummary = Object.freeze({
   type: 'obstacle',
   dice: 0,
   ob: 0,
-  successes: 0,
+  addSuccesses: 0,
   odds: 0,
   expectedMargin: 0
 });
@@ -61,22 +61,22 @@ describe('expectedMargin', () => {
     expect(expectedMargin(summary)).toBe(-1);
   });
 
-  test('accounts for positive successes', () => {
+  test('accounts for positive addSuccesses', () => {
     const summary = {
       ...fakeSummary,
       dice: 4,
       ob: 2,
-      successes: 1
+      addSuccesses: 1
     };
     expect(expectedMargin(summary)).toBe(1);
   });
 
-  test('accounts for negative successes', () => {
+  test('accounts for negative addSuccesses', () => {
     const summary = {
       ...fakeSummary,
       dice: 4,
       ob: 2,
-      successes: -1
+      addSuccesses: -1
     };
     expect(expectedMargin(summary)).toBe(-1);
   });
@@ -95,16 +95,16 @@ describe('oddsOfSuccess', () => {
     expect(oddsOfSuccess(summary)).toBe(1);
   });
 
-  test('yields 1 if ob - successes <= 0', () => {
+  test('yields 1 if ob - addSuccesses <= 0', () => {
     const summary = {
       ...fakeSummary,
       dice: 4,
       ob: 1,
-      successes: 1
+      addSuccesses: 1
     };
     expect(oddsOfSuccess(summary)).toBe(1);
 
-    summary.successes = 2;
+    summary.addSuccesses = 2;
     expect(oddsOfSuccess(summary)).toBe(1);
   });
 
@@ -117,16 +117,16 @@ describe('oddsOfSuccess', () => {
     expect(oddsOfSuccess(summary)).toBe(0);
   });
 
-  test('yields 0 if dice + successes <= 0', () => {
+  test('yields 0 if dice + addSuccesses <= 0', () => {
     const summary = {
       ...fakeSummary,
       dice: 1,
       ob: 1,
-      successes: -1
+      addSuccesses: -1
     };
     expect(oddsOfSuccess(summary)).toBe(0);
 
-    summary.successes = -2;
+    summary.addSuccesses = -2;
     expect(oddsOfSuccess(summary)).toBe(0);
   });
 

@@ -7,12 +7,19 @@ import diceImages from './images/diceImages';
 import './styles/Results.css';
 import Control from '../shared/Control';
 
-const DiceList = ({ dice, name }) => {
+const DiceList = ({ dice, name, extra }) => {
+  let count = dice.length.toString();
+  if (extra || extra === 0) {
+    count += ' ';
+    count += extra >= 0 ? '+' : '-';
+    count += ' ' + extra;
+    count += ' = ' + (dice.length + extra);
+  }
   return (
     <div className="dice-list">
       <h2>
         {name + ' '}
-        ({dice.length})
+        ({count})
       </h2>
       <ul>
         {
@@ -35,7 +42,7 @@ const DiceList = ({ dice, name }) => {
   );
 };
 
-const UseButton = ({name, reactions, onSetReaction}) => {
+const UseButton = ({ name, reactions, onSetReaction }) => {
   return (
     <button
       disabled={reactions[name]}
@@ -97,7 +104,38 @@ const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, 
   );
 };
 
-const Results = ({ rolledDice, reactions, characterWises, onSetReaction }) => {
+const Outcome = ({ outcome, rollSummary, totalSuccesses }) => {
+  return (
+    <footer className="outcome">
+      <h2>Outcome: {outcome}</h2>
+
+      <div className="outcome-stats">
+        <label htmlFor="ob">
+          Obstacle
+        </label>
+        <label htmlFor="successes">
+          Successes
+        </label>
+        <label htmlFor="margin">
+          Margin
+        </label>
+        <span className="number" name="ob">
+          {rollSummary.ob}
+        </span>
+        <span className="number" name="successes">
+          {totalSuccesses}
+        </span>
+        <span className="number" name="margin">
+          {totalSuccesses - rollSummary.ob}
+        </span>
+      </div>
+
+      <button>Accept Results</button>
+    </footer>
+  )
+}
+
+const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReaction }) => {
   console.log("Rendering results");
   console.log(reactions);
   let dice = rolledDice.sort(
@@ -107,49 +145,58 @@ const Results = ({ rolledDice, reactions, characterWises, onSetReaction }) => {
     d => d.face > 3 ? "successes" : "scoundrels"
   );
 
+  const totalSuccesses = successes.length + rollSummary.addSuccesses;
+  const outcome = totalSuccesses >= rollSummary.ob ? 'success' : 'failure';
+
   return (
     <div
       className="roll-results"
     >
-      <DiceList
-        dice={successes}
-        name="Successes" />
-      <DiceList
-        dice={scoundrels}
-        name="Scoundrels" />
-      <h2>Reactions</h2>
-      <ul>
-        <Control
-          className="roll-reaction"
-          name="Fate for Luck"
-          subtext="Spend one fate to explode all sixes. Sixes rolled this way also explode. Describe the Luck!"
-          knob={(
-            <UseButton
-              name="explodeSixes"
-              reactions={reactions}
-              onSetReaction={onSetReaction}
-            />
-          )}
-        />
-        <WiseReaction
-          name="Deeper Understanding"
-          subtext="Spend a fate point and reroll any single failed die on a test related to your wise. State, “Ah hah!” and gesture that you understand everything now."
-          reactionName="deeperUnderstanding"
-          reactions={reactions}
-          characterWises={characterWises}
-          onSetReaction={onSetReaction}
-        />
-        <WiseReaction
-          name="Of Course"
-          subtext="Spend a persona point and reroll all failed dice on a test related to your wise. Declare, “Of course!” and indicate that you were wrong before but you have it all correct now."
-          reactionName="ofCourse"
-          reactions={reactions}
-          characterWises={characterWises}
-          onSetReaction={onSetReaction}
-        />
-      </ul>
-      {/* TODO: tiebreakers */}
-      {/* <button>Accept Results</button> */}
+      <section className="pre-footer">
+        <DiceList
+          dice={successes}
+          name="Successes"
+          extra={rollSummary.addSuccesses} />
+        <DiceList
+          dice={scoundrels}
+          name="Scoundrels" />
+        <h2>Reactions</h2>
+        <ul>
+          <Control
+            className="roll-reaction"
+            name="Fate for Luck"
+            subtext="Spend one fate to explode all sixes. Sixes rolled this way also explode. Describe the Luck!"
+            knob={(
+              <UseButton
+                name="explodeSixes"
+                reactions={reactions}
+                onSetReaction={onSetReaction}
+              />
+            )}
+          />
+          <WiseReaction
+            name="Deeper Understanding"
+            subtext="Spend a fate point and reroll any single failed die on a test related to your wise. State, “Ah hah!” and gesture that you understand everything now."
+            reactionName="deeperUnderstanding"
+            reactions={reactions}
+            characterWises={characterWises}
+            onSetReaction={onSetReaction}
+          />
+          <WiseReaction
+            name="Of Course"
+            subtext="Spend a persona point and reroll all failed dice on a test related to your wise. Declare, “Of course!” and indicate that you were wrong before but you have it all correct now."
+            reactionName="ofCourse"
+            reactions={reactions}
+            characterWises={characterWises}
+            onSetReaction={onSetReaction}
+          />
+        </ul>
+        {/* TODO: tiebreakers */}
+      </section>
+      <Outcome
+        outcome={outcome}
+        totalSuccesses={totalSuccesses}
+        rollSummary={rollSummary} />
     </div>
   );
 }
