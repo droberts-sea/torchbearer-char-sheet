@@ -253,7 +253,7 @@ const reduceResults = function (state, action, character, roll) {
       newState.reactions = { ...InitialRoll.results.reactions };
 
       // Tell what happened
-      let logString = logDiceDetails(`Initial roll of ${rolledDice.length} dice yielded `, rolledDice);
+      const logString = logDiceDetails(`Initial roll of ${rolledDice.length} dice yielded `, rolledDice);
 
       newState.reactions.log = [logString];
 
@@ -293,8 +293,7 @@ const reduceResults = function (state, action, character, roll) {
 
           newState.rolledDice = newRolledDice.concat(rerolls);
 
-          const sortedRerolls = rerolls.map(die => die.face).sort().reverse();
-          let logString = logDiceDetails(`Used "Fate for Luck" to cascade-reroll ${sixCount} sixes, yielding `, rerolls);
+          const logString = logDiceDetails(`Used "Fate for Luck" to cascade-reroll ${sixCount} sixes, yielding `, rerolls);
           newState.reactions.log = state.reactions.log.concat([logString]);
 
           // TODO: impact - spend one fate
@@ -328,6 +327,9 @@ const reduceResults = function (state, action, character, roll) {
           // Each wise can be used only once per roll (pg 21)
           newState.reactions.wisesUsed = state.reactions.wisesUsed.concat([state.reactions.deeperUnderstandingWise]);
 
+          const logString = logDiceDetails(`Used "Deeper Understanding" to reroll the lowest die (value ${lowDie.face}), yielding `, [newDie]);
+          newState.reactions.log = state.reactions.log.concat([logString]);
+
           // TODO: impact - spend one fate, mark wise used
 
           break;
@@ -351,6 +353,9 @@ const reduceResults = function (state, action, character, roll) {
           });
 
           newState.rolledDice = newRolledDice.concat(rerolls);
+
+          
+
           break;
 
         }
