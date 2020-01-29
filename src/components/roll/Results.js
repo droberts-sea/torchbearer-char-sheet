@@ -167,18 +167,6 @@ const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReac
           name="Scoundrels" />
         <h2>Reactions</h2>
         <ul>
-          <Control
-            className="roll-reaction"
-            name="Fate for Luck"
-            subtext="Spend one fate to reroll all sixes. Sixes rolled this way keep rerolling. Describe the Luck!"
-            knob={(
-              <UseButton
-                name="explodeSixes"
-                reactions={reactions}
-                onSetReaction={onSetReaction}
-              />
-            )}
-          />
           <WiseReaction
             name="Deeper Understanding"
             subtext="Spend a fate point and reroll any single failed die on a test related to your wise. State, “Ah hah!” and gesture that you understand everything now."
@@ -194,6 +182,18 @@ const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReac
             reactions={reactions}
             characterWises={characterWises}
             onSetReaction={onSetReaction}
+          />
+          <Control
+            className="roll-reaction"
+            name="Fate for Luck"
+            subtext="Spend one fate to reroll all sixes. Sixes rolled this way keep rerolling. Describe the Luck!"
+            knob={(
+              <UseButton
+                name="explodeSixes"
+                reactions={reactions}
+                onSetReaction={onSetReaction}
+              />
+            )}
           />
           <section className="reaction-log">
             <h3>Log</h3>
