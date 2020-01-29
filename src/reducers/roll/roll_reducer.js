@@ -305,6 +305,7 @@ const reduceResults = function (state, action, character, roll) {
           if (!state.reactions.deeperUnderstandingWise) {
             throw new Error("Deeper understanding was used, but no wise was selected!");
           }
+
           let nextId = state.rolledDice.length;
           let lowDie = { face: Infinity };
           let lowDieIndex = undefined;
@@ -318,16 +319,16 @@ const reduceResults = function (state, action, character, roll) {
 
           const newRolledDice = [...state.rolledDice];
           newRolledDice.splice(lowDieIndex, 1);
-          const newDie = { ...lowDie, rerolled: true }
+          newRolledDice.push({ ...lowDie, rerolled: true });
+          const newDie = rollDie(nextId)
           newRolledDice.push(newDie);
-          newRolledDice.push(rollDie(nextId));
 
           newState.rolledDice = newRolledDice;
 
           // Each wise can be used only once per roll (pg 21)
           newState.reactions.wisesUsed = state.reactions.wisesUsed.concat([state.reactions.deeperUnderstandingWise]);
 
-          const logString = logDiceDetails(`Used "Deeper Understanding" to reroll the lowest die (value ${lowDie.face}), yielding `, [newDie]);
+          const logString = logDiceDetails(`Used "Deeper Understanding" with wise "${state.reactions.deeperUnderstandingWise} to reroll the lowest die (value ${lowDie.face}), yielding `, [newDie]);
           newState.reactions.log = state.reactions.log.concat([logString]);
 
           // TODO: impact - spend one fate, mark wise used
@@ -335,6 +336,10 @@ const reduceResults = function (state, action, character, roll) {
           break;
         }
         case 'ofCourseUsed': {
+          if (!state.reactions.ofCourseWise) {
+            throw new Error("Of Course was used, but no wise was selected!");
+          }
+
           let nextId = state.rolledDice.length;
           const rerolls = [];
           const newRolledDice = [];
@@ -346,7 +351,7 @@ const reduceResults = function (state, action, character, roll) {
               die.rerolled = true;
 
               const newDie = rollDie(nextId)
-              rerolls.push(die);
+              rerolls.push(newDie);
               nextId += 1;
             }
             newRolledDice.push(die);
@@ -354,7 +359,13 @@ const reduceResults = function (state, action, character, roll) {
 
           newState.rolledDice = newRolledDice.concat(rerolls);
 
-          
+          // Each wise can be used only once per roll (pg 21)
+          newState.reactions.wisesUsed = state.reactions.wisesUsed.concat([state.reactions.ofCourseWise]);
+
+          const logString = logDiceDetails(`Used "Of Course" with wise "${state.reactions.ofCourseWise} to reroll ${rerolls.length} failures, yielding `, rerolls);
+          newState.reactions.log = state.reactions.log.concat([logString]);
+
+          // TODO impact - spend one persona, mark wise used
 
           break;
 
