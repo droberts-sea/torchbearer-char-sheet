@@ -56,4 +56,10 @@ const DiceList = ({ dice, name, extra }) => {
   );
 };
 
+DiceList.propTypes = {
+  dice: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired,
+  extra: PropTypes.number,
+};
+
 export default DiceList;
