@@ -312,7 +312,7 @@ describe('Derived State', () => {
         checkModifierAdded({
           beforeState, afterState,
           detailsText: `${traitName} trait (benefit)`,
-          effectType: 'successes'
+          effectType: 'addSuccesses'
         });
       });
 
