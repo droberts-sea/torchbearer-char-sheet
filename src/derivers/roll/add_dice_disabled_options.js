@@ -1,6 +1,6 @@
 import { traitIsAvailable } from '../../rules/traits';
 
-const disabledOptions = function(state, character) {
+const addDiceDisabledOptions = function(state, character) {
   const disabledOptions = {};
 
   const skillName = state.dice.info.skill;
@@ -32,4 +32,4 @@ const disabledOptions = function(state, character) {
   return disabledOptions;
 };
 
-export default disabledOptions;
+export default addDiceDisabledOptions;
