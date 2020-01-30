@@ -42,6 +42,7 @@ class RollPage extends React.Component {
           rollSummary={this.props.derived.summary}
           characterWises={this.props.character.wises}
           onSetReaction={this.props.onSetReaction}
+          disabledOptions={this.props.disabledOptions.results}
           />
       );
       
