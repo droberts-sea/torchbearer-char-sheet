@@ -15,7 +15,7 @@ describe('Roll Results page', () => {
           rolledDice={roll.results.rolledDice}
           reactions={roll.results.reactions}
           rollSummary={calculateDerivedRollState(roll, character)}
-          characterWises={character.wises}
+          character={character}
           onSetReaction={() => {}}
           disabledOptions={{
             deeperUnderstanding: { wises: [] },

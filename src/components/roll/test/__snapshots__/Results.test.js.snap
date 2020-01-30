@@ -152,6 +152,12 @@ exports[`Roll Results page renders with a typical roll / character setup 1`] = `
         </div>
         <p>
           Spend a fate point and reroll any single failed die on a test related to your wise. State, “Ah hah!” and gesture that you understand everything now.
+          <br />
+          <br />
+          <strong>
+            0
+             fate available
+          </strong>
         </p>
       </li>
       <li
@@ -197,6 +203,12 @@ exports[`Roll Results page renders with a typical roll / character setup 1`] = `
         </div>
         <p>
           Spend a persona point and reroll all failed dice on a test related to your wise. Declare, “Of course!” and indicate that you were wrong before but you have it all correct now.
+          <br />
+          <br />
+          <strong>
+            0
+             persona available
+          </strong>
         </p>
       </li>
       <li
@@ -219,7 +231,13 @@ exports[`Roll Results page renders with a typical roll / character setup 1`] = `
           </button>
         </div>
         <p>
-          Spend one fate to reroll all sixes. Sixes rolled this way keep rerolling. Describe the Luck!
+          Spend a fate point and reroll all sixes. Sixes rolled this way keep rerolling. Describe the Luck!
+          <br />
+          <br />
+          <strong>
+            0
+             fate available
+          </strong>
         </p>
       </li>
       <section
