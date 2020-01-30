@@ -1,4 +1,4 @@
-import math from 'mathjs';
+import { sum, combinations } from 'mathjs';
 import _ from 'underscore';
 
 export const expectedMargin = function(summary) {
@@ -26,9 +26,9 @@ export const oddsOfSuccess = function(summary) {
   //   (d choose i) * .5^i * .5^(d-i)
   const dice = summary.dice;
   const base = summary.ob - summary.addSuccesses;
-  return math.sum(_.times(1 + dice - base, (j) => {
+  return sum(_.times(1 + dice - base, (j) => {
     const i = j + base;
-    return math.combinations(dice, i) * (.5 ** i) * (.5 ** (dice-i));
+    return combinations(dice, i) * (.5 ** i) * (.5 ** (dice-i));
   }));
 }
 
