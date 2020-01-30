@@ -164,7 +164,7 @@ const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReac
             <h3>Log</h3>
             <ul>{
               reactions.log.map((logLine, i) => (
-                <li className="log-line" key={i}>{logLine}</li>
+                <li className="log-line" key={i}><p>{logLine}</p></li>
               ))
             }</ul>
           </section>
