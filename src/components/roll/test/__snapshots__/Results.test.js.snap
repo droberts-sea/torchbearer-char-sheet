@@ -122,13 +122,12 @@ exports[`Roll Results page renders with a typical roll / character setup 1`] = `
           </h3>
           <button
             className="use-button"
-            disabled={true}
+            disabled={false}
             onClick={[Function]}
           >
             Use
           </button>
           <select
-            disabled={false}
             onChange={[Function]}
             value="none"
           >
@@ -168,13 +167,12 @@ exports[`Roll Results page renders with a typical roll / character setup 1`] = `
           </h3>
           <button
             className="use-button"
-            disabled={true}
+            disabled={false}
             onClick={[Function]}
           >
             Use
           </button>
           <select
-            disabled={false}
             onChange={[Function]}
             value="none"
           >

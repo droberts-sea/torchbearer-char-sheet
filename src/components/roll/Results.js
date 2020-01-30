@@ -6,10 +6,10 @@ import './styles/Results.css';
 import Control from '../shared/Control';
 import DiceList from './DiceList';
 
-const UseButton = ({ name, reactions, onSetReaction, disabled = false }) => {
+const UseButton = ({ name, onSetReaction, disabled = false }) => {
   return (
     <button
-      disabled={disabled || reactions[name]}
+      disabled={disabled}
       onClick={() => onSetReaction(name, true)}
       className="use-button"
     >
@@ -18,7 +18,7 @@ const UseButton = ({ name, reactions, onSetReaction, disabled = false }) => {
   )
 };
 
-const WiseList = ({ disabled, characterWises, wisesUsed, selectedWise = "none", onSelectWise }) => {
+const WiseList = ({ characterWises, selectedWise = "none", onSelectWise, disabled, disabledWises }) => {
   return (
     <select
       value={selectedWise}
@@ -34,7 +34,7 @@ const WiseList = ({ disabled, characterWises, wisesUsed, selectedWise = "none", 
             <option
               key={`wise_${wise.name}`}
               value={wise.name}
-              disabled={wisesUsed.includes(wise.name)}
+              disabled={disabledWises.includes(wise.name)}
             >
               {wise.name}
             </option>
@@ -45,7 +45,15 @@ const WiseList = ({ disabled, characterWises, wisesUsed, selectedWise = "none", 
   );
 };
 
-const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, onSetReaction }) => {
+WiseList.propTypes = {
+  characterWises: PropTypes.array.isRequired,
+  selectedWise: PropTypes.string,
+  onSelectWise: PropTypes.func.isRequired,
+  disabled: PropTypes.bool, 
+  disabledWises: PropTypes.array.isRequired,
+}
+
+const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, onSetReaction, disabledOptions }) => {
   const selectedWise = reactions[reactionName + 'Wise'];
   return (
     <Control
@@ -56,20 +64,19 @@ const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, 
         <React.Fragment>
           <UseButton
             name={reactionName + 'Used'}
-            reactions={reactions}
             onSetReaction={onSetReaction}
-            disabled={!selectedWise}
+            disabled={disabledOptions.button}
           />
           <WiseList
-            disabled={reactions[reactionName + 'Used']}
             characterWises={characterWises}
-            wisesUsed={reactions.wisesUsed}
             selectedWise={selectedWise}
             onSelectWise={wise => {
               onSetReaction(reactionName + 'Wise', wise)
             }}
+            disabled={disabledOptions.select}
+            disabledWises={disabledOptions.wises}
           />
-          
+
         </React.Fragment>
       )}
     />
@@ -107,7 +114,7 @@ const Outcome = ({ outcome, rollSummary, totalSuccesses }) => {
   )
 };
 
-const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReaction }) => {
+const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReaction, disabledOptions }) => {
   let dice = rolledDice.sort(
     (a, b) => Math.sign(b.face - a.face)
   );
@@ -139,6 +146,7 @@ const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReac
             reactions={reactions}
             characterWises={characterWises}
             onSetReaction={onSetReaction}
+            disabledOptions={disabledOptions.deeperUnderstanding}
           />
           <WiseReaction
             name="Of Course"
@@ -147,6 +155,7 @@ const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReac
             reactions={reactions}
             characterWises={characterWises}
             onSetReaction={onSetReaction}
+            disabledOptions={disabledOptions.ofCourse}
           />
           <Control
             className="roll-reaction"
@@ -155,11 +164,12 @@ const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReac
             knob={(
               <UseButton
                 name="explodeSixes"
-                reactions={reactions}
+                disabled={disabledOptions.explodeSixes}
                 onSetReaction={onSetReaction}
               />
             )}
           />
+          {/* TODO: tiebreakers */}
           <section className="reaction-log">
             <h3>Log</h3>
             <ul>{
@@ -169,7 +179,6 @@ const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReac
             }</ul>
           </section>
         </ul>
-        {/* TODO: tiebreakers */}
       </section>
       <Outcome
         outcome={outcome}
@@ -185,6 +194,7 @@ Results.propTypes = {
   rollSummary: PropTypes.object.isRequired,
   characterWises: PropTypes.array.isRequired,
   onSetReaction: PropTypes.func.isRequired,
+  disabledOptions: PropTypes.object.isRequired,
 };
 
 export default Results;

@@ -3,7 +3,7 @@ import {
   SPEND_POINT
 } from '../../actions';
 
-const InitialPoints = {
+export const InitialPoints = {
   fate: {
     available: 0,
     spent: 0

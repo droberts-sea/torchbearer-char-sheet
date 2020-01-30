@@ -17,6 +17,10 @@ describe('Roll Results page', () => {
           rollSummary={calculateDerivedRollState(roll, character)}
           characterWises={character.wises}
           onSetReaction={() => {}}
+          disabledOptions={{
+            deeperUnderstanding: { wises: [] },
+            ofCourse: { wises: [] },
+          }}
           />
       )
       .toJSON();

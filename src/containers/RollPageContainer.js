@@ -11,6 +11,7 @@ import {
 import RollPage from '../components/roll/RollPage';
 import calculateDerivedRollState from '../derivers/roll/derived_state';
 import addDiceDisabledOptions from '../derivers/roll/add_dice_disabled_options';
+import resultsDisabledOptions from '../derivers/roll/results_disabled_options';
 
 const mapStateToProps = (state) => {
   return {
@@ -18,7 +19,8 @@ const mapStateToProps = (state) => {
     character: state.character,
     derived: calculateDerivedRollState(state.roll, state.character),
     disabledOptions: {
-      addDice: addDiceDisabledOptions(state.roll, state.character)
+      addDice: addDiceDisabledOptions(state.roll, state.character),
+      results: resultsDisabledOptions(state.roll, state.character),
     }
   };
 };
