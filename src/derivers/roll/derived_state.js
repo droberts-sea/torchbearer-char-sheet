@@ -10,9 +10,6 @@ const InitialState = {
     expectedMargin: 0
   },
   details: [],
-  addDiceDisabledOptions: {
-    natureInstead: true
-  }
 }
 
 const preBLConditionDice = function (state, character, summary, details) {
