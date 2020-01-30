@@ -40,7 +40,7 @@ class RollPage extends React.Component {
         <Results
           {...this.props.results}
           rollSummary={this.props.derived.summary}
-          characterWises={this.props.character.wises}
+          character={this.props.character}
           onSetReaction={this.props.onSetReaction}
           disabledOptions={this.props.disabledOptions.results}
           />

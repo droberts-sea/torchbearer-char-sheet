@@ -49,7 +49,7 @@ WiseList.propTypes = {
   characterWises: PropTypes.array.isRequired,
   selectedWise: PropTypes.string,
   onSelectWise: PropTypes.func.isRequired,
-  disabled: PropTypes.bool, 
+  disabled: PropTypes.bool,
   disabledWises: PropTypes.array.isRequired,
 }
 
@@ -114,7 +114,7 @@ const Outcome = ({ outcome, rollSummary, totalSuccesses }) => {
   )
 };
 
-const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReaction, disabledOptions }) => {
+const Results = ({ rolledDice, reactions, rollSummary, character, onSetReaction, disabledOptions }) => {
   let dice = rolledDice.sort(
     (a, b) => Math.sign(b.face - a.face)
   );
@@ -141,26 +141,53 @@ const Results = ({ rolledDice, reactions, rollSummary, characterWises, onSetReac
         <ul>
           <WiseReaction
             name="Deeper Understanding"
-            subtext="Spend a fate point and reroll any single failed die on a test related to your wise. State, “Ah hah!” and gesture that you understand everything now."
+            subtext={(
+              <React.Fragment>
+                Spend a fate point and reroll any single failed die on a test related to your wise. State, “Ah hah!” and gesture that you understand everything now.
+                <br /><br />
+                <strong>
+                  {character.points.fate.available}
+                  &nbsp;fate available
+                </strong>
+              </React.Fragment>
+            )}
             reactionName="deeperUnderstanding"
             reactions={reactions}
-            characterWises={characterWises}
+            characterWises={character.wises}
             onSetReaction={onSetReaction}
             disabledOptions={disabledOptions.deeperUnderstanding}
           />
           <WiseReaction
             name="Of Course"
-            subtext="Spend a persona point and reroll all failed dice on a test related to your wise. Declare, “Of course!” and indicate that you were wrong before but you have it all correct now."
+            subtext={(
+              <React.Fragment>
+                Spend a persona point and reroll all failed dice on a test related to your wise. Declare, “Of course!” and indicate that you were wrong before but you have it all correct now.
+              <br /><br />
+                <strong>
+                  {character.points.persona.available}
+                  &nbsp;persona available
+                </strong>
+              </React.Fragment>
+            )}
             reactionName="ofCourse"
             reactions={reactions}
-            characterWises={characterWises}
+            characterWises={character.wises}
             onSetReaction={onSetReaction}
             disabledOptions={disabledOptions.ofCourse}
           />
           <Control
             className="roll-reaction"
             name="Fate for Luck"
-            subtext="Spend one fate to reroll all sixes. Sixes rolled this way keep rerolling. Describe the Luck!"
+            subtext={(
+              <React.Fragment>
+                Spend a fate point and reroll all sixes. Sixes rolled this way keep rerolling. Describe the Luck!
+              <br /><br />
+                <strong>
+                  {character.points.fate.available}
+                  &nbsp;fate available
+                </strong>
+              </React.Fragment>
+            )}
             knob={(
               <UseButton
                 name="explodeSixes"
@@ -192,7 +219,7 @@ Results.propTypes = {
   rolledDice: PropTypes.array.isRequired,
   reactions: PropTypes.object.isRequired,
   rollSummary: PropTypes.object.isRequired,
-  characterWises: PropTypes.array.isRequired,
+  character: PropTypes.object.isRequired,
   onSetReaction: PropTypes.func.isRequired,
   disabledOptions: PropTypes.object.isRequired,
 };

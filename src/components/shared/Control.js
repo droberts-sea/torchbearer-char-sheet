@@ -18,7 +18,7 @@ const Control = ({name, subtext, knob, className}) => {
 
 Control.propTypes = {
   name: PropTypes.string.isRequired,
-  subtext: PropTypes.string,
+  subtext: PropTypes.node,
   knob: PropTypes.node,
   className: PropTypes.string,
 }
