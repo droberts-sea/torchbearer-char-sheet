@@ -5,6 +5,8 @@ import _ from 'underscore';
 
 import diceImages from './images/diceImages';
 
+import './styles/DiceList.css';
+
 const DiceList = ({ dice, name, extra }) => {
   let count = dice.length.toString();
   let successDice = "";
