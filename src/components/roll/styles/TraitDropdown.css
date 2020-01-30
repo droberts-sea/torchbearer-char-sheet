@@ -1,10 +1,10 @@
-.trait-dropdown > div {
+.trait-dropdown > .control-main {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   row-gap: .5em;
 
-  margin-top: 1em;
+  margin-top: 2em;
 }
 
 .trait-dropdown h3 {

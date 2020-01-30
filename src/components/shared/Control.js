@@ -7,8 +7,8 @@ const Control = ({name, subtext, knob, className}) => {
   className += ' control';
   return (
     <li className={className}>
-      <div>
-        <h3>{ name }</h3>
+      <div className="control-main">
+        <h3 className="control-title">{ name }</h3>
         {knob}
       </div>
       { subtext ? (<p>{ subtext }</p>) : "" }

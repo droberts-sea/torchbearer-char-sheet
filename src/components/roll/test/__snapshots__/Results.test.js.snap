@@ -110,12 +110,23 @@ exports[`Roll Results page renders with a typical roll / character setup 1`] = `
     </h2>
     <ul>
       <li
-        className="roll-reaction control"
+        className="roll-reaction wise-reaction control"
       >
-        <div>
-          <h3>
+        <div
+          className="control-main"
+        >
+          <h3
+            className="control-title"
+          >
             Deeper Understanding
           </h3>
+          <button
+            className="use-button"
+            disabled={true}
+            onClick={[Function]}
+          >
+            Use
+          </button>
           <select
             disabled={false}
             onChange={[Function]}
@@ -139,24 +150,29 @@ exports[`Roll Results page renders with a typical roll / character setup 1`] = `
               Home
             </option>
           </select>
-          <button
-            disabled={true}
-            onClick={[Function]}
-          >
-            Use
-          </button>
         </div>
         <p>
           Spend a fate point and reroll any single failed die on a test related to your wise. State, “Ah hah!” and gesture that you understand everything now.
         </p>
       </li>
       <li
-        className="roll-reaction control"
+        className="roll-reaction wise-reaction control"
       >
-        <div>
-          <h3>
+        <div
+          className="control-main"
+        >
+          <h3
+            className="control-title"
+          >
             Of Course
           </h3>
+          <button
+            className="use-button"
+            disabled={true}
+            onClick={[Function]}
+          >
+            Use
+          </button>
           <select
             disabled={false}
             onChange={[Function]}
@@ -180,12 +196,6 @@ exports[`Roll Results page renders with a typical roll / character setup 1`] = `
               Home
             </option>
           </select>
-          <button
-            disabled={true}
-            onClick={[Function]}
-          >
-            Use
-          </button>
         </div>
         <p>
           Spend a persona point and reroll all failed dice on a test related to your wise. Declare, “Of course!” and indicate that you were wrong before but you have it all correct now.
@@ -194,11 +204,16 @@ exports[`Roll Results page renders with a typical roll / character setup 1`] = `
       <li
         className="roll-reaction control"
       >
-        <div>
-          <h3>
+        <div
+          className="control-main"
+        >
+          <h3
+            className="control-title"
+          >
             Fate for Luck
           </h3>
           <button
+            className="use-button"
             disabled={false}
             onClick={[Function]}
           >

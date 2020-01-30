@@ -4,8 +4,12 @@ exports[`renders when active 1`] = `
 <li
   className=" toggle active notest control"
 >
-  <div>
-    <h3>
+  <div
+    className="control-main"
+  >
+    <h3
+      className="control-title"
+    >
       Test toggle
     </h3>
     
@@ -29,8 +33,12 @@ exports[`renders when disabled 1`] = `
 <li
   className=" toggle notest control"
 >
-  <div>
-    <h3>
+  <div
+    className="control-main"
+  >
+    <h3
+      className="control-title"
+    >
       Test toggle
     </h3>
     
@@ -48,8 +56,12 @@ exports[`renders when inactive 1`] = `
 <li
   className=" toggle notest control"
 >
-  <div>
-    <h3>
+  <div
+    className="control-main"
+  >
+    <h3
+      className="control-title"
+    >
       Test toggle
     </h3>
     

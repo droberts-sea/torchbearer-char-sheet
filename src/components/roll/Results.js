@@ -11,6 +11,7 @@ const UseButton = ({ name, reactions, onSetReaction, disabled = false }) => {
     <button
       disabled={disabled || reactions[name]}
       onClick={() => onSetReaction(name, true)}
+      className="use-button"
     >
       Use
     </button>
@@ -48,11 +49,17 @@ const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, 
   const selectedWise = reactions[reactionName + 'Wise'];
   return (
     <Control
-      className="roll-reaction"
+      className="roll-reaction wise-reaction"
       name={name}
       subtext={subtext}
       knob={(
         <React.Fragment>
+          <UseButton
+            name={reactionName + 'Used'}
+            reactions={reactions}
+            onSetReaction={onSetReaction}
+            disabled={!selectedWise}
+          />
           <WiseList
             disabled={reactions[reactionName + 'Used']}
             characterWises={characterWises}
@@ -62,12 +69,7 @@ const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, 
               onSetReaction(reactionName + 'Wise', wise)
             }}
           />
-          <UseButton
-            name={reactionName + 'Used'}
-            reactions={reactions}
-            onSetReaction={onSetReaction}
-            disabled={!selectedWise}
-          />
+          
         </React.Fragment>
       )}
     />

@@ -5,8 +5,12 @@ exports[`disables buttons at boundaries 1`] = `
   <li
     className="plus-minus control"
   >
-    <div>
-      <h3>
+    <div
+      className="control-main"
+    >
+      <h3
+        className="control-title"
+      >
         plus minus at min
       </h3>
       <div>
@@ -34,8 +38,12 @@ exports[`disables buttons at boundaries 1`] = `
   <li
     className="plus-minus control"
   >
-    <div>
-      <h3>
+    <div
+      className="control-main"
+    >
+      <h3
+        className="control-title"
+      >
         plus minus at max
       </h3>
       <div>
@@ -67,8 +75,12 @@ exports[`renders with all props 1`] = `
 <li
   className="plus-minus control"
 >
-  <div>
-    <h3>
+  <div
+    className="control-main"
+  >
+    <h3
+      className="control-title"
+    >
       Test plus minus
     </h3>
     <div>

@@ -41,3 +41,14 @@
 .roll-results .reaction-log .log-line {
   margin: .5em 0;
 }
+
+.roll-reaction .control-main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.roll-reaction .use-button {
+  grid-row: span 2;
+  font-size: 1em;
+}

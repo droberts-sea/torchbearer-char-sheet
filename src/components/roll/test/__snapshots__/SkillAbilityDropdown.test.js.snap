@@ -4,8 +4,12 @@ exports[`renders with a trained skill selected 1`] = `
 <li
   className="skill-ability-dropdown control"
 >
-  <div>
-    <h3>
+  <div
+    className="control-main"
+  >
+    <h3
+      className="control-title"
+    >
       Skill / Ability
     </h3>
     <select
@@ -106,8 +110,12 @@ exports[`renders with no skill selected 1`] = `
 <li
   className="skill-ability-dropdown control"
 >
-  <div>
-    <h3>
+  <div
+    className="control-main"
+  >
+    <h3
+      className="control-title"
+    >
       Skill / Ability
     </h3>
     <select

@@ -1,9 +1,14 @@
 /* Controls all have similar styling. This includes toggles, plusminus, maybe more in the future */
-.control > div {
+.control .control-main {
   margin-bottom: 1em;
+  margin-top: 1em;
 }
 
-.control > div > * {
+.control .control-title {
+  margin-top: 0;
+}
+
+.control .control-main > * {
   margin-bottom: 0;
 }
 
