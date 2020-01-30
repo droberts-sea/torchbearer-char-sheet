@@ -1,4 +1,4 @@
-import disabledOptions from '../disabled_options';
+import addDiceDisabledOptions from '../add_dice_disabled_options';
 import fakeCharacter from '../../../mock/character.js';
 import { traitIsAvailable } from '../../../rules/traits';
 
@@ -28,13 +28,13 @@ const deepCopy = (obj) => {
   return JSON.parse(JSON.stringify(obj));
 }
 
-describe('disabledOptions', () => {
+describe('addDiceDisabledOptions', () => {
   describe('natureInstead', () => {
     test('it is not disabled for a BL skill', () => {
       const roll = deepCopy(fakeRoll);
       roll.dice.info.skill = 'ALCHEMIST';
 
-      const disabled = disabledOptions(roll, fakeCharacter);
+      const disabled = addDiceDisabledOptions(roll, fakeCharacter);
 
       expect(disabled.natureInstead).toBe(false);
     });
@@ -44,7 +44,7 @@ describe('disabledOptions', () => {
         const roll = deepCopy(fakeRoll);
         roll.dice.info.skill = skill;
 
-        const disabled = disabledOptions(roll, fakeCharacter);
+        const disabled = addDiceDisabledOptions(roll, fakeCharacter);
 
         expect(disabled.natureInstead).toBe(true);
       })
@@ -55,7 +55,7 @@ describe('disabledOptions', () => {
       const roll = deepCopy(fakeRoll);
       roll.dice.info.skill = 'WILL';
 
-      const disabled = disabledOptions(roll, fakeCharacter);
+      const disabled = addDiceDisabledOptions(roll, fakeCharacter);
 
       expect(disabled.natureInstead).toBe(true);
     });
@@ -64,7 +64,7 @@ describe('disabledOptions', () => {
       const roll = deepCopy(fakeRoll);
       roll.dice.info.skill = undefined;
 
-      const disabled = disabledOptions(roll, fakeCharacter);
+      const disabled = addDiceDisabledOptions(roll, fakeCharacter);
 
       expect(disabled.natureInstead).toBe(true);
     });
@@ -81,7 +81,7 @@ describe('disabledOptions', () => {
       expect(character.skills.ORATOR.open).toBeTruthy();
 
       roll.dice.info.skill = skillName;
-      const disabled = disabledOptions(roll, character);
+      const disabled = addDiceDisabledOptions(roll, character);
       expect(disabled.unselectNatureInstead).toBeFalsy();
     });
 
@@ -91,7 +91,7 @@ describe('disabledOptions', () => {
 
       roll.dice.info.skill = skillName;
       character.conditions.AFRAID = false;
-      const disabled = disabledOptions(roll, character);
+      const disabled = addDiceDisabledOptions(roll, character);
       expect(disabled.unselectNatureInstead).toBeFalsy();
     });
 
@@ -101,7 +101,7 @@ describe('disabledOptions', () => {
 
       roll.dice.info.skill = skillName;
       character.conditions.AFRAID = true;
-      const disabled = disabledOptions(roll, character);
+      const disabled = addDiceDisabledOptions(roll, character);
       expect(disabled.unselectNatureInstead).toBeFalsy();
     });
   });
@@ -124,13 +124,13 @@ describe('disabledOptions', () => {
       trait.uses = 0;
       expect(traitIsAvailable(trait)).toBeTruthy();
 
-      disabled = disabledOptions(roll, character);
+      disabled = addDiceDisabledOptions(roll, character);
       expect(disabled.traitBenefit).toBeFalsy();
 
       trait.uses = trait.level;
       expect(traitIsAvailable(trait)).toBeFalsy();
 
-      disabled = disabledOptions(roll, character);
+      disabled = addDiceDisabledOptions(roll, character);
       expect(disabled.traitBenefit).toBeTruthy();
     });
 
@@ -138,12 +138,12 @@ describe('disabledOptions', () => {
       let disabled;
       trait.uses = 0;
 
-      disabled = disabledOptions(roll, character);
+      disabled = addDiceDisabledOptions(roll, character);
       expect(disabled.traitBenefit).toBeFalsy();
 
       character.conditions.ANGRY = true;
 
-      disabled = disabledOptions(roll, character);
+      disabled = addDiceDisabledOptions(roll, character);
       expect(disabled.traitBenefit).toBeTruthy();
     });
 
@@ -151,12 +151,12 @@ describe('disabledOptions', () => {
       let disabled;
       roll.dice.info.isVersus = false;
 
-      disabled = disabledOptions(roll, character);
+      disabled = addDiceDisabledOptions(roll, character);
       expect(disabled.traitOpponent).toBeTruthy();
 
       roll.dice.info.isVersus = true;
 
-      disabled = disabledOptions(roll, character);
+      disabled = addDiceDisabledOptions(roll, character);
       expect(disabled.traitOpponent).toBeFalsy();
     });
   });

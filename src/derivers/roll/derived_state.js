@@ -1,5 +1,4 @@
 import diceMath from './dice_math';
-import disabledOptions from './disabled_options';
 
 const InitialState = {
   summary: {
@@ -11,7 +10,7 @@ const InitialState = {
     expectedMargin: 0
   },
   details: [],
-  disabledOptions: {
+  addDiceDisabledOptions: {
     natureInstead: true
   }
 }
@@ -288,7 +287,6 @@ export const calculateDerivedRollState = function (state, character) {
   return {
     summary: summary,
     details: details,
-    disabledOptions: disabledOptions(state, character)
   };
 };
 
