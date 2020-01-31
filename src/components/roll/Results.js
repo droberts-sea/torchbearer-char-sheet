@@ -114,8 +114,8 @@ const Outcome = ({ outcome, rollSummary, totalSuccesses }) => {
   )
 };
 
-const Results = ({ rolledDice, reactions, rollSummary, character, onSetReaction, disabledOptions }) => {
-  let dice = rolledDice.sort(
+const Results = ({ rolledDice, reactions, rollSummary, character, onSetReaction, disabledOptions, resourcesSpent }) => {
+  const dice = rolledDice.sort(
     (a, b) => Math.sign(b.face - a.face)
   );
   const { successes, scoundrels } = _.groupBy(dice,
@@ -124,6 +124,9 @@ const Results = ({ rolledDice, reactions, rollSummary, character, onSetReaction,
 
   const totalSuccesses = successes.length + rollSummary.addSuccesses;
   const outcome = totalSuccesses >= rollSummary.ob ? 'success' : 'failure';
+
+  const availableFate = character.points.fate.available - resourcesSpent.fate;
+  const availablePersona = character.points.persona.available - resourcesSpent.persona;
 
   return (
     <div
@@ -146,7 +149,7 @@ const Results = ({ rolledDice, reactions, rollSummary, character, onSetReaction,
                 Spend a fate point and reroll any single failed die on a test related to your wise. State, “Ah hah!” and gesture that you understand everything now.
                 <br /><br />
                 <strong>
-                  {character.points.fate.available}
+                  {availableFate}
                   &nbsp;fate available
                 </strong>
               </React.Fragment>
@@ -164,7 +167,7 @@ const Results = ({ rolledDice, reactions, rollSummary, character, onSetReaction,
                 Spend a persona point and reroll all failed dice on a test related to your wise. Declare, “Of course!” and indicate that you were wrong before but you have it all correct now.
               <br /><br />
                 <strong>
-                  {character.points.persona.available}
+                  {availablePersona}
                   &nbsp;persona available
                 </strong>
               </React.Fragment>
@@ -183,7 +186,7 @@ const Results = ({ rolledDice, reactions, rollSummary, character, onSetReaction,
                 Spend a fate point and reroll all sixes. Sixes rolled this way keep rerolling. Describe the Luck!
               <br /><br />
                 <strong>
-                  {character.points.fate.available}
+                  {availableFate}
                   &nbsp;fate available
                 </strong>
               </React.Fragment>

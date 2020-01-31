@@ -1,9 +1,10 @@
-const wiseDisabledOptions = (roll, character, effect, resource) => {
+const wiseDisabledOptions = (roll, character, resourcesSpent, effect, resource) => {
   const reactions = roll.results.reactions;
   const wiseDisabledOptions = {};
 
+  const resourcesAvailable = character.points[resource].available - resourcesSpent[resource];
   if (character.conditions.ANGRY ||
-    character.points[resource].available < 1 ||
+    resourcesAvailable < 1 ||
     reactions[effect + 'Used']) {
     wiseDisabledOptions.button = true;
     wiseDisabledOptions.select = true;
@@ -21,18 +22,19 @@ const wiseDisabledOptions = (roll, character, effect, resource) => {
   }
 
   return wiseDisabledOptions;
-}
+};
 
-const resultsDisabledOptions = (roll, character) => {
+const resultsDisabledOptions = (roll, character, resourcesSpent) => {
   const disabledOptions = {};
 
-  if (character.points.fate.available < 1 || roll.results.reactions.explodeSixes) {
+  const fateAvailable = character.points.fate.available - resourcesSpent.fate;
+  if (fateAvailable < 1 || roll.results.reactions.explodeSixes) {
     disabledOptions.explodeSixes = true;
   }
 
-  disabledOptions.deeperUnderstanding = wiseDisabledOptions(roll, character, 'deeperUnderstanding', 'fate');
+  disabledOptions.deeperUnderstanding = wiseDisabledOptions(roll, character, resourcesSpent, 'deeperUnderstanding', 'fate');
 
-  disabledOptions.ofCourse = wiseDisabledOptions(roll, character, 'ofCourse', 'persona');
+  disabledOptions.ofCourse = wiseDisabledOptions(roll, character, resourcesSpent, 'ofCourse', 'persona');
 
   // console.log(disabledOptions);
 
