@@ -30,7 +30,7 @@ class Ready extends React.Component {
           className="roll-engage"
           onClick={() => {
             this.props.operations.rollDice();
-            this.props.onGotoPage('RESULTS');
+            // this.props.onGotoPage('READY');
           }}
           >
           Roll the dice!

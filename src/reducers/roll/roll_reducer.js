@@ -14,7 +14,7 @@ import { SET_CONDITION } from '../../actions';
 import reduceResults from './results_reducer';
 
 // Transitions between stages are controlled by big buttons, not the nav arrows. Naving to a stage that hasn't begun is impossible. Previous stages are visible but can't interact.
-const ROLL_STAGES = {
+export const ROLL_STAGES = {
   PREPARE: 'PREPARE', // gather info, add dice, ready
   REACT: 'REACT', // results
   OUTCOME: 'OUTCOME', // aftermath
@@ -22,19 +22,7 @@ const ROLL_STAGES = {
 
 export const InitialRoll = {
   stage: ROLL_STAGES.PREPARE,
-  display: {
-    currentPage: ROLL_PAGES[2],
-
-    back: {
-      target: undefined,
-      enabled: false
-    },
-
-    forward: {
-      target: 'RESULTS',
-      enabled: true
-    }
-  },
+  pageIndex: 2,
   dice: {
     info: {
       isVersus: false,
@@ -56,35 +44,7 @@ export const InitialRoll = {
       supplies: false,
       gear: true,
     },
-
-
   },
-  
-};
-
-const reduceDisplay = function (state, action, character) {
-  let pageIndex;
-  switch (action.type) {
-    case ROLL_GOTO_PAGE:
-      pageIndex = ROLL_PAGES.indexOf(action.payload.page);
-      return {
-        ...state,
-        currentPage: action.payload.page,
-        back: {
-          target: ROLL_PAGES[pageIndex - 1],
-          // TODO some transitions have extra reqs
-          enabled: !!ROLL_PAGES[pageIndex - 1]
-        },
-        forward: {
-          target: ROLL_PAGES[pageIndex + 1],
-          // TODO some transitions have extra reqs
-          enabled: !!ROLL_PAGES[pageIndex + 1]
-        }
-      };
-
-    default:
-      return state;
-  }
 };
 
 const reduceInfo = function (state, action, character) {
@@ -203,23 +163,29 @@ const reduceDice = function (state, action, character) {
 
 const rollReducer = function (state = InitialRoll, action, character) {
   state = {
-    display: reduceDisplay(state.display, action, character),
+    ...state,
     dice: reduceDice(state.dice, action, character),
     results: reduceResults(state.results, action, character, state),
   };
 
-  // Stage transitions
   switch (action.type) {
+    case ROLL_GOTO_PAGE:
+      state.pageIndex = action.payload.pageIndex;
+      break;
+
+    // Stage transitions
     case ROLL_RESET:
       state.stage = ROLL_STAGES.PREPARE;
       break;
 
     case ROLL_ROLL_DICE:
       state.stage = ROLL_STAGES.REACT;
+      state.pageIndex = ROLL_PAGES.indexOf('REACT');
       break;
 
     case ROLL_ACCEPT:
       state.stage = ROLL_STAGES.OUTCOME;
+      state.pageIndex = ROLL_PAGES.indexOf('OUTCOME');
       break;
       
     default:

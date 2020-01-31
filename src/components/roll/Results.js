@@ -83,7 +83,7 @@ const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, 
   );
 };
 
-const Outcome = ({ outcome, rollSummary, totalSuccesses }) => {
+const Outcome = ({ outcome, rollSummary, totalSuccesses, onAcceptRoll }) => {
   return (
     <footer className="outcome">
       <h2>Outcome: {outcome}</h2>
@@ -109,12 +109,12 @@ const Outcome = ({ outcome, rollSummary, totalSuccesses }) => {
         </span>
       </div>
 
-      <button>Accept Results</button>
+      <button onClick={onAcceptRoll}>Accept Results</button>
     </footer>
   )
 };
 
-const Results = ({ rolledDice, reactions, rollSummary, character, onSetReaction, disabledOptions, resourcesSpent }) => {
+const Results = ({ rolledDice, reactions, rollSummary, character, onSetReaction, onAcceptRoll, disabledOptions, resourcesSpent }) => {
   const dice = rolledDice.sort(
     (a, b) => Math.sign(b.face - a.face)
   );
@@ -213,7 +213,9 @@ const Results = ({ rolledDice, reactions, rollSummary, character, onSetReaction,
       <Outcome
         outcome={outcome}
         totalSuccesses={totalSuccesses}
-        rollSummary={rollSummary} />
+        rollSummary={rollSummary}
+        onAcceptRoll={onAcceptRoll}
+        />
     </div>
   );
 };
@@ -224,6 +226,7 @@ Results.propTypes = {
   rollSummary: PropTypes.object.isRequired,
   character: PropTypes.object.isRequired,
   onSetReaction: PropTypes.func.isRequired,
+  onAcceptRoll: PropTypes.func.isRequired,
   disabledOptions: PropTypes.object.isRequired,
 };
 

@@ -12,12 +12,14 @@ import RollPage from '../components/roll/RollPage';
 import calculateDerivedRollState from '../derivers/roll/derived_state';
 import addDiceDisabledOptions from '../derivers/roll/add_dice_disabled_options';
 import resultsDisabledOptions from '../derivers/roll/results_disabled_options';
-import roll_resources from '../derivers/roll/roll_resources';
+import rollResources from '../derivers/roll/roll_resources';
+import rollNavStatus from '../derivers/roll/roll_nav_status';
 
 const mapStateToProps = (state) => {
-  const resourcesSpent = roll_resources(state.roll, state.character);
+  const resourcesSpent = rollResources(state.roll, state.character);
   return {
     ...state.roll,
+    navStatus: rollNavStatus(state.roll),
     character: state.character,
     derived: calculateDerivedRollState(state.roll, state.character),
     disabledOptions: {

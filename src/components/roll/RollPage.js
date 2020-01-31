@@ -13,7 +13,7 @@ import './styles/RollPage.css';
 
 class RollPage extends React.Component {
   currentAction() {
-    switch(this.props.display.currentPage) {
+    switch(this.props.navStatus.pageName) {
       case 'GATHER INFO':
       return (
         <GatherInfo {...this.props.dice}
@@ -37,19 +37,20 @@ class RollPage extends React.Component {
         <Ready {...this.props} />
       );
 
-      case 'RESULTS':
+      case 'REACT':
       return (
         <Results
           {...this.props.results}
           rollSummary={this.props.derived.summary}
           character={this.props.character}
           onSetReaction={this.props.onSetReaction}
+          onAcceptRoll={this.props.operations.accept}
           disabledOptions={this.props.disabledOptions.results}
           resourcesSpent={this.props.resourcesSpent}
           />
       );
       
-      // case 'AFTERMATH':
+      // case 'OUTCOME':
       // return (
       //   <Aftermath {...this.props} />
       // );
@@ -60,11 +61,14 @@ class RollPage extends React.Component {
     }
   }
   render() {
-    const showSummary = ['GATHER INFO', 'ADD DICE', 'READY'].includes(this.props.display.currentPage);
+    const showSummary = [
+      'GATHER INFO', 'ADD DICE', 'READY'
+    ].includes(this.props.navStatus.pageName);
+
     return (
       <div id="roll-page">
         <RollNav
-          {...this.props.display}
+          status={this.props.navStatus}
           onGotoPage={this.props.onGotoPage}
           reset={this.props.operations.reset}
           />
@@ -82,9 +86,10 @@ class RollPage extends React.Component {
 }
 
 RollPage.propTypes = {
+  // stage: PropTypes.string.isRequired,
+  navStatus: PropTypes.object.isRequired,
   character: PropTypes.object.isRequired,
   dice: PropTypes.object.isRequired,
-  display: PropTypes.object.isRequired,
   results: PropTypes.object.isRequired,
   derived: PropTypes.object.isRequired,
   disabledOptions: PropTypes.object.isRequired,

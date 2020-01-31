@@ -11,21 +11,21 @@ export function rollReset() {
   return {
     type: ROLL_RESET,
     payload: {}
-  }
+  };
 };
 
 export function rollRollDice() {
   return {
     type: ROLL_ROLL_DICE,
     payload: {}
-  }
+  };
 };
 
 export function rollAccept() {
   return {
     type: ROLL_ACCEPT,
     payload: {}
-  }
+  };
 };
 
 const ROLL_INFO_PROPS = [
@@ -87,16 +87,17 @@ export function rollSetReaction(prop, value) {
   };
 }
 
-export const ROLL_PAGES = ['GATHER INFO', 'ADD DICE', 'READY', 'RESULTS', 'AFTERMATH'];
+export const ROLL_PAGES = ['GATHER INFO', 'ADD DICE', 'READY', 'REACT', 'OUTCOME'];
 
-export function rollGotoPage(page) {
-  if (!ROLL_PAGES.includes(page)) {
-    throw new Error(`Invalid page ${page}`);
+export function rollGotoPage(pageIndex) {
+  if (pageIndex < 0 ||
+    pageIndex > ROLL_PAGES.length) {
+    throw new Error(`Invalid page index ${pageIndex}`);
   }
   return {
     type: ROLL_GOTO_PAGE,
     payload: {
-      page: page
+      pageIndex: pageIndex
     }
   };
 }
