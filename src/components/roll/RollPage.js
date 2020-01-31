@@ -28,7 +28,7 @@ class RollPage extends React.Component {
           character={this.props.character}
           onSetProperty={this.props.onSetModifier}
           disabledOptions={this.props.disabledOptions.addDice}
-          resourcesSpent={this.props.resourcesSpent}
+          resourcesSpent={this.props.impact.points.total}
           />
       );
 
@@ -46,7 +46,7 @@ class RollPage extends React.Component {
           onSetReaction={this.props.onSetReaction}
           onAcceptRoll={this.props.operations.accept}
           disabledOptions={this.props.disabledOptions.results}
-          resourcesSpent={this.props.resourcesSpent}
+          resourcesSpent={this.props.impact.points.total}
           />
       );
       
@@ -91,9 +91,9 @@ RollPage.propTypes = {
   character: PropTypes.object.isRequired,
   dice: PropTypes.object.isRequired,
   results: PropTypes.object.isRequired,
+  impact: PropTypes.object.isRequired,
   derived: PropTypes.object.isRequired,
   disabledOptions: PropTypes.object.isRequired,
-  resourcesSpent: PropTypes.object.isRequired,
   onGotoPage: PropTypes.func.isRequired,
   onSetInfo: PropTypes.func.isRequired,
   onSetModifier: PropTypes.func.isRequired,
