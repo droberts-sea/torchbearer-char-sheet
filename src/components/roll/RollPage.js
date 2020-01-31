@@ -70,7 +70,7 @@ class RollPage extends React.Component {
         <RollNav
           status={this.props.navStatus}
           onGotoPage={this.props.onGotoPage}
-          reset={this.props.operations.reset}
+          onResetRoll={this.props.operations.reset}
           />
         <div className="roll-page-action">
           { this.currentAction() }

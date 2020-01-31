@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const RollNav = function({ status, onGotoPage, reset }) {
+const RollNav = function({ status, onGotoPage, onResetRoll }) {
   return (
     <nav id="roll-nav">
       <button
@@ -13,7 +13,7 @@ const RollNav = function({ status, onGotoPage, reset }) {
       <h2>{status.pageName}</h2>
       <button
         className="reset"
-        onClick={reset}
+        onClick={onResetRoll}
         >Reset</button>
 
       <button
@@ -28,7 +28,7 @@ const RollNav = function({ status, onGotoPage, reset }) {
 RollNav.propTypes = {
   status: PropTypes.object.isRequired,
   onGotoPage: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
+  onResetRoll: PropTypes.func.isRequired,
 };
 
 export default RollNav;
