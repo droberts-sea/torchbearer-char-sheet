@@ -29,12 +29,16 @@ const deepCopy = (obj) => {
 }
 
 describe('addDiceDisabledOptions', () => {
+  let resourcesSpent;
+  beforeEach(() => {
+    resourcesSpent = { fate: 0, persona: 0 };
+  });
   describe('natureInstead', () => {
     test('it is not disabled for a BL skill', () => {
       const roll = deepCopy(fakeRoll);
       roll.dice.info.skill = 'ALCHEMIST';
 
-      const disabled = addDiceDisabledOptions(roll, fakeCharacter);
+      const disabled = addDiceDisabledOptions(roll, fakeCharacter, resourcesSpent);
 
       expect(disabled.natureInstead).toBe(false);
     });
@@ -44,7 +48,7 @@ describe('addDiceDisabledOptions', () => {
         const roll = deepCopy(fakeRoll);
         roll.dice.info.skill = skill;
 
-        const disabled = addDiceDisabledOptions(roll, fakeCharacter);
+        const disabled = addDiceDisabledOptions(roll, fakeCharacter, resourcesSpent);
 
         expect(disabled.natureInstead).toBe(true);
       })
@@ -55,7 +59,7 @@ describe('addDiceDisabledOptions', () => {
       const roll = deepCopy(fakeRoll);
       roll.dice.info.skill = 'WILL';
 
-      const disabled = addDiceDisabledOptions(roll, fakeCharacter);
+      const disabled = addDiceDisabledOptions(roll, fakeCharacter, resourcesSpent);
 
       expect(disabled.natureInstead).toBe(true);
     });
@@ -64,7 +68,7 @@ describe('addDiceDisabledOptions', () => {
       const roll = deepCopy(fakeRoll);
       roll.dice.info.skill = undefined;
 
-      const disabled = addDiceDisabledOptions(roll, fakeCharacter);
+      const disabled = addDiceDisabledOptions(roll, fakeCharacter, resourcesSpent);
 
       expect(disabled.natureInstead).toBe(true);
     });
@@ -81,7 +85,7 @@ describe('addDiceDisabledOptions', () => {
       expect(character.skills.ORATOR.open).toBeTruthy();
 
       roll.dice.info.skill = skillName;
-      const disabled = addDiceDisabledOptions(roll, character);
+      const disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
       expect(disabled.unselectNatureInstead).toBeFalsy();
     });
 
@@ -91,7 +95,7 @@ describe('addDiceDisabledOptions', () => {
 
       roll.dice.info.skill = skillName;
       character.conditions.AFRAID = false;
-      const disabled = addDiceDisabledOptions(roll, character);
+      const disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
       expect(disabled.unselectNatureInstead).toBeFalsy();
     });
 
@@ -101,7 +105,7 @@ describe('addDiceDisabledOptions', () => {
 
       roll.dice.info.skill = skillName;
       character.conditions.AFRAID = true;
-      const disabled = addDiceDisabledOptions(roll, character);
+      const disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
       expect(disabled.unselectNatureInstead).toBeFalsy();
     });
   });
@@ -124,13 +128,13 @@ describe('addDiceDisabledOptions', () => {
       trait.uses = 0;
       expect(traitIsAvailable(trait)).toBeTruthy();
 
-      disabled = addDiceDisabledOptions(roll, character);
+      disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
       expect(disabled.traitBenefit).toBeFalsy();
 
       trait.uses = trait.level;
       expect(traitIsAvailable(trait)).toBeFalsy();
 
-      disabled = addDiceDisabledOptions(roll, character);
+      disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
       expect(disabled.traitBenefit).toBeTruthy();
     });
 
@@ -138,12 +142,12 @@ describe('addDiceDisabledOptions', () => {
       let disabled;
       trait.uses = 0;
 
-      disabled = addDiceDisabledOptions(roll, character);
+      disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
       expect(disabled.traitBenefit).toBeFalsy();
 
       character.conditions.ANGRY = true;
 
-      disabled = addDiceDisabledOptions(roll, character);
+      disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
       expect(disabled.traitBenefit).toBeTruthy();
     });
 
@@ -151,13 +155,85 @@ describe('addDiceDisabledOptions', () => {
       let disabled;
       roll.dice.info.isVersus = false;
 
-      disabled = addDiceDisabledOptions(roll, character);
+      disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
       expect(disabled.traitOpponent).toBeTruthy();
 
       roll.dice.info.isVersus = true;
 
-      disabled = addDiceDisabledOptions(roll, character);
+      disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
       expect(disabled.traitOpponent).toBeFalsy();
     });
+  });
+
+  describe('persona dice', () => {
+    let character;
+    let roll;
+    beforeEach(() => {
+      character = deepCopy(fakeCharacter);
+      roll = deepCopy(fakeRoll);
+    });
+
+    it('personaDice is limited by available persona', () => {
+      character.points.persona.available = 2;
+      resourcesSpent.persona = 0;
+      
+      let disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
+      expect(disabled.maxPersonaDice).toEqual(2);
+
+      resourcesSpent.persona = 1;
+      disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
+      expect(disabled.maxPersonaDice).toEqual(1);
+    });
+
+    it('personaDice max is never more than 3', () => {
+      character.points.persona.available = 10;
+      resourcesSpent.persona = 0;
+      
+      const disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
+      expect(disabled.maxPersonaDice).toEqual(3);
+    });
+
+    it('persona spent on personaDice is ignored in the cap', () => {
+      character.points.persona.available = 2;
+      roll.dice.modifiers.personaDice = 1;
+      resourcesSpent.persona = 1;
+      
+      const disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
+      expect(disabled.maxPersonaDice).toEqual(2);
+    });
+  });
+
+  describe('tap nature', () => {
+    let character;
+    let roll;
+    beforeEach(() => {
+      character = deepCopy(fakeCharacter);
+      roll = deepCopy(fakeRoll);
+    });
+
+    it('is enabled if there is persona available', () => {
+      character.points.persona.available = 2;
+      resourcesSpent.persona = 1;
+
+      const disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
+      expect(disabled.tapNature).toBeFalsy();
+    });
+
+    it('is disabled if there is not persona available', () => {
+      character.points.persona.available = 1;
+      resourcesSpent.persona = 1;
+
+      const disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
+      expect(disabled.tapNature).toBeTruthy();
+    });
+
+    it('is enabled if the tapPersona modifier is set', () => {
+      character.points.persona.available = 1;
+      resourcesSpent.persona = 1;
+      roll.dice.modifiers.tapNature = true;
+
+      const disabled = addDiceDisabledOptions(roll, character, resourcesSpent);
+      expect(disabled.tapNature).toBeFalsy();
+    })
   });
 });
