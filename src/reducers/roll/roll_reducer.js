@@ -3,6 +3,9 @@ import {
   ROLL_SET_MODIFIER,
   ROLL_GOTO_PAGE,
   ROLL_PAGES,
+  ROLL_RESET,
+  ROLL_ROLL_DICE,
+  ROLL_ACCEPT,
 } from '../../actions/roll_actions';
 
 import { traitIsAvailable } from '../../rules/traits';
@@ -10,7 +13,15 @@ import { SET_CONDITION } from '../../actions';
 
 import reduceResults from './results_reducer';
 
+// Transitions between stages are controlled by big buttons, not the nav arrows. Naving to a stage that hasn't begun is impossible. Previous stages are visible but can't interact.
+const ROLL_STAGES = {
+  PREPARE: 'PREPARE', // gather info, add dice, ready
+  REACT: 'REACT', // results
+  OUTCOME: 'OUTCOME', // aftermath
+};
+
 export const InitialRoll = {
+  stage: ROLL_STAGES.PREPARE,
   display: {
     currentPage: ROLL_PAGES[2],
 
@@ -45,8 +56,6 @@ export const InitialRoll = {
       supplies: false,
       gear: true,
     },
-
-    locked: false,
 
 
   },
@@ -198,6 +207,24 @@ const rollReducer = function (state = InitialRoll, action, character) {
     dice: reduceDice(state.dice, action, character),
     results: reduceResults(state.results, action, character, state),
   };
+
+  // Stage transitions
+  switch (action.type) {
+    case ROLL_RESET:
+      state.stage = ROLL_STAGES.PREPARE;
+      break;
+
+    case ROLL_ROLL_DICE:
+      state.stage = ROLL_STAGES.REACT;
+      break;
+
+    case ROLL_ACCEPT:
+      state.stage = ROLL_STAGES.OUTCOME;
+      break;
+      
+    default:
+      break;
+  }
 
   return state;
 }

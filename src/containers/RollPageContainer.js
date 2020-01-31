@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import {
   rollReset,
   rollRollDice,
-  rollCommit,
+  rollAccept,
   rollSetInfo,
   rollSetModifier,
   rollSetReaction,
@@ -37,8 +37,8 @@ const mapDispatchToProps = (dispatch) => {
       rollDice: () => {
         dispatch(rollRollDice());
       },
-      commit: () => {
-        dispatch(rollCommit());
+      accept: () => {
+        dispatch(rollAccept());
       },
     },
     onGotoPage: (page) => {
