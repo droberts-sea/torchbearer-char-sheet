@@ -42,10 +42,10 @@ describe('resources', () => {
   });
 
   it('Adds a persona for of course', () => {
-    roll.results.reactions.ofCourse = false;
+    roll.results.reactions.ofCourseUsed = false;
     const before_impact = impact(roll);
     
-    roll.results.reactions.ofCourse = true;
+    roll.results.reactions.ofCourseUsed = true;
     const after_impact = impact(roll);
 
     expect(after_impact.points.total.persona).toEqual(before_impact.points.total.persona + 1);

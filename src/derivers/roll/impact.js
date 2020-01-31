@@ -31,7 +31,7 @@ const points = (roll) => {
     });
   }
 
-  if (roll.results.reactions.ofCourse) {
+  if (roll.results.reactions.ofCourseUsed) {
     points.persona.push({
       source: 'of course',
       effect: 1,
@@ -46,8 +46,8 @@ const points = (roll) => {
   }
 
   points.total = {
-    persona: points.persona.reduce((m, p) => m + p.effect, 0),
     fate: points.fate.reduce((m, f) => m + f.effect, 0),
+    persona: points.persona.reduce((m, p) => m + p.effect, 0),
     checks: points.checks.reduce((m, c) => m + c.effect, 0),
   }
 

@@ -228,6 +228,7 @@ Results.propTypes = {
   onSetReaction: PropTypes.func.isRequired,
   onAcceptRoll: PropTypes.func.isRequired,
   disabledOptions: PropTypes.object.isRequired,
+  resourcesSpent: PropTypes.object.isRequired,
 };
 
 export default Results;
