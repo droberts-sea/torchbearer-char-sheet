@@ -47,3 +47,7 @@ button {
   font-style: italic;
   text-transform: capitalize;
 }
+
+select {
+  font-size: 1em;
+}
