@@ -1,34 +1,63 @@
-const impact = (roll) => {
-  const impact = {
-    points: {
-      persona: [],
-      fate: [],
-      checks: [],
-      total: {
-        fate: 0,
-        persona: 0,
-        checks: 0,
-      },
+const points = (roll) => {
+  const points = {
+    persona: [],
+    fate: [],
+    checks: [],
+    total: {
+      fate: 0,
+      persona: 0,
+      checks: 0,
     },
   };
 
-  impact.points.total.persona += roll.dice.modifiers.personaDice;
+  if (roll.dice.modifiers.personaDice) {
+    points.persona.push({
+      source: 'persona dice',
+      effect: roll.dice.modifiers.personaDice,
+    });
+  }
 
   if (roll.dice.modifiers.tapNature) {
-    impact.points.total.persona += 1;
+    points.persona.push({
+      source: 'tap nature',
+      effect: 1,
+    });
   }
 
   if (roll.results.reactions.deeperUnderstandingUsed) {
-    impact.points.total.fate += 1;
+    points.fate.push({
+      source: 'deeper understanding',
+      effect: 1,
+    });
   }
 
   if (roll.results.reactions.ofCourse) {
-    impact.points.total.persona += 1;
+    points.persona.push({
+      source: 'of course',
+      effect: 1,
+    });
   }
 
   if (roll.results.reactions.explodeSixes) {
-    impact.points.total.fate += 1;
+    points.fate.push({
+      source: 'fate for luck',
+      effect: 1,
+    });
   }
+
+  points.total = {
+    persona: points.persona.reduce((m, p) => m + p.effect, 0),
+    fate: points.fate.reduce((m, f) => m + f.effect, 0),
+    checks: points.checks.reduce((m, c) => m + c.effect, 0),
+  }
+
+  return points;
+};
+
+const impact = (roll) => {
+  const impact = {
+    points: points(roll),
+  };
 
   return impact;
 };
