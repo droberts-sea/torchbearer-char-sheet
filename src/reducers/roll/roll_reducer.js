@@ -154,11 +154,15 @@ const reduceModifiers = function (state, action, character, rollInfo) {
 }
 
 const reduceDice = function (state, action, character) {
-  return {
-    ...state,
-    info: reduceInfo(state.info, action, character),
-    modifiers: reduceModifiers(state.modifiers, action, character, state.info)
-  };
+  if (action.type === ROLL_RESET) {
+    return InitialRoll.dice;
+  } else {
+    return {
+      ...state,
+      info: reduceInfo(state.info, action, character),
+      modifiers: reduceModifiers(state.modifiers, action, character, state.info)
+    };
+  }
 };
 
 const rollReducer = function (state = InitialRoll, action, character) {
@@ -176,6 +180,7 @@ const rollReducer = function (state = InitialRoll, action, character) {
     // Stage transitions
     case ROLL_RESET:
       state.stage = ROLL_STAGES.PREPARE;
+      state.pageIndex = 0;
       break;
 
     case ROLL_ROLL_DICE:
@@ -187,7 +192,7 @@ const rollReducer = function (state = InitialRoll, action, character) {
       state.stage = ROLL_STAGES.OUTCOME;
       state.pageIndex = ROLL_PAGES.indexOf('OUTCOME');
       break;
-      
+
     default:
       break;
   }

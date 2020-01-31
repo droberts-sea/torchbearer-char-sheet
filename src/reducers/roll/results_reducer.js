@@ -3,6 +3,7 @@ import _ from 'underscore';
 import {
   ROLL_SET_REACTION,
   ROLL_ROLL_DICE,
+  ROLL_RESET,
 } from '../../actions/roll_actions';
 
 import calculateDerivedRollState from '../../derivers/roll/derived_state';
@@ -176,12 +177,12 @@ const ofCourse = (state, newState) => {
 }
 
 const reduceResults = function (state = InitialResults, action, character, roll) {
-  const newState = { ...state };
   switch (action.type) {
     case ROLL_ROLL_DICE:
       return reduceRollDice(state, character, roll);
 
     case ROLL_SET_REACTION:
+      const newState = { ...state };
       // Set the property first, then handle other effects
       const newReactions = { ...newState.reactions };
       const { prop, value } = action.payload;
@@ -207,6 +208,9 @@ const reduceResults = function (state = InitialResults, action, character, roll)
       }
 
       return newState;
+
+    case ROLL_RESET:
+      return InitialResults;
 
     default:
       return state;
