@@ -3,6 +3,7 @@ import {
   rollReset,
   rollRollDice,
   rollAccept,
+  rollCommitResults,
   rollSetInfo,
   rollSetModifier,
   rollSetReaction,
@@ -42,6 +43,9 @@ const mapDispatchToProps = (dispatch) => {
       accept: () => {
         dispatch(rollAccept());
       },
+      commitResults: () => {
+        dispatch(rollCommitResults());
+      }
     },
     onGotoPage: (page) => {
       dispatch(rollGotoPage(page));

@@ -1,6 +1,7 @@
 export const ROLL_RESET = 'ROLL_RESET';
 export const ROLL_ROLL_DICE = 'ROLL_ROLL_DICE';
 export const ROLL_ACCEPT = 'ROLL_ACCEPT';
+export const ROLL_COMMIT_RESULTS = 'ROLL_COMMIT_RESULTS';
 
 export const ROLL_SET_INFO = 'ROLL_SET_INFO';
 export const ROLL_SET_MODIFIER = 'ROLL_SET_MODIFIER';
@@ -24,6 +25,13 @@ export function rollRollDice() {
 export function rollAccept() {
   return {
     type: ROLL_ACCEPT,
+    payload: {}
+  };
+};
+
+export function rollCommitResults() {
+  return {
+    type: ROLL_COMMIT_RESULTS,
     payload: {}
   };
 };

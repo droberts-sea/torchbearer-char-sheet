@@ -52,7 +52,7 @@ const Wises = ({ effects }) => {
   );
 }
 
-const Outcome = ({ impact }) => {
+const Outcome = ({ impact, operations }) => {
   return (
     <div>
       <ul className="impact-effect-list">
@@ -73,10 +73,24 @@ const Outcome = ({ impact }) => {
         <Wises effects={impact.wises} />
         <Toggle
           name="Skill already used this conflict*"
-          
+
         />
-        <li><button className="action-button">Apply outcomes to character</button></li>
-        <li><button className="action-button">Reset roll without applying outcomes</button></li>
+        <li>
+          <button
+            className="action-button"
+            onClick={operations.commitResults}
+          >
+            Apply outcomes to character
+          </button>
+        </li>
+        <li>
+          <button
+            className="action-button"
+            onClick={operations.reset}
+          >
+            Reset roll without applying outcomes
+          </button>
+        </li>
         <li>
           <p>
             *Any time you test an ability multiple times to determine the outcome, only one test is earned toward advancement. Log the first test you earn. That’s the one that counts for this conflict.

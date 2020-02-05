@@ -55,6 +55,7 @@ class RollPage extends React.Component {
         return (
           <Outcome
             impact={this.props.impact}
+            operations={this.props.operations}
           />
         );
 
