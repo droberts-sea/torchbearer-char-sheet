@@ -5,3 +5,13 @@
 .impact-effect-list .point-effect-details > li {
   margin-inline-start: 1em;
 }
+
+.impact-effect-list button {
+  font-size: 1.5em;
+  display: block;
+  width: 70%;
+  padding: .2em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: .5em;
+}
