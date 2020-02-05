@@ -27,10 +27,9 @@ class Ready extends React.Component {
           {details.map(this.buildDetail)}
         </ul>
         <button
-          className="roll-engage"
+          className="action-button"
           onClick={() => {
             this.props.operations.rollDice();
-            // this.props.onGotoPage('READY');
           }}
           >
           Roll the dice!

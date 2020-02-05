@@ -20,16 +20,6 @@
   justify-items: center;
 }
 
-.roll-results .outcome button {
-  font-size: 1.5em;
-  display: block;
-  width: 70%;
-  padding: .2em;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: .5em;
-}
-
 .roll-results .pre-footer {
   padding-bottom: 3em;
 }

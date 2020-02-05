@@ -75,13 +75,13 @@ const Outcome = ({ impact }) => {
           name="Skill already used this conflict*"
           
         />
-        <li><button>Apply outcomes to character</button></li>
-        <li><button>Reset roll without applying outcomes</button></li>
+        <li><button className="action-button">Apply outcomes to character</button></li>
+        <li><button className="action-button">Reset roll without applying outcomes</button></li>
         <li>
           <p>
             *Any time you test an ability multiple times to determine the outcome, only one test is earned toward advancement. Log the first test you earn. That’s the one that counts for this conflict.
           </p><p>
-            Exception: If you only need one more of a particular type of test to advance, you can hold off noting your test during a confl ict to see if you get the pass or fail that you need to advance.
+            Exception: If you only need one more of a particular type of test to advance, you can hold off noting your test during a conflict to see if you get the pass or fail that you need to advance.
           </p>
         </li>
       </ul>

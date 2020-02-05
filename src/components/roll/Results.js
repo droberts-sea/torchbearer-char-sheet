@@ -109,7 +109,12 @@ const Outcome = ({ outcome, rollSummary, totalSuccesses, onAcceptRoll }) => {
         </span>
       </div>
 
-      <button onClick={onAcceptRoll}>Accept Results</button>
+      <button
+        className="action-button"
+        onClick={onAcceptRoll}
+      >
+        Accept Results
+      </button>
     </footer>
   )
 };
@@ -215,7 +220,7 @@ const Results = ({ rolledDice, reactions, rollSummary, character, onSetReaction,
         totalSuccesses={totalSuccesses}
         rollSummary={rollSummary}
         onAcceptRoll={onAcceptRoll}
-        />
+      />
     </div>
   );
 };
