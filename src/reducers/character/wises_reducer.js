@@ -4,9 +4,9 @@ export const InitialWises = [
   {
     name: "Deepest Heart of Darkness",
     advancement: {
-      pass: false,
+      pass: true,
       fail: true,
-      fate: false,
+      fate: true,
       persona: false
     }
   },

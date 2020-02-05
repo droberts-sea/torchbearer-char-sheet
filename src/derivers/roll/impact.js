@@ -1,3 +1,7 @@
+import { wiseReadyToAdvance } from "../../rules/wises";
+
+// Thought: maybe you could consolidate all the impact effects into a single type?
+
 const points = (roll) => {
   const points = {
     persona: [],
@@ -12,37 +16,54 @@ const points = (roll) => {
 
   if (roll.dice.modifiers.personaDice) {
     points.persona.push({
-      source: 'persona dice',
+      source: 'Persona Dice',
       effect: roll.dice.modifiers.personaDice,
     });
   }
 
   if (roll.dice.modifiers.tapNature) {
     points.persona.push({
-      source: 'tap nature',
+      source: 'Tap Nature',
       effect: 1,
     });
   }
 
   if (roll.results.reactions.deeperUnderstandingUsed) {
     points.fate.push({
-      source: 'deeper understanding',
+      source: 'Deeper Understanding',
       effect: 1,
     });
   }
 
   if (roll.results.reactions.ofCourseUsed) {
     points.persona.push({
-      source: 'of course',
+      source: 'Of Course',
       effect: 1,
     });
   }
 
   if (roll.results.reactions.explodeSixes) {
     points.fate.push({
-      source: 'fate for luck',
+      source: 'Fate for Luck',
       effect: 1,
     });
+  }
+
+  if (roll.dice.modifiers.traitName) {
+    if (roll.dice.modifiers.traitEffect === 'penalty') {
+      points.checks.push({
+        source: `${roll.dice.modifiers.traitName} trait used against you`,
+        effect: 1,
+      });
+
+    } else if (roll.dice.info.isVersus &&
+      roll.dice.modifiers.traitEffect === "opponent") {
+      points.checks.push({
+        source: `${roll.dice.modifiers.traitName} trait used to aid opponent`,
+        effect: 2,
+      });
+
+    }
   }
 
   points.total = {
@@ -54,9 +75,56 @@ const points = (roll) => {
   return points;
 };
 
-const impact = (roll) => {
+const beneficialTrait = (roll, character) => {
+  const trait = character.traits.find(t => t.name === roll.dice.modifiers.traitName);
+  if (trait && trait.level < 3 &&
+    roll.dice.modifiers.traitEffect === 'benefit') {
+    return roll.dice.modifiers.traitName;
+  }
+  return undefined;
+}
+
+const wises = (roll, character) => {
+  const reactions = roll.results.reactions;
+
+  const effects = [];
+
+  if (reactions.deeperUnderstandingUsed) {
+    const wise = character.wises.find(w => w.name === reactions.deeperUnderstandingWise);
+    if (wise) {
+      const effect = {
+        name: reactions.deeperUnderstandingWise,
+        mark: 'fate',
+        alreadyMarked: wise.advancement.fate,
+      };
+      effect.advance = !effect.alreadyMarked && wiseReadyToAdvance(wise, 'fate');
+      effects.push(effect);
+    }
+  }
+
+  if (reactions.ofCourseUsed) {
+    const wise = character.wises.find(w => w.name === reactions.ofCourseWise);
+    if (wise) {
+      const effect = {
+        name: reactions.ofCourseWise,
+        mark: 'persona',
+        alreadyMarked: wise.advancement.persona,
+      }
+      effect.advance = !effect.alreadyMarked && wiseReadyToAdvance(wise, 'persona');
+      effects.push(effect);
+    }
+  }
+
+  return effects;
+}
+
+const impact = (roll, character) => {
   const impact = {
     points: points(roll),
+    beneficialTrait: beneficialTrait(roll, character),
+    wises: wises(roll, character),
+    // ...skillsAndAbilities(roll),
+
   };
 
   return impact;

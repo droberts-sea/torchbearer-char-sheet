@@ -5,11 +5,11 @@ import {
 
 export const InitialPoints = {
   fate: {
-    available: 0,
+    available: 3,
     spent: 0
   },
   persona: {
-    available: 0,
+    available: 3,
     spent: 0
   },
   checks: {

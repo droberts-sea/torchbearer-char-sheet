@@ -1,14 +1,16 @@
 import React from 'react';
 
-const Points = ({ name, points, total, verb = "spent" }) => {
+import "./styles/Outcome.css";
+
+const Points = ({ name, points, verb = "Spend" }) => {
   return (
     <li>
-      <b>{total}</b> {name} {verb}
-      <ul>
+      <b>{verb} {points.total[name]}</b> {name}
+      <ul className="point-effect-details">
         {
-          points.map((effect) => (
+          points[name].map((effect) => (
             <li key={effect.source}>
-              {effect.effect} for {effect.source}
+              {effect.effect} for <em>{effect.source}</em>
             </li>
           ))
         }
@@ -17,14 +19,57 @@ const Points = ({ name, points, total, verb = "spent" }) => {
   );
 }
 
+const BeneficialTrait = ({ trait }) => {
+  if (trait) {
+    return (
+      <li>
+        <p>
+          <b>Mark</b> beneficial use of trait <em>{trait}</em>
+        </p>
+      </li>
+    );
+  }
+  return "";
+}
+
+const Wises = ({ effects }) => {
+  return (
+    <React.Fragment>
+      {
+        effects.map(effect => (
+          <li>
+            <p>
+              <b>Mark</b> {effect.mark} use of wise <em>{effect.name}</em>
+              {effect.alreadyMarked ? " (already marked)" : ""}
+              {effect.advance ? " (ready to advance!)" : ""}
+            </p>
+          </li>
+        ))
+      }
+    </React.Fragment>
+  );
+}
+
 const Outcome = ({ impact }) => {
   return (
     <div>
-      <Points
-        name="persona"
-        points={impact.points.persona}
-        total={impact.points.total.persona}
+      <ul className="impact-effect-list">
+        <Points
+          name="persona"
+          points={impact.points}
         />
+        <Points
+          name="fate"
+          points={impact.points}
+        />
+        <Points
+          name="checks"
+          points={impact.points}
+          verb="Earn"
+        />
+        <BeneficialTrait trait={impact.beneficialTrait} />
+        <Wises effects={impact.wises} />
+      </ul>
     </div>
   );
 };

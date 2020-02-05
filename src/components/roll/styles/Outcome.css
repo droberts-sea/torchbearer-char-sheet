@@ -1,0 +1,7 @@
+.impact-effect-list > li {
+  margin: 1em 0;
+}
+
+.impact-effect-list .point-effect-details > li {
+  margin-inline-start: 1em;
+}
