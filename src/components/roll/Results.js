@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'underscore';
 
 import './styles/Results.css';
 import Control from '../shared/Control';
@@ -83,6 +82,7 @@ const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, 
   );
 };
 
+// TODO: consider changing name to OutcomePreview
 const Outcome = ({ outcome, rollSummary, totalSuccesses, onAcceptRoll }) => {
   return (
     <footer className="outcome">
@@ -119,16 +119,8 @@ const Outcome = ({ outcome, rollSummary, totalSuccesses, onAcceptRoll }) => {
   )
 };
 
-const Results = ({ rolledDice, reactions, rollSummary, character, onSetReaction, onAcceptRoll, disabledOptions, resourcesSpent }) => {
-  const dice = rolledDice.sort(
-    (a, b) => Math.sign(b.face - a.face)
-  );
-  const { successes, scoundrels } = _.groupBy(dice,
-    d => d.face > 3 ? "successes" : "scoundrels"
-  );
-
-  const totalSuccesses = successes.length + rollSummary.addSuccesses;
-  const outcome = totalSuccesses >= rollSummary.ob ? 'success' : 'failure';
+const Results = ({ postRoll, reactions, rollSummary, character, onSetReaction, onAcceptRoll, disabledOptions, resourcesSpent }) => {
+  const { successes, scoundrels, totalSuccesses, outcome } = postRoll;
 
   const availableFate = character.points.fate.available - resourcesSpent.fate;
   const availablePersona = character.points.persona.available - resourcesSpent.persona;

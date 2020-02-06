@@ -35,14 +35,18 @@ class RollPage extends React.Component {
 
       case 'READY':
         return (
-          <Ready {...this.props} />
+          <Ready
+            details={this.props.preRollDerived.details}
+            rollDice={this.props.operations.rollDice}
+          />
         );
 
       case 'REACT':
         return (
           <Results
             {...this.props.results}
-            rollSummary={this.props.derived.summary}
+            rollSummary={this.props.preRollDerived.summary}
+            postRoll={this.props.postRollDerived}
             character={this.props.character}
             onSetReaction={this.props.onSetReaction}
             onAcceptRoll={this.props.operations.accept}
@@ -80,7 +84,7 @@ class RollPage extends React.Component {
         </div>
         {
           showSummary ? (
-            <RollSummary {...this.props.derived.summary} />
+            <RollSummary {...this.props.preRollDerived.summary} />
           ) : ""
         }
       </div>
@@ -94,8 +98,9 @@ RollPage.propTypes = {
   character: PropTypes.object.isRequired,
   dice: PropTypes.object.isRequired,
   results: PropTypes.object.isRequired,
+  preRollDerived: PropTypes.object.isRequired,
+  postRollDerived: PropTypes.object.isRequired,
   impact: PropTypes.object.isRequired,
-  derived: PropTypes.object.isRequired,
   disabledOptions: PropTypes.object.isRequired,
   onGotoPage: PropTypes.func.isRequired,
   onSetInfo: PropTypes.func.isRequired,

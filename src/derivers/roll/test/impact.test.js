@@ -219,7 +219,7 @@ describe('resources', () => {
     });
   });
 
-  describe('skills', () => {
+  describe('skill', () => {
 
   });
 

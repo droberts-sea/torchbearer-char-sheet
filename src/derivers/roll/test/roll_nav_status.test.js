@@ -42,9 +42,9 @@ describe('rollNavStatus', () => {
     expect(navStatus.back.disabled).toBeTruthy();
   });
 
-  it('disables the forward button from the READY page in the PREPARE stage', () => {
+  it('disables the forward button from the READY page in the PRE_ROLL stage', () => {
     roll.pageIndex = ROLL_PAGES.indexOf('READY');
-    roll.stage = ROLL_STAGES.PREPARE;
+    roll.stage = ROLL_STAGES.PRE_ROLL;
 
     const navStatus = rollNavStatus(roll);
     expect(navStatus.forward.disabled).toBeTruthy();

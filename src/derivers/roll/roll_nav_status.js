@@ -16,7 +16,7 @@ const rollNavStatus = (roll) => {
   };
 
   if (ROLL_PAGES[roll.pageIndex] === 'READY' &&
-    roll.stage === ROLL_STAGES.PREPARE) {
+    roll.stage === ROLL_STAGES.PRE_ROLL) {
     navStatus.forward.disabled = true;
   }
 

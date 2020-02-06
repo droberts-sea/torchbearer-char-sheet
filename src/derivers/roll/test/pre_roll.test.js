@@ -1,6 +1,6 @@
 import _ from 'underscore';
 
-import { skillDice, calculateDerivedRollState } from '../derived_state';
+import { skillDice, preRollDerived } from '../pre_roll';
 import character from '../../../mock/character';
 
 describe('Derived State', () => {
@@ -101,11 +101,11 @@ describe('Derived State', () => {
 
       // Calculate state without this modifier
       rollState.dice.modifiers[modName] = beforeSetting;
-      const beforeState = calculateDerivedRollState(rollState, character);
+      const beforeState = preRollDerived(rollState, character);
 
       // Calculate state with this modifier
       rollState.dice.modifiers[modName] = afterSetting;
-      const afterState = calculateDerivedRollState(rollState, character);
+      const afterState = preRollDerived(rollState, character);
 
       return [beforeState, afterState];
     }
@@ -266,12 +266,12 @@ describe('Derived State', () => {
         // Calculate state without this modifier
         rollState.dice.modifiers.traitName = undefined;
         rollState.dice.modifiers.traitEffect = undefined;
-        const beforeState = calculateDerivedRollState(rollState, character);
+        const beforeState = preRollDerived(rollState, character);
 
         // Calculate state with this modifier
         rollState.dice.modifiers.traitName = traitName;
         rollState.dice.modifiers.traitEffect = traitEffect;
-        const afterState = calculateDerivedRollState(rollState, character);
+        const afterState = preRollDerived(rollState, character);
 
         return [beforeState, afterState];
       };
@@ -363,7 +363,7 @@ describe('Derived State', () => {
         // should also divide by 2
         rollState.dice.info.skill = blSkillName;
 
-        const afterState = calculateDerivedRollState(rollState, character);
+        const afterState = preRollDerived(rollState, character);
 
         const expectedDice = Math.ceil(blAbilityRating / 2);
 
@@ -376,11 +376,11 @@ describe('Derived State', () => {
         rollState.dice.info.skill = blSkillName;
         rollState.dice.modifiers.help = 0;
 
-        const beforeState = calculateDerivedRollState(rollState, character);
+        const beforeState = preRollDerived(rollState, character);
 
         rollState.dice.modifiers.help = helpDice;
 
-        const afterState = calculateDerivedRollState(rollState, character);
+        const afterState = preRollDerived(rollState, character);
 
         const expectedDice = beforeState.summary.dice + helpDice / 2;
         expect(afterState.summary.dice).toBe(expectedDice);
@@ -395,7 +395,7 @@ describe('Derived State', () => {
         rollState.dice.modifiers.gear = false;
         rollState.dice.modifiers.supplies = false;
 
-        const beforeState = calculateDerivedRollState(rollState, character);
+        const beforeState = preRollDerived(rollState, character);
 
         // Assumption: the only thing that applies is the ability and the lack of gear
         expect(beforeState.summary.dice).toBe(Math.ceil((blAbilityRating - 1) / 2));
@@ -404,7 +404,7 @@ describe('Derived State', () => {
         rollState.dice.modifiers.supplies = true;
         rollState.dice.modifiers.gear = false;
 
-        const withSuppliesState = calculateDerivedRollState(rollState, character);
+        const withSuppliesState = preRollDerived(rollState, character);
 
         let expectedDice = beforeState.summary.dice;
         if (blAbilityRating % 2 == 1) {
@@ -416,14 +416,14 @@ describe('Derived State', () => {
         rollState.dice.modifiers.supplies = false;
         rollState.dice.modifiers.gear = true;
 
-        const withGearState = calculateDerivedRollState(rollState, character);
+        const withGearState = preRollDerived(rollState, character);
         expect(withGearState.summary.dice).toBe(expectedDice);
 
         // Both supplies and gear
         rollState.dice.modifiers.supplies = true;
         rollState.dice.modifiers.gear = true;
 
-        const withSuppliesAndGearState = calculateDerivedRollState(rollState, character);
+        const withSuppliesAndGearState = preRollDerived(rollState, character);
 
         expectedDice = beforeState.summary.dice + 1;
         expect(withSuppliesAndGearState.summary.dice).toBe(expectedDice);
@@ -446,11 +446,11 @@ describe('Derived State', () => {
         rollState.dice.info.skill = blSkillName;
         rollState.dice.modifiers.personaDice = 0;
 
-        const beforeState = calculateDerivedRollState(rollState, character);
+        const beforeState = preRollDerived(rollState, character);
 
         rollState.dice.modifiers.personaDice = personaDice;
 
-        const afterState = calculateDerivedRollState(rollState, character);
+        const afterState = preRollDerived(rollState, character);
 
         const expectedDice = beforeState.summary.dice + personaDice;
         expect(afterState.summary.dice).toBe(expectedDice);

@@ -6,7 +6,7 @@ import {
   ROLL_RESET,
 } from '../../actions/roll_actions';
 
-import calculateDerivedRollState from '../../derivers/roll/derived_state';
+import calculateDerivedRollState from '../../derivers/roll/pre_roll';
 
 export const InitialResults = Object.freeze({
   rolledDice: [

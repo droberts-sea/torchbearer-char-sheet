@@ -236,7 +236,7 @@ const addPostBLDice = function (state, character, summary, details) {
 }
 
 
-export const calculateDerivedRollState = function (state, character) {
+export const preRollDerived = function (state, character) {
   if (!character) {
     return InitialState;
   }
@@ -287,4 +287,4 @@ export const calculateDerivedRollState = function (state, character) {
   };
 };
 
-export default calculateDerivedRollState;
+export default preRollDerived;

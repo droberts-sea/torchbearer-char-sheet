@@ -2,41 +2,35 @@ import React from 'react';
 
 import "./styles/Ready.css";
 
-class Ready extends React.Component {
+const buildDetail = (detail, i) => {
+  return (
+    <li
+      key={`detail_${i}`}>
+      <p>
+        <strong>{detail.effect}</strong>
+        &nbsp;from&nbsp;
+        <em>{detail.source}</em>
+        <br></br>
+        <span className="reason">{detail.reason}</span>
+      </p>
+    </li>
+  );
+}
 
-  buildDetail(detail, i) {
-    return (
-      <li
-        key={`detail_${i}`}>
-        <p>
-          <strong>{detail.effect}</strong>
-          &nbsp;from&nbsp;
-          <em>{detail.source}</em>
-          <br></br>
-          <span className="reason">{detail.reason}</span>
-        </p>
-      </li>
-    );
-  }
-
-  render() {
-    const details = this.props.derived.details;
-    return (
-      <div id="roll-ready">
-        <ul>
-          {details.map(this.buildDetail)}
-        </ul>
-        <button
-          className="action-button"
-          onClick={() => {
-            this.props.operations.rollDice();
-          }}
-          >
-          Roll the dice!
+const Ready = ({ details, rollDice }) => {
+  return (
+    <div id="roll-ready">
+      <ul>
+        {details.map(buildDetail)}
+      </ul>
+      <button
+        className="action-button"
+        onClick={rollDice}
+      >
+        Roll the dice!
         </button>
-      </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Ready;

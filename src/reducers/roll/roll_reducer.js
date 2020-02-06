@@ -15,13 +15,13 @@ import reduceResults from './results_reducer';
 
 // Transitions between stages are controlled by big buttons, not the nav arrows. Naving to a stage that hasn't begun is impossible. Previous stages are visible but can't interact.
 export const ROLL_STAGES = {
-  PREPARE: 'PREPARE', // gather info, add dice, ready
+  PRE_ROLL: 'PRE_ROLL', // gather info, add dice, ready
   REACT: 'REACT', // results
   OUTCOME: 'OUTCOME', // aftermath
 };
 
 export const InitialRoll = {
-  stage: ROLL_STAGES.PREPARE,
+  stage: ROLL_STAGES.PRE_ROLL,
   pageIndex: 2,
   dice: {
     info: {
@@ -45,6 +45,10 @@ export const InitialRoll = {
       gear: true,
     },
   },
+  // results: {
+  //   rolledDice: [],
+  //   reactions: {},
+  // }
 };
 
 const reduceInfo = function (state, action, character) {
@@ -179,7 +183,7 @@ const rollReducer = function (state = InitialRoll, action, character) {
 
     // Stage transitions
     case ROLL_RESET:
-      state.stage = ROLL_STAGES.PREPARE;
+      state.stage = ROLL_STAGES.PRE_ROLL;
       state.pageIndex = 0;
       break;
 
