@@ -280,7 +280,39 @@ describe('resources', () => {
       expect(testImpact.skill.mark).toEqual('pass');
     })
 
-    // TODO: advancement
+    it('tracks when a skill is not ready to advance', () => {
+      const character = deepCopy(mockCharacter);
+      const postRoll = deepCopy(mockPostRoll);
+
+      const skillName = Object.keys(character.skills)[0];
+      roll.dice.info.skill = skillName;
+
+      const skill = character.skills[skillName]
+      skill.open = true;
+      skill.advancement.pass = skill.rating - 2;
+      skill.advancement.fail = skill.rating - 1;
+      postRoll.outcome = 'pass';
+
+      const testImpact = impact(roll, character, postRoll);
+      expect(testImpact.skill.advance).toBeFalsy();
+    });
+
+    it('tracks when a skill is ready to advance', () => {
+      const character = deepCopy(mockCharacter);
+      const postRoll = deepCopy(mockPostRoll);
+
+      const skillName = Object.keys(character.skills)[0];
+      roll.dice.info.skill = skillName;
+
+      const skill = character.skills[skillName]
+      skill.open = true;
+      skill.advancement.pass = skill.rating - 1;
+      skill.advancement.fail = skill.rating - 1;
+      postRoll.outcome = 'pass';
+
+      const testImpact = impact(roll, character, postRoll);
+      expect(testImpact.skill.advance).toBeTruthy();
+    });
   });
 
   describe('tax', () => {

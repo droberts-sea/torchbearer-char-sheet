@@ -1,4 +1,5 @@
 import { wiseReadyToAdvance } from "../../rules/wises";
+import { skillReadyToAdvance } from "../../rules/skills";
 
 // Thought: maybe you could consolidate all the impact effects into a single type?
 
@@ -84,6 +85,14 @@ const beneficialTrait = (roll, character) => {
   return undefined;
 }
 
+// markEffect = {
+//   name: "...",
+//   category: "wise" | "skill" | "ablity",
+//   mark: "pass" | "fail" | "fate" | "persona",
+//   advance: bool
+//   [alreadyMarked: bool,]
+// }
+
 const wises = (roll, character) => {
   const reactions = roll.results.reactions;
 
@@ -93,6 +102,7 @@ const wises = (roll, character) => {
     const wise = character.wises.find(w => w.name === reactions.deeperUnderstandingWise);
     if (wise) {
       const effect = {
+        category: 'wise',
         name: reactions.deeperUnderstandingWise,
         mark: 'fate',
         alreadyMarked: wise.advancement.fate,
@@ -106,6 +116,7 @@ const wises = (roll, character) => {
     const wise = character.wises.find(w => w.name === reactions.ofCourseWise);
     if (wise) {
       const effect = {
+        category: 'wise',
         name: reactions.ofCourseWise,
         mark: 'persona',
         alreadyMarked: wise.advancement.persona,
@@ -118,26 +129,29 @@ const wises = (roll, character) => {
   return effects;
 }
 
-const skillAbility = (roll, character, outcome) => {
+const skillAbility = (roll, character, mark) => {
+  let skill;
   const effect = {
     name: roll.dice.info.skill,
-    mark: outcome,
   };
 
-  if (character.skills[effect.name]) {
+  if (skill = character.skills[effect.name]) {
     effect.category = 'skills';
 
     // Once you use Beginner’s Luck... Check off one of the Pass bubbles—it doesn’t matter if you passed or failed that particular test. (pg 30)
     if (!character.skills[effect.name].open) {
-      effect.mark = 'pass';
+      mark = 'pass';
     }
 
-  } else if (character.abilities[effect.name]) {
+  } else if (skill = character.abilities[effect.name]) {
     effect.category = 'abilities';
 
   } else {
     throw new Error(`Invalid skill/ability name ${effect.name}`);
-  } 
+  }
+
+  effect.mark = mark;
+  effect.advance = skillReadyToAdvance(skill, character, mark);
 
   return effect;
 }
