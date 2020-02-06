@@ -1,14 +1,14 @@
 import React from 'react';
+import pluralize from 'pluralize';
 
 import "./styles/Outcome.css";
-import Control from '../shared/Control';
 import Toggle from '../shared/Toggle';
 
 const Points = ({ name, points, verb = "Spend" }) => {
   return (
     <li>
       <b>{verb} {points.total[name]}</b> {name}
-      <ul className="point-effect-details">
+      <ul className="effect-details">
         {
           points[name].map((effect) => (
             <li key={effect.source}>
@@ -34,28 +34,29 @@ const BeneficialTrait = ({ trait }) => {
   return "";
 }
 
-const Wises = ({ effects }) => {
+const MarkEffect = ({ effect }) => {
+  console.log(effect);
   return (
-    <React.Fragment>
-      {
-        effects.map(effect => (
-          <li>
-            <p>
-              <b>Mark</b> {effect.mark} use of wise <em>{effect.name}</em>
-              {effect.alreadyMarked ? " (already marked)" : ""}
-              {effect.advance ? " (ready to advance!)" : ""}
-            </p>
-          </li>
-        ))
-      }
-    </React.Fragment>
-  );
+    <li key={`me_${effect.category}_${effect.name}`}>
+      <p>
+        <b>Mark</b> use of {pluralize.singular(effect.category)} <em>{effect.name}</em>
+        <ul className="effect-details">
+          <li>Mark type: <em>{effect.mark}</em></li>
+          {effect.alreadyMarked ? (<li>(already marked)</li>) : ""}
+          {effect.advance ? (<li>Ready to advance!</li>) : ""}
+        </ul>
+      </p>
+    </li>
+  )
 }
 
 const Outcome = ({ impact, operations }) => {
   return (
     <div>
       <ul className="impact-effect-list">
+        <MarkEffect effect={impact.skill} />
+        {impact.wises.map(effect => <MarkEffect effect={effect} />)}
+        <BeneficialTrait trait={impact.beneficialTrait} />
         <Points
           name="persona"
           points={impact.points}
@@ -69,8 +70,6 @@ const Outcome = ({ impact, operations }) => {
           points={impact.points}
           verb="Earn"
         />
-        <BeneficialTrait trait={impact.beneficialTrait} />
-        <Wises effects={impact.wises} />
         <Toggle
           name="Skill already used this conflict*"
 

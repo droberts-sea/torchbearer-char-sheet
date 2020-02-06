@@ -87,10 +87,10 @@ const beneficialTrait = (roll, character) => {
 
 // markEffect = {
 //   name: "...",
-//   category: "wise" | "skill" | "ablity",
+//   category: "wises" | "skills" | "ablities",
 //   mark: "pass" | "fail" | "fate" | "persona",
-//   advance: bool
-//   [alreadyMarked: bool,]
+//   advance: bool,
+//   [alreadyMarked: bool],
 // }
 
 const wises = (roll, character) => {
@@ -102,7 +102,7 @@ const wises = (roll, character) => {
     const wise = character.wises.find(w => w.name === reactions.deeperUnderstandingWise);
     if (wise) {
       const effect = {
-        category: 'wise',
+        category: 'wises',
         name: reactions.deeperUnderstandingWise,
         mark: 'fate',
         alreadyMarked: wise.advancement.fate,
@@ -116,7 +116,7 @@ const wises = (roll, character) => {
     const wise = character.wises.find(w => w.name === reactions.ofCourseWise);
     if (wise) {
       const effect = {
-        category: 'wise',
+        category: 'wises',
         name: reactions.ofCourseWise,
         mark: 'persona',
         alreadyMarked: wise.advancement.persona,
@@ -135,7 +135,7 @@ const skillAbility = (roll, character, mark) => {
     name: roll.dice.info.skill,
   };
 
-  if (skill = character.skills[effect.name]) {
+  if (skill = character.skills[effect.name]) { // eslint-disable-line no-cond-assign
     effect.category = 'skills';
 
     // Once you use Beginner’s Luck... Check off one of the Pass bubbles—it doesn’t matter if you passed or failed that particular test. (pg 30)
@@ -143,7 +143,7 @@ const skillAbility = (roll, character, mark) => {
       mark = 'pass';
     }
 
-  } else if (skill = character.abilities[effect.name]) {
+  } else if (skill = character.abilities[effect.name]) { // eslint-disable-line no-cond-assign
     effect.category = 'abilities';
 
   } else {
