@@ -118,27 +118,36 @@ const wises = (roll, character) => {
   return effects;
 }
 
-const skillAbility = (roll, character) => {
+const skillAbility = (roll, character, outcome) => {
   const effect = {
-    name: roll.info.skill,
-    // mark: 
+    name: roll.dice.info.skill,
+    mark: outcome,
   };
 
   if (character.skills[effect.name]) {
     effect.category = 'skills';
+
+    // Once you use Beginner’s Luck... Check off one of the Pass bubbles—it doesn’t matter if you passed or failed that particular test. (pg 30)
+    if (!character.skills[effect.name].open) {
+      effect.mark = 'pass';
+    }
+
   } else if (character.abilities[effect.name]) {
     effect.category = 'abilities';
+
   } else {
     throw new Error(`Invalid skill/ability name ${effect.name}`);
-  }
+  } 
+
+  return effect;
 }
 
-const impact = (roll, character) => {
+const impact = (roll, character, postRoll) => {
   const impact = {
     points: points(roll),
     beneficialTrait: beneficialTrait(roll, character),
     wises: wises(roll, character),
-    // skill: skillAbility(roll, character),
+    skill: skillAbility(roll, character, postRoll.outcome),
     // ...skillsAndAbilities(roll),
 
   };

@@ -11,7 +11,7 @@ const postRollDerived = (rolledDice, rollSummary) => {
   const scoundrels = groups.scoundrels || [];
 
   const totalSuccesses = successes.length + rollSummary.addSuccesses;
-  const outcome = totalSuccesses >= rollSummary.ob ? 'success' : 'failure';
+  const outcome = totalSuccesses >= rollSummary.ob ? 'pass' : 'fail';
 
   return { dice, successes, scoundrels, totalSuccesses, outcome };
 };

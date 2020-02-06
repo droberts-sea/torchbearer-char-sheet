@@ -20,7 +20,7 @@ import rollNavStatus from '../derivers/roll/roll_nav_status';
 const mapStateToProps = (state) => {
   const preRoll = preRollDerived(state.roll, state.character);
   const postRoll = postRollDerived(state.roll.results.rolledDice, preRoll.summary);
-  const rollImpact = impact(state.roll, state.character);
+  const rollImpact = impact(state.roll, state.character, postRoll);
   return {
     ...state.roll,
     character: state.character,
