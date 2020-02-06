@@ -9,17 +9,6 @@
   background-color: white;
 }
 
-.roll-results .outcome h2 {
-  font-size: 1.75em;
-  text-transform: uppercase;
-}
-
-.roll-results .outcome-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  justify-items: center;
-}
-
 .roll-results .pre-footer {
   padding-bottom: 3em;
 }

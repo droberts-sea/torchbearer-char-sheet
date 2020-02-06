@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import './styles/Results.css';
 import Control from '../shared/Control';
 import DiceList from './DiceList';
+import OutcomeSummary from './OutcomeSummary';
 
 const UseButton = ({ name, onSetReaction, disabled = false }) => {
   return (
@@ -86,28 +87,11 @@ const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, 
 const Outcome = ({ outcome, rollSummary, totalSuccesses, onAcceptRoll }) => {
   return (
     <footer className="outcome">
-      <h2>Outcome: {outcome}</h2>
-
-      <div className="outcome-stats">
-        <label htmlFor="ob">
-          Obstacle
-        </label>
-        <label htmlFor="successes">
-          Successes
-        </label>
-        <label htmlFor="margin">
-          Margin
-        </label>
-        <span className="number" name="ob">
-          {rollSummary.ob}
-        </span>
-        <span className="number" name="successes">
-          {totalSuccesses}
-        </span>
-        <span className="number" name="margin">
-          {totalSuccesses - rollSummary.ob}
-        </span>
-      </div>
+      <OutcomeSummary
+        outcome={outcome}
+        ob={rollSummary.ob}
+        totalSuccesses={totalSuccesses}
+        />
 
       <button
         className="action-button"

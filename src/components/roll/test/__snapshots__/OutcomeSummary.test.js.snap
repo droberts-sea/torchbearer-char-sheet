@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OutcomeSummary renders with a typical roll outcome 1`] = `
+<div
+  className="outcome-summary"
+>
+  <h2>
+    Outcome: 
+    pass
+  </h2>
+  <div
+    className="outcome-stats"
+  >
+    <label
+      htmlFor="ob"
+    >
+      Obstacle
+    </label>
+    <label
+      htmlFor="successes"
+    >
+      Successes
+    </label>
+    <label
+      htmlFor="margin"
+    >
+      Margin
+    </label>
+    <span
+      className="number"
+      name="ob"
+    >
+      4
+    </span>
+    <span
+      className="number"
+      name="successes"
+    >
+      5
+    </span>
+    <span
+      className="number"
+      name="margin"
+    >
+      1
+    </span>
+  </div>
+</div>
+`;

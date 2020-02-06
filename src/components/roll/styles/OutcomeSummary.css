@@ -1,0 +1,10 @@
+.outcome-summary h2 {
+  font-size: 1.75em;
+  text-transform: uppercase;
+}
+
+.outcome-summary .outcome-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+}
