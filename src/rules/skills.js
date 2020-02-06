@@ -1,3 +1,25 @@
+export const skillReadyToAdvance = (skill, character, mark) => {
+  const advancement = { ...skill.advancement };
+  if (mark) {
+    advancement[mark] += 1;
+  }
+
+  if (skill.open) {
+    // An ability or skill advances when you pass a number of tests equal to its current rating and fail a number of tests equal to one less than its rating. (pg 104)
+    return (
+      skill.rating < skill.max &&
+      advancement.pass >= skill.rating &&
+      advancement.fail >= skill.rating - 1
+    );
+
+  } else {
+    // Beginners Luck - Once you have attempted to use that skill a number of times equal to your current untaxed Nature rating, you learn the skill (pg 30)
+    const attempts = advancement.pass + advancement.fail;
+    return attempts >= character.abilities.NATURE.untaxed;
+
+  }
+}
+
 export const SkillRules = {
   ALCHEMIST: {
     description: "The Alchemist skill is used primarily by magicians and wise (or foolish) sages to create potions, tinctures, acids or eldritch preparations.",

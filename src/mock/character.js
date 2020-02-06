@@ -9,19 +9,25 @@ const character = {
       name: 'Alchemist',
       beginnersLuck: 'WILL',
       rating: 0,
-      open: false
+      open: false,
+      advancement: { pass: 0, fail: 0, },
+      min: 0, max: 6,
     },
     FIGHTER: {
       name: 'Fighter',
       beginnersLuck: 'HEALTH',
       rating: 0,
-      open: true
+      open: true,
+      advancement: { pass: 0, fail: 0, },
+      min: 0, max: 6,
     },
     ORATOR: {
       name: 'Orator',
       beginnersLuck: 'WILL',
       rating: 3,
-      open: true
+      open: true,
+      advancement: { pass: 0, fail: 0, },
+      min: 0, max: 6,
     }
   },
   abilities: {
@@ -35,7 +41,8 @@ const character = {
     },
     NATURE: {
       name: 'Nature',
-      rating: 4
+      rating: 4,
+      untaxed: 5,
     },
     RESOURCES: {
       name: 'Resources',

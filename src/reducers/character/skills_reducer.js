@@ -11,7 +11,7 @@ Object.keys(SkillRules).forEach((name) => {
     name: display_name,
     rating: 0,
     min: 0,
-    max: 6,
+    max: 6, // Skills are rated from 1 to 6 (pg 13)
     advancement: {
       pass: 0,
       fail: 0
