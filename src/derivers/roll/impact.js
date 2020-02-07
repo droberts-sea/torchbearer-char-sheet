@@ -5,8 +5,8 @@ import { skillReadyToAdvance } from "../../rules/skills";
 
 const points = (roll) => {
   const points = {
-    persona: [],
     fate: [],
+    persona: [],
     checks: [],
     total: {
       fate: 0,

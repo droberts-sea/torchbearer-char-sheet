@@ -91,11 +91,11 @@ const Outcome = ({ impact, postRoll, operations }) => {
           {impact.wises.map(effect => <MarkEffect effect={effect} />)}
           <BeneficialTrait trait={impact.beneficialTrait} />
           <Points
-            name="persona"
+            name="fate"
             points={impact.points}
           />
           <Points
-            name="fate"
+            name="persona"
             points={impact.points}
           />
           <Points
