@@ -22,18 +22,19 @@ export const InitialWises = [
   }
 ];
 
-const markWise = function (wises, name, mark, unmark=false) {
-  // TODO
-  console.log(`Marking wise ${name} mark ${mark} unmark ${unmark}`);
+// effect: {name, mark, unmark}
+const markWises = function (wises, effects) {
   return wises.map(wise => {
-    if (wise.name === name) {
-      const newWise = { ...wise };
-      newWise.advancement = { ...wise.advancement };
-      newWise.advancement[mark] = !unmark;
-      return newWise;
-    } else {
-      return wise;
+    for (let i = 0; i < effects.length; i++) {
+      const { name, mark, unmark } = effects[i];
+      if (wise.name === name) {
+        const newWise = { ...wise };
+        newWise.advancement = { ...wise.advancement };
+        newWise.advancement[mark] = !unmark;
+        return newWise;
+      }
     }
+    return wise;
   });
 };
 
@@ -44,11 +45,9 @@ const wisesReducer = function (state = InitialWises, action, character) {
   switch (action.type) {
     case MARK_TEST:
       if (action.payload.category === 'wises') {
-        return markWise(
+        return markWises(
           state,
-          action.payload.name,
-          action.payload.mark,
-          action.payload.unmark
+          [action.payload]
         );
       }
       break;
