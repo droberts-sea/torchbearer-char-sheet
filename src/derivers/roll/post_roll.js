@@ -12,10 +12,13 @@ const postRollDerived = (rolledDice, rollSummary) => {
 
   const totalSuccesses = successes.length + rollSummary.addSuccesses;
 
+  
   // Note: 'pass' and 'fail' are used as keywords elsewhere
   const outcome = totalSuccesses >= rollSummary.ob ? 'pass' : 'fail';
 
-  return { dice, successes, scoundrels, totalSuccesses, outcome };
+  const margin = Math.abs(rollSummary.ob - totalSuccesses);
+  
+  return { dice, successes, scoundrels, ob: rollSummary.ob, totalSuccesses, outcome, margin };
 };
 
 export default postRollDerived;

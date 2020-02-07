@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 import './styles/OutcomeSummary.css';
 
-const OutcomeSummary = ({ outcome, ob, totalSuccesses }) => {
+const OutcomeSummary = ({ postRoll }) => {
+  const { outcome, ob, totalSuccesses } = postRoll;
   return (
     <div className="outcome-summary">
       <h2>Outcome: {outcome}</h2>
@@ -33,9 +34,11 @@ const OutcomeSummary = ({ outcome, ob, totalSuccesses }) => {
 };
 
 OutcomeSummary.propTypes = {
-  outcome: PropTypes.string.isRequired,
-  ob: PropTypes.number.isRequired,
-  totalSuccesses: PropTypes.number.isRequired,
+  postRoll: PropTypes.shape({
+    outcome: PropTypes.string.isRequired,
+    ob: PropTypes.number.isRequired,
+    totalSuccesses: PropTypes.number.isRequired,
+  }).isRequired,
 }
 
 export default OutcomeSummary;

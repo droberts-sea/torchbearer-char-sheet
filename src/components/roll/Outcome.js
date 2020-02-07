@@ -53,7 +53,7 @@ const MarkEffect = ({ effect }) => {
   )
 }
 
-const Outcome = ({ impact, preRoll, postRoll, operations }) => {
+const Outcome = ({ impact, postRoll, operations }) => {
   // Page 65
   let outcomeFlavor;
   if (postRoll.outcome === 'pass') {
@@ -64,9 +64,7 @@ const Outcome = ({ impact, preRoll, postRoll, operations }) => {
   return (
     <div className="roll-outcome">
       <OutcomeSummary
-        outcome={postRoll.outcome}
-        ob={preRoll.summary.ob}
-        totalSuccesses={postRoll.totalSuccesses}
+        postRoll={postRoll}
       />
       <p>{outcomeFlavor}</p>
 
@@ -131,7 +129,6 @@ const Outcome = ({ impact, preRoll, postRoll, operations }) => {
 
 Outcome.propTypes = {
   impact: PropTypes.object.isRequired,
-  preRoll: PropTypes.object.isRequired,
   postRoll: PropTypes.object.isRequired,
   operations: PropTypes.object.isRequired,
 }

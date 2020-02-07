@@ -3,7 +3,7 @@ import _ from 'underscore';
 import { skillDice, preRollDerived } from '../pre_roll';
 import character from '../../../mock/character';
 
-describe('Derived State', () => {
+describe('Pre Roll Derived', () => {
   let rollState;
   let rollSummary;
   beforeEach(() => {

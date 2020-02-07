@@ -84,13 +84,11 @@ const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, 
 };
 
 // TODO: consider changing name to OutcomePreview
-const Outcome = ({ outcome, rollSummary, totalSuccesses, onAcceptRoll }) => {
+const OutcomePreview = ({ postRoll, onAcceptRoll }) => {
   return (
     <footer className="outcome">
       <OutcomeSummary
-        outcome={outcome}
-        ob={rollSummary.ob}
-        totalSuccesses={totalSuccesses}
+        postRoll={postRoll}
         />
 
       <button
@@ -191,10 +189,8 @@ const Results = ({ postRoll, reactions, rollSummary, character, onSetReaction, o
           </section>
         </ul>
       </section>
-      <Outcome
-        outcome={outcome}
-        totalSuccesses={totalSuccesses}
-        rollSummary={rollSummary}
+      <OutcomePreview
+        postRoll={postRoll}
         onAcceptRoll={onAcceptRoll}
       />
     </div>
