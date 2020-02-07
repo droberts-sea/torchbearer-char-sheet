@@ -29,7 +29,9 @@ _MVP_
   - [x] Actually do the roll
   - [x] React / reroll
   - [] Feed results back into character sheet after roll
-    - Call these "resources"? "impacts"?
+    - [x] Calculate impact
+    - [x] Show impact to user
+    - [] Apply impact to character
   - [x] Cancel button
 - Character creation / input
 - Edit mode for a character (possibly same as ^^)
