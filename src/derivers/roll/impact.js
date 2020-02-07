@@ -139,7 +139,7 @@ const taxNature = (roll, character, postRoll) => {
     !roll.dice.info.inNature &&
     postRoll.outcome === 'fail') {
     tax = {
-      source: 'Faking it (rolling with nature) on a failed test outside nature',
+      source: 'Faking It (rolling with Nature) on a failed test outside Nature',
       total: postRoll.margin,
     };
 
@@ -153,12 +153,12 @@ const taxNature = (roll, character, postRoll) => {
     //   If the test is failed, whether it was within or outside Nature, Nature is taxed by the margin of failure.
     if (postRoll.outcome === 'fail') {
       tax = {
-        source: 'Ancestral insight (tap nature) on a failed test',
+        source: 'Ancestral Insight (tap Nature) on a failed test',
         total: postRoll.margin,
       };
     } else if (!roll.dice.info.inNature) {
       tax = {
-        source: 'Ancestral insight (tap nature) on a successful test outside nature',
+        source: 'Ancestral Insight (tap Nature) on a successful test outside Nature',
         total: 1,
       };
     }

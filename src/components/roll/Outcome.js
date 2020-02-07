@@ -53,6 +53,22 @@ const MarkEffect = ({ effect }) => {
   )
 }
 
+const TaxNature = ({ tax }) => {
+  if (tax) {
+    return (
+      <li key={`tax_nature`}>
+        <b>Tax</b> <em>Nature</em> by <b>{tax.total}</b>
+        <ul className="effect-details">
+          <li>Cause: {tax.source}</li>
+          {tax.willDeplete ? (<li>This will deplete Nature, reducing its untaxed rating by 1. Your character freaks out a little!</li>) : ""}
+        </ul>
+      </li>
+    );
+  } else {
+    return "";
+  }
+};
+
 const Outcome = ({ impact, postRoll, operations }) => {
   // Page 65
   let outcomeFlavor;
@@ -87,6 +103,7 @@ const Outcome = ({ impact, postRoll, operations }) => {
             points={impact.points}
             verb="Earn"
           />
+          <TaxNature tax={impact.taxNature} />
         </ul>
       </div>
 
