@@ -129,37 +129,7 @@ const wises = (roll, character) => {
   return effects;
 }
 
-const skillAbility = (roll, character, mark) => {
-  let skill;
-  const effect = {
-    name: roll.dice.info.skill,
-  };
-
-  if (skill = character.skills[effect.name]) { // eslint-disable-line no-cond-assign
-    effect.category = 'skills';
-
-    // Once you use Beginner’s Luck... Check off one of the Pass bubbles—it doesn’t matter if you passed or failed that particular test. (pg 30)
-    if (!character.skills[effect.name].open && mark === 'fail') {
-      effect.markComment = "beginner's luck always marks pass";
-      mark = 'pass';
-    }
-
-  } else if (skill = character.abilities[effect.name]) { // eslint-disable-line no-cond-assign
-    effect.category = 'abilities';
-
-  } else {
-    throw new Error(`Invalid skill/ability name ${effect.name}`);
-  }
-
-  effect.mark = mark;
-
-  // TODO account for tax (if skill is nature)
-  // https://www.reddit.com/r/Torchbearer/comments/f02avw/tax_or_advance_nature_which_comes_first/
-  effect.advance = skillReadyToAdvance(skill, character, mark);
-
-  return effect;
-}
-
+// Resources can also be taxed but never automatically, so this function is OK to be nature-specific.
 const taxNature = (roll, character, postRoll) => {
   let tax;
 
@@ -173,9 +143,9 @@ const taxNature = (roll, character, postRoll) => {
       total: postRoll.margin,
     };
 
-  // No double tax! Double-Tapping Nature (pg 28):
-  // If you’re acting within your Nature, you may test your Nature... and use a persona point to add your Nature rating on top of that roll.
-  // Essentially, you’re doubling your Nature. However, if you fail this test, your Nature is taxed as per the rule in Tapping Your Nature.
+    // No double tax! Double-Tapping Nature (pg 28):
+    // If you’re acting within your Nature, you may test your Nature... and use a persona point to add your Nature rating on top of that roll.
+    // Essentially, you’re doubling your Nature. However, if you fail this test, your Nature is taxed as per the rule in Tapping Your Nature.
   } else if (roll.dice.modifiers.tapNature) {
     // Tap nature and tax (page 28)
     //   If the test is within your character’s Nature and successful, then there is no tax.
@@ -201,13 +171,53 @@ const taxNature = (roll, character, postRoll) => {
   return tax;
 }
 
+const skillAbility = (roll, character, mark, taxNature) => {
+  let skill;
+  const effect = {
+    name: roll.dice.info.skill,
+  };
+
+  if (skill = character.skills[effect.name]) { // eslint-disable-line no-cond-assign
+    effect.category = 'skills';
+
+    // Once you use Beginner’s Luck... Check off one of the Pass bubbles—it doesn’t matter if you passed or failed that particular test. (pg 30)
+    if (!character.skills[effect.name].open && mark === 'fail') {
+      effect.markComment = "beginner's luck always marks pass";
+      mark = 'pass';
+    }
+
+  } else if (skill = character.abilities[effect.name]) { // eslint-disable-line no-cond-assign
+    effect.category = 'abilities';
+
+  } else {
+    throw new Error(`Invalid skill/ability name ${effect.name}`);
+  }
+
+  effect.mark = mark;
+
+  // Account for tax (if skill is nature)
+  // The source book is hazy on whether tax or advancement happens first, so I made an Engineering Decision to tax first (it's meaner)
+  // See https://www.reddit.com/r/Torchbearer/comments/f02avw/tax_or_advance_nature_which_comes_first/
+  if (taxNature && taxNature.willDeplete &&
+    effect.name === 'NATURE') {
+    // If tax depletes max nature to 1, a single pass (this roll) is enough to advance. You clean the slate (remove all marks, pg 104) after depleting, so if max nature is more than 1 after depletion or this isn't a pass roll then no advancement.
+    effect.advance = character.abilities.NATURE.untaxed <= 2 && mark === 'pass';
+
+  } else {
+    effect.advance = skillReadyToAdvance(skill, character, mark);
+  }
+  
+  return effect;
+}
+
 const impact = (roll, character, postRoll) => {
+  const tax = taxNature(roll, character, postRoll);
   const impact = {
     points: points(roll),
     beneficialTrait: beneficialTrait(roll, character),
     wises: wises(roll, character),
-    skill: skillAbility(roll, character, postRoll.outcome),
-    taxNature: taxNature(roll, character, postRoll),
+    taxNature: tax,
+    skill: skillAbility(roll, character, postRoll.outcome, tax),
   };
 
   return impact;

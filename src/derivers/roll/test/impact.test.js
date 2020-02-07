@@ -313,6 +313,44 @@ describe('resources', () => {
       const testImpact = impact(roll, character, postRoll);
       expect(testImpact.skill.advance).toBeTruthy();
     });
+
+    it('does not mark NATURE for advancement if tax would deplete it and the new untaxed value is greater than 1', () => {
+      roll.dice.info.skill = 'NATURE';
+      roll.dice.info.inNature = false;
+      roll.dice.modifiers.tapNature = true;
+
+      const character = deepCopy(mockCharacter);
+      const nature = character.abilities.NATURE;
+      nature.rating = 1;
+      nature.untaxed = 4;
+      nature.advancement.pass = 3;
+      nature.advancement.fail = 3;
+
+      const postRoll = deepCopy(mockPostRoll);
+      postRoll.outcome = 'pass';
+
+      const testImpact = impact(roll, character, postRoll);
+      expect(testImpact.taxNature.willDeplete).toBeTruthy();
+      expect(testImpact.skill.advance).toBeFalsy();
+    });
+
+    it('does mark NATURE for advancement if tax would deplete it and the new untaxed value is 1', () => {
+      roll.dice.info.skill = 'NATURE';
+      roll.dice.info.inNature = false;
+      roll.dice.modifiers.tapNature = true;
+
+      const character = deepCopy(mockCharacter);
+      const nature = character.abilities.NATURE;
+      nature.rating = 1;
+      nature.untaxed = 2;
+
+      const postRoll = deepCopy(mockPostRoll);
+      postRoll.outcome = 'pass';
+
+      const testImpact = impact(roll, character, postRoll);
+      expect(testImpact.taxNature.willDeplete).toBeTruthy();
+      expect(testImpact.skill.advance).toBeTruthy();
+    });
   });
 
   describe('taxNature', () => {
@@ -342,7 +380,24 @@ describe('resources', () => {
     });
 
     it('detects when nature will be depleted', () => {
+      roll.dice.info.inNature = false;
+      roll.dice.modifiers.natureInstead = true;
 
+      const postRoll = deepCopy(mockPostRoll);
+      postRoll.outcome = 'fail';
+      postRoll.ob = 5;
+      postRoll.totalSuccesses = 3;
+      postRoll.margin = 2;
+
+      const character = deepCopy(mockCharacter);
+
+      character.abilities.NATURE.rating = 3;
+      const before_impact = impact(roll, character, postRoll);
+      expect(before_impact.taxNature.willDeplete).toBeFalsy();
+
+      character.abilities.NATURE.rating = 2;
+      const after_impact = impact(roll, character, postRoll);
+      expect(after_impact.taxNature.willDeplete).toBeTruthy();
     });
 
     describe('faking it (nature instead of BL)', () => {

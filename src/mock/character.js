@@ -43,6 +43,7 @@ const character = {
       name: 'Nature',
       rating: 4,
       untaxed: 5,
+      advancement: { pass: 0, fail: 0, },
     },
     RESOURCES: {
       name: 'Resources',
