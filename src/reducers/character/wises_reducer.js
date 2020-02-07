@@ -53,9 +53,10 @@ const wisesReducer = function (state = InitialWises, action, character) {
       break;
 
     case ROLL_COMMIT_RESULTS:
-      console.log("Committing results");
-      console.log(action.payload);
-      break;
+      return markWises(
+        state,
+        action.payload.wises
+      );
 
     default:
       break;
