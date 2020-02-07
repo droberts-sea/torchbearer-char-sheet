@@ -102,7 +102,7 @@ const OutcomePreview = ({ postRoll, onAcceptRoll }) => {
 };
 
 const Results = ({ postRoll, reactions, rollSummary, character, onSetReaction, onAcceptRoll, disabledOptions, resourcesSpent }) => {
-  const { successes, scoundrels, totalSuccesses, outcome } = postRoll;
+  const { successes, scoundrels } = postRoll;
 
   const availableFate = character.points.fate.available - resourcesSpent.fate;
   const availablePersona = character.points.persona.available - resourcesSpent.persona;
