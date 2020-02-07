@@ -139,7 +139,8 @@ const skillAbility = (roll, character, mark) => {
     effect.category = 'skills';
 
     // Once you use Beginner’s Luck... Check off one of the Pass bubbles—it doesn’t matter if you passed or failed that particular test. (pg 30)
-    if (!character.skills[effect.name].open) {
+    if (!character.skills[effect.name].open && mark === 'fail') {
+      effect.markComment = "beginner's luck always marks pass";
       mark = 'pass';
     }
 

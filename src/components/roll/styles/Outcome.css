@@ -5,3 +5,7 @@
 .impact-effect-list .effect-details > li {
   margin-inline-start: 1em;
 }
+
+.roll-outcome .skill-used-already-checkbox .control-main {
+  margin-top: 0;
+}
