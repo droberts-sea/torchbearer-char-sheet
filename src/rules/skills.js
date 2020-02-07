@@ -1,4 +1,4 @@
-export const skillReadyToAdvance = (skill, character, mark) => {
+export const skillReadyToAdvance = (skill, untaxedNature, mark) => {
   const advancement = { ...skill.advancement };
   if (mark) {
     advancement[mark] += 1;
@@ -15,7 +15,7 @@ export const skillReadyToAdvance = (skill, character, mark) => {
   } else {
     // Beginners Luck - Once you have attempted to use that skill a number of times equal to your current untaxed Nature rating, you learn the skill (pg 30)
     const attempts = advancement.pass + advancement.fail;
-    return attempts >= character.abilities.NATURE.untaxed;
+    return attempts >= untaxedNature;
 
   }
 }

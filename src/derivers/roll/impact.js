@@ -194,19 +194,24 @@ const skillAbility = (roll, character, mark, taxNature) => {
   }
 
   effect.mark = mark;
+  effect.advance = skillReadyToAdvance(skill, character.abilities.NATURE.untaxed, mark);
 
   // Account for tax (if skill is nature)
   // The source book is hazy on whether tax or advancement happens first, so I made an Engineering Decision to tax first (it's meaner)
   // See https://www.reddit.com/r/Torchbearer/comments/f02avw/tax_or_advance_nature_which_comes_first/
-  if (taxNature && taxNature.willDeplete &&
-    effect.name === 'NATURE') {
-    // If tax depletes max nature to 1, a single pass (this roll) is enough to advance. You clean the slate (remove all marks, pg 104) after depleting, so if max nature is more than 1 after depletion or this isn't a pass roll then no advancement.
-    effect.advance = character.abilities.NATURE.untaxed <= 2 && mark === 'pass';
+  if (taxNature && taxNature.willDeplete) {
+    if (effect.name === 'NATURE') {
+      // If tax depletes max nature to 1, a single pass (this roll) is enough to advance. You clean the slate (remove all marks, pg 104) after depleting, so if max nature is more than 1 after depletion or this isn't a pass roll then no advancement.
+      effect.advance = character.abilities.NATURE.untaxed <= 2 && mark === 'pass';
 
-  } else {
-    effect.advance = skillReadyToAdvance(skill, character, mark);
+    } else if (!skill.open) {
+      // Tax / depletion and beginner's luck advancement
+      // If tax happens first, then BL advancement should use the depleted nature value
+      const depletedNature = character.abilities.NATURE.untaxed - 1
+      effect.advance = skillReadyToAdvance(skill, depletedNature, mark);
+    }
   }
-  
+
   return effect;
 }
 

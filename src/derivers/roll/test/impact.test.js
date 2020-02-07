@@ -351,6 +351,41 @@ describe('resources', () => {
       expect(testImpact.taxNature.willDeplete).toBeTruthy();
       expect(testImpact.skill.advance).toBeTruthy();
     });
+
+    it('does mark BL skill for advancement if tax would deplete nature down to the number of marks', () => {
+      const character = deepCopy(mockCharacter);
+      const postRoll = deepCopy(mockPostRoll);
+
+      const skillName = Object.keys(character.skills)[0];
+      roll.dice.info.skill = skillName;
+      roll.dice.info.inNature = false;
+      
+      character.skills[skillName].open = false;
+      character.skills[skillName].advancement.pass = 2;
+      character.skills[skillName].advancement.fail = 0;
+      character.abilities.NATURE.rating = 1;
+      character.abilities.NATURE.untaxed = 4;
+      
+      postRoll.outcome = 'pass';
+      
+      // No tax -> no advance
+      roll.dice.modifiers.tapNature = false;
+      let testImpact = impact(roll, character, postRoll);
+      expect(testImpact.taxNature).toBe(undefined);
+      expect(testImpact.skill.advance).toBeFalsy();
+
+      // Yes tax -> yes advance
+      roll.dice.modifiers.tapNature = true;
+      testImpact = impact(roll, character, postRoll);
+      expect(testImpact.taxNature.willDeplete).toBeTruthy();
+      expect(testImpact.skill.advance).toBeTruthy();
+
+      // Increase untaxed nature -> no advance (not enough marks)
+      character.abilities.NATURE.untaxed = 5;
+      testImpact = impact(roll, character, postRoll);
+      expect(testImpact.taxNature.willDeplete).toBeTruthy();
+      expect(testImpact.skill.advance).toBeFalsy();
+    });
   });
 
   describe('taxNature', () => {
