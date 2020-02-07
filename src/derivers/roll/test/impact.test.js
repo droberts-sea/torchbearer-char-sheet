@@ -315,7 +315,116 @@ describe('resources', () => {
     });
   });
 
-  describe('tax', () => {
+  describe('taxNature', () => {
+    it('does not tax nature for a typical roll', () => {
+      roll.dice.modifiers.natureInstead = false;
+      roll.dice.modifiers.tapNature = false;
+      const testImpact = impact(roll, mockCharacter, mockPostRoll);
 
+      expect(testImpact.taxNature).toBe(undefined);
+    });
+
+    it("Doesn't double tax", () => {
+      roll.dice.info.inNature = false;
+      roll.dice.modifiers.natureInstead = true;
+      roll.dice.modifiers.tapNature = true;
+
+      const postRoll = deepCopy(mockPostRoll);
+      postRoll.outcome = 'fail';
+      postRoll.ob = 5;
+      postRoll.totalSuccesses = 3;
+      postRoll.margin = 2;
+
+
+      const testImpact = impact(roll, mockCharacter, postRoll);
+
+      expect(testImpact.taxNature.total).toEqual(2);
+    });
+
+    it('detects when nature will be depleted', () => {
+
+    });
+
+    describe('faking it (nature instead of BL)', () => {
+      let postRoll;
+      beforeEach(() => {
+        roll.dice.info.inNature = false;
+        roll.dice.modifiers.natureInstead = true;
+        roll.dice.modifiers.tapNature = false;
+
+        postRoll = deepCopy(mockPostRoll);
+        postRoll.outcome = 'fail';
+        postRoll.ob = 5;
+        postRoll.totalSuccesses = 3;
+        postRoll.margin = 2;
+      });
+
+      it('Taxes nature by the margin of failure on a failed roll if the task is not in the characters nature', () => {
+        const testImpact = impact(roll, mockCharacter, postRoll);
+
+        expect(testImpact.taxNature.total).toEqual(2);
+      });
+
+      it('Does not tax nature on a passed roll', () => {
+        roll.dice.modifiers.natureInstead = false;
+        const testImpact = impact(roll, mockCharacter, postRoll);
+
+        expect(testImpact.taxNature).toBe(undefined);
+      });
+
+      it('Does not tax nature on a failed roll within nature', () => {
+        roll.dice.info.inNature = true;
+        const testImpact = impact(roll, mockCharacter, postRoll);
+
+        expect(testImpact.taxNature).toBe(undefined);
+      });
+    });
+
+    describe('Ancestral insight (tap nature)', () => {
+      let postRoll;
+      beforeEach(() => {
+        roll.dice.modifiers.natureInstead = false;
+        roll.dice.modifiers.tapNature = true;
+
+        postRoll = deepCopy(mockPostRoll);
+      });
+
+      it('taxes by margin of failure on failed rolls', () => {
+        postRoll.outcome = 'fail';
+        postRoll.ob = 5;
+        postRoll.totalSuccesses = 3;
+        postRoll.margin = 2;
+
+        const testImpact = impact(roll, mockCharacter, postRoll);
+
+        expect(testImpact.taxNature.total).toEqual(2);
+      });
+
+      it('taxes by 1 on a successful roll outside nature', () => {
+        roll.dice.info.inNature = false;
+
+        postRoll.outcome = 'success';
+        postRoll.ob = 3;
+        postRoll.totalSuccesses = 5;
+        postRoll.margin = 2;
+
+        const testImpact = impact(roll, mockCharacter, postRoll);
+
+        expect(testImpact.taxNature.total).toEqual(1);
+      });
+
+      it('does not tax on a successful roll inside nature', () => {
+        roll.dice.info.inNature = true;
+
+        postRoll.outcome = 'success';
+        postRoll.ob = 3;
+        postRoll.totalSuccesses = 5;
+        postRoll.margin = 2;
+
+        const testImpact = impact(roll, mockCharacter, postRoll);
+
+        expect(testImpact.taxNature).toBe(undefined);
+      });
+    });
   });
 });

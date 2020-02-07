@@ -152,9 +152,52 @@ const skillAbility = (roll, character, mark) => {
   }
 
   effect.mark = mark;
+
+  // TODO account for tax (if skill is nature)
   effect.advance = skillReadyToAdvance(skill, character, mark);
 
   return effect;
+}
+
+const taxNature = (roll, character, postRoll) => {
+  let tax;
+
+  // Taxing Nature (pg 27)
+  // If you use Nature in a situation outside of your Nature descriptors and fail the roll, the current rating is reduced by the margin of failure (to a minimum rating of 0).
+  if (roll.dice.modifiers.natureInstead &&
+    !roll.dice.info.inNature &&
+    postRoll.outcome === 'fail') {
+    tax = {
+      source: 'Faking it (rolling with nature) on a failed test outside nature',
+      total: postRoll.margin,
+    };
+
+  // No double tax! Double-Tapping Nature (pg 28):
+  // If you’re acting within your Nature, you may test your Nature... and use a persona point to add your Nature rating on top of that roll.
+  // Essentially, you’re doubling your Nature. However, if you fail this test, your Nature is taxed as per the rule in Tapping Your Nature.
+  } else if (roll.dice.modifiers.tapNature) {
+    // Tap nature and tax (page 28)
+    //   If the test is within your character’s Nature and successful, then there is no tax.
+    //   If the test is outside your character’s Nature and successful, Nature is taxed by one.
+    //   If the test is failed, whether it was within or outside Nature, Nature is taxed by the margin of failure.
+    if (postRoll.outcome === 'fail') {
+      tax = {
+        source: 'Ancestral insight (tap nature) on a failed test',
+        total: postRoll.margin,
+      };
+    } else if (!roll.dice.info.inNature) {
+      tax = {
+        source: 'Ancestral insight (tap nature) on a successful test outside nature',
+        total: 1,
+      };
+    }
+  }
+
+  if (tax) {
+    tax.willDeplete = tax.total >= character.abilities.NATURE.rating;
+  }
+
+  return tax;
 }
 
 const impact = (roll, character, postRoll) => {
@@ -163,8 +206,7 @@ const impact = (roll, character, postRoll) => {
     beneficialTrait: beneficialTrait(roll, character),
     wises: wises(roll, character),
     skill: skillAbility(roll, character, postRoll.outcome),
-    // ...skillsAndAbilities(roll),
-
+    taxNature: taxNature(roll, character, postRoll),
   };
 
   return impact;
