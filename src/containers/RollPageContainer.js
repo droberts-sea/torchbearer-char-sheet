@@ -47,8 +47,8 @@ const mapDispatchToProps = (dispatch) => {
       accept: () => {
         dispatch(rollAccept());
       },
-      commitResults: () => {
-        dispatch(rollCommitResults());
+      commitResults: (impact) => {
+        dispatch(rollCommitResults(impact));
       }
     },
     onGotoPage: (page) => {

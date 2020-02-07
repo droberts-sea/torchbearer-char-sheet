@@ -118,7 +118,7 @@ const Outcome = ({ impact, postRoll, operations }) => {
           <li>
             <button
               className="action-button"
-              onClick={operations.commitResults}
+              onClick={() => operations.commitResults(impact)}
             >
               Apply effects to character
           </button>
@@ -129,7 +129,7 @@ const Outcome = ({ impact, postRoll, operations }) => {
               onClick={operations.reset}
             >
               Reset roll without applying effects
-          </button>
+            </button>
           </li>
           <li>
             <p>
