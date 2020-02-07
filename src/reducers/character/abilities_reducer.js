@@ -67,23 +67,25 @@ const InitialAbilities = {
   }
 }
 
-const markTest = function(state, action, character) {
+const markTest = function (state, action, character) {
   // We use the MARK_TEST action for both skills and abilities
-  const ability = action.payload.skillName;
-  if (!state[ability] || ability === 'MIGHT') {
+  const ability = action.payload.name;
+  if (action.payload.category !== 'abilities' ||
+    !state[ability] ||
+    ability === 'MIGHT') {
     return state;
   }
 
   const newState = { ...state };
-  newState[ability] = advanceSkill(state[ability], action.payload.result, character);
+  newState[ability] = advanceSkill(state[ability], action.payload.mark, character);
 
   return newState;
 }
 
-const abilitiesReducer = function(state=InitialAbilities, action, character) {
+const abilitiesReducer = function (state = InitialAbilities, action, character) {
   switch (action.type) {
     case MARK_TEST:
-    return markTest(state, action, character);
+      return markTest(state, action, character);
 
     //
     // case TAX:
@@ -92,7 +94,7 @@ const abilitiesReducer = function(state=InitialAbilities, action, character) {
     // break;
 
     default:
-    return state;
+      return state;
   }
 }
 

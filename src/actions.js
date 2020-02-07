@@ -12,7 +12,6 @@ export const SPEND_POINT = 'SPEND_POINT';
 
 // STATS
 export const MARK_TEST = 'MARK_TEST';
-export const MARK_WISE = 'MARK_WISE';
 export const SKILL_COLLAPSE = 'SKILL_COLLAPSE';
 
 
@@ -73,16 +72,18 @@ export function spendPoint(category) {
   }
 }
 
-// could be for a skill or ability; we generalize to "skill"
-export function markTest(skillName, result) {
-  if (result !== 'PASS' && result !== 'FAIL') {
-    throw new Error(`Bogus test result: ${result}`);
+export function markTest(name, category, mark, unmark=false) {
+  mark = mark.toLowerCase();
+  if (!['pass', 'fail', 'fate', 'persona'].includes(mark)) {
+    throw new Error(`Bogus test mark: ${mark}`);
   }
   return {
     type: MARK_TEST,
     payload: {
-      skillName: skillName,
-      result: result
+      name,
+      category,
+      mark,
+      unmark,
     }
   };
 };
@@ -92,19 +93,3 @@ export function skillCollapse() {
     type: SKILL_COLLAPSE
   };
 };
-
-export function markWise(wiseName, testType) {
-  testType = testType.toLowerCase();
-  if (!['pass', 'fail', 'fate', 'persona'].include(testType)) {
-    throw new Error(`Bogus wise type: ${testType}`);
-  }
-  return {
-    type: MARK_WISE,
-    payload: {
-      wiseName: wiseName,
-      testType: testType
-    }
-  }
-};
-
-// ROLLS

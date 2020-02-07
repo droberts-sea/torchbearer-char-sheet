@@ -1,23 +1,23 @@
 import React from 'react';
 
 class SkillTable extends React.Component {
-  advancement(key, ability) {
-    if (!ability.advancement) {
+  advancement(name, skill) {
+    if (!skill.advancement) {
       return null;
     }
     const disabled = (
       this.props.advancementDisabled ||
-      ability.rating >= ability.max
+      skill.rating >= skill.max
     );
     return (
       <React.Fragment>
         <td className="advancement">
-          <span className="number">{ability.advancement.pass}</span>
-          <button onClick={() => this.props.onMarkTest(key, 'PASS')} disabled={disabled}>Mark</button>
+          <span className="number">{skill.advancement.pass}</span>
+          <button onClick={() => this.props.onMarkTest(name, 'PASS')} disabled={disabled}>Mark</button>
         </td>
         <td className="advancement">
-          <span className="number">{ability.advancement.fail}</span>
-          <button onClick={() => this.props.onMarkTest(key, 'FAIL')} disabled={disabled}>Mark</button>
+          <span className="number">{skill.advancement.fail}</span>
+          <button onClick={() => this.props.onMarkTest(name, 'FAIL')} disabled={disabled}>Mark</button>
         </td>
       </React.Fragment>
     );
@@ -29,7 +29,7 @@ class SkillTable extends React.Component {
   extraCol() { return null; }
   shouldShow() { return true; }
 
-  tableBody(skills) {
+  tableBody(skills, category) {
     return Object.keys(skills).map((key) => {
       if (!this.shouldShow(key, skills[key])) {
         return null;

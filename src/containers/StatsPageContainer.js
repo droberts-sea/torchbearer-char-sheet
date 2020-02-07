@@ -16,8 +16,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onMarkTest: (skillName, result) => {
-      dispatch(markTest(skillName, result));
+    onMarkTest: (...args) => {
+      dispatch(markTest(...args));
     },
     onSkillCollapse: () => {
       dispatch(skillCollapse());

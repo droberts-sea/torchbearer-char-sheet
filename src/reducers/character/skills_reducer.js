@@ -21,12 +21,12 @@ Object.keys(SkillRules).forEach((name) => {
   InitialSkills[name] = skill;
 });
 
-const clearSlate = function(advancement) {
+const clearSlate = function (advancement) {
   advancement.pass = 0;
   advancement.fail = 0;
 }
 
-export const advanceSkill = function(skill, result, character) {
+export const advanceSkill = function (skill, result, character) {
   if (skill.rating >= skill.max) {
     return skill;
   }
@@ -37,16 +37,16 @@ export const advanceSkill = function(skill, result, character) {
 
   const newAdvancement = { ...skill.advancement };
   switch (result) {
-    case 'PASS':
-    newAdvancement.pass += 1;
-    break;
+    case 'pass':
+      newAdvancement.pass += 1;
+      break;
 
-    case 'FAIL':
-    newAdvancement.fail += 1;
-    break;
+    case 'fail':
+      newAdvancement.fail += 1;
+      break;
 
     default:
-    throw new Error(`Bogus test result: ${result}`);
+      throw new Error(`Bogus test result: ${result}`);
   }
 
   const newSkill = {
@@ -83,29 +83,30 @@ export const advanceSkill = function(skill, result, character) {
   return newSkill;
 };
 
-const markTest = function(state, action, character) {
-  const skillName = action.payload.skillName;
-  if (!state[skillName]) {
+const markTest = function (state, action, character) {
+  const skillName = action.payload.name;
+  if (action.payload.category !== 'skills' ||
+    !state[skillName]) {
     return state;
   }
 
   const newState = { ...state };
   newState[skillName] = advanceSkill(
     state[skillName],
-    action.payload.result,
+    action.payload.mark,
     character
   );
 
   return newState;
 };
 
-const skillsReducer = function(state=InitialSkills, action, character) {
-  switch(action.type) {
+const skillsReducer = function (state = InitialSkills, action, character) {
+  switch (action.type) {
     case MARK_TEST:
-    return markTest(state, action, character);
+      return markTest(state, action, character);
 
     default:
-    return state;
+      return state;
   }
 };
 

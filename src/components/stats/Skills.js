@@ -1,6 +1,8 @@
 import React from 'react';
 import SkillTable from './SkillTable';
 
+// XXX this is an antipattern, react specifically recommends against extending your own components
+// see https://reactjs.org/docs/composition-vs-inheritance.html
 class Skills extends SkillTable {
   extraCol(key, ability) {
     return (
