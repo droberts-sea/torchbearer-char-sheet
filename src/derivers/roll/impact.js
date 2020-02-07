@@ -24,7 +24,7 @@ const points = (roll) => {
 
   if (roll.dice.modifiers.tapNature) {
     points.persona.push({
-      source: 'Tap Nature',
+      source: 'Ancestral Insight (tap nature)',
       effect: 1,
     });
   }

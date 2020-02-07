@@ -221,7 +221,7 @@ describe('Derived State', () => {
       checkModifierAdded({
         beforeState,
         afterState,
-        detailsText: 'Tapping nature',
+        detailsText: 'tapping nature',
         expectedDelta: character.abilities.NATURE.rating
       });
     });

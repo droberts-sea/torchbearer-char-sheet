@@ -20,7 +20,7 @@ const AddDice = ({ disabledOptions, onSetProperty, modifiers, character, resourc
         // TODO only display beginner's luck info and "roll using nature" if character does not have this skill
       }
       <Toggle
-        name="Roll using Nature"
+        name="Fake It (roll using Nature)"
         subtext="If you don't have the skill, you can roll with (full) Nature instead of using Beginner's Luck. If the test is outside your Nature, your Nature will be taxed by the margin of failure. If you are Afraid, this option will be selected automatically."
         disabled={disabledOptions.natureInstead || disabledOptions.unselectNatureInstead}
         active={modifiers.natureInstead}
@@ -75,7 +75,7 @@ const AddDice = ({ disabledOptions, onSetProperty, modifiers, character, resourc
         onValueChange={(personaDice) => onSetProperty('personaDice', personaDice)}
       />
       <Toggle
-        name="Tap Nature"
+        name="Ancestral Insight (tap Nature)"
         subtext="Spend a Persona to add your Nature to this test. If the test is outside your Nature, Nature will be taxed by one."
         disabled={disabledOptions.tapNature}
         active={modifiers.tapNature}

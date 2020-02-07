@@ -66,7 +66,7 @@ export const skillDice = function (state, character, summary, details) {
       // non-open skill and the player has opted to use their nature instead
       const nature = character.abilities['NATURE'];
       rating = nature.rating;
-      source = `Nature (instead of ${character.skills[skillName].name})`;
+      source = `Faking It (use Nature instead of ${character.skills[skillName].name})`;
 
     } else {
       // non-open skill without nature -> beginner's luck
@@ -222,15 +222,12 @@ const addPostBLDice = function (state, character, summary, details) {
 
   // tapped nature (page 28)
   // You may tap your character’s Nature to perform a heroic act. By spending a persona point, you may add your current Nature rating to your ability or skill test (except Resources or Circles)
-  //   If the test is within your character’s Nature and successful, then there is no tax.
-  //   If the test is outside your character’s Nature and successful, Nature is taxed by one.
-  //   If the test is failed, whether it was within or outside Nature, Nature is taxed by the margin of failure.
   if (state.dice.info.skill !== 'RESOURCES' && state.dice.info.skill !== 'CIRCLES' && modifiers.tapNature) {
     const nature = character.abilities.NATURE.rating
     summary.dice += nature;
     details.push({
       effect: `+${nature}D`,
-      source: 'Tapping nature'
+      source: 'Ancestral Insight (tapping nature)'
     });
   }
 }
