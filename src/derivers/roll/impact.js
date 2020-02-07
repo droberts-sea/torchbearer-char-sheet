@@ -154,6 +154,7 @@ const skillAbility = (roll, character, mark) => {
   effect.mark = mark;
 
   // TODO account for tax (if skill is nature)
+  // https://www.reddit.com/r/Torchbearer/comments/f02avw/tax_or_advance_nature_which_comes_first/
   effect.advance = skillReadyToAdvance(skill, character, mark);
 
   return effect;
