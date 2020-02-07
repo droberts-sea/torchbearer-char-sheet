@@ -83,7 +83,6 @@ const WiseReaction = ({ name, subtext, reactionName, reactions, characterWises, 
   );
 };
 
-// TODO: consider changing name to OutcomePreview
 const OutcomePreview = ({ postRoll, onAcceptRoll }) => {
   return (
     <footer className="outcome">
