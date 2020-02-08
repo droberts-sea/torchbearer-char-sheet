@@ -1,5 +1,6 @@
 import { MARK_TEST } from '../../actions';
 import { advanceSkill } from './skills_reducer';
+import { ROLL_COMMIT_RESULTS } from '../../actions/roll_actions';
 
 // See _Abilities_, page 26
 const InitialAbilities = {
@@ -67,17 +68,17 @@ const InitialAbilities = {
   }
 }
 
-const markTest = function (state, action, character) {
+const markTest = function (state, effect, character) {
   // We use the MARK_TEST action for both skills and abilities
-  const ability = action.payload.name;
-  if (action.payload.category !== 'abilities' ||
+  const ability = effect.name;
+  if (effect.category !== 'abilities' ||
     !state[ability] ||
     ability === 'MIGHT') {
     return state;
   }
 
   const newState = { ...state };
-  newState[ability] = advanceSkill(state[ability], action.payload.mark, character);
+  newState[ability] = advanceSkill(state[ability], effect.mark, character);
 
   return newState;
 }
@@ -85,13 +86,13 @@ const markTest = function (state, action, character) {
 const abilitiesReducer = function (state = InitialAbilities, action, character) {
   switch (action.type) {
     case MARK_TEST:
-      return markTest(state, action, character);
+      return markTest(state, action.payload, character);
 
-    //
-    // case TAX:
-    // console.log('TODO: implement tax');
-    // return state;
-    // break;
+    case ROLL_COMMIT_RESULTS:
+      if (action.payload.taxNature) {
+        // state = taxNature(state, action.payload.taxNature.total)
+      }
+      return markTest(state, action.payload.skill, character);
 
     default:
       return state;
