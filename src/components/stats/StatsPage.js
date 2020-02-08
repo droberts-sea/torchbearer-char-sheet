@@ -25,6 +25,7 @@ class StatsPage extends React.Component {
           />
         <Traits
           traits={this.props.traits}
+          onMarkTrait={this.props.onMarkTrait}
           />
         <Skills
           skills={this.props.skills}

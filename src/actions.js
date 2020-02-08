@@ -12,6 +12,7 @@ export const SPEND_POINT = 'SPEND_POINT';
 
 // STATS
 export const MARK_TEST = 'MARK_TEST';
+export const MARK_TRAIT = 'MARK_TRAIT';
 export const SKILL_COLLAPSE = 'SKILL_COLLAPSE';
 
 
@@ -87,6 +88,13 @@ export function markTest(name, category, mark, unmark=false) {
     }
   };
 };
+
+export function markTrait(name, increase) {
+  return {
+    type: MARK_TRAIT,
+    payload: { name, increase },
+  };
+}
 
 export function skillCollapse() {
   return {

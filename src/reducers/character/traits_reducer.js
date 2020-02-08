@@ -1,3 +1,5 @@
+import { MARK_TRAIT } from "../../actions";
+
 export const InitialTraits = [
   {
     name: "Firey",
@@ -16,10 +18,29 @@ export const InitialTraits = [
   }
 ];
 
-const traitsReducer = function(state=InitialTraits, action, character) {
-  switch(action.type) {
+const traitsReducer = function (state = InitialTraits, action, character) {
+  switch (action.type) {
+    case MARK_TRAIT:
+      return state.map(trait => {
+        if (trait.name === action.payload.name) {
+          if (action.payload.increase) {
+            return {
+              ...trait,
+              uses: Math.min(trait.uses + 1, trait.level),
+            };
+          } else {
+            return {
+              ...trait,
+              uses: Math.max(trait.uses - 1, 0),
+            };
+          }
+        } else {
+          return trait;
+        }
+      });
+
     default:
-    return state;
+      return state;
   }
 };
 

@@ -13,10 +13,12 @@ class Traits extends React.Component {
         <React.Fragment>
           <Checkbox
             active={trait.uses >= 1}
+            onToggle={(active) => this.props.onMarkTrait(trait.name, active)}
             />
           <Checkbox
             disabled={trait.level < 2}
             active={trait.uses >= 2}
+            onToggle={(active) => this.props.onMarkTrait(trait.name, active)}
             />
         </React.Fragment>
       );
