@@ -33,7 +33,7 @@ PlusMinus.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,
   onValueChange: PropTypes.func.isRequired,
-  subtext: PropTypes.string,
+  subtext: PropTypes.node,
   min: PropTypes.number,
   max: PropTypes.number,
 };

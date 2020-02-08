@@ -45,14 +45,12 @@ const AddDice = ({ disabledOptions, onSetProperty, info, modifiers, character, r
       </li>
       <PlusMinus
         name="Help"
-        subtext={(
-          <p>
-            Get help from your allies, through wises or an appropriate skill.
-            <br />
-            Suggested help:
-            <em> {formatSuggestedHelp(info.skill)}</em>
-          </p>
-        )}
+        subtext={(<>
+          Get help from your allies, through wises or an appropriate skill.
+          <br />
+          Suggested help:
+          <em> {formatSuggestedHelp(info.skill)}</em>
+        </>)}
         value={modifiers.help}
         min={0}
         onValueChange={(help) => onSetProperty('help', help)}
@@ -86,7 +84,7 @@ const AddDice = ({ disabledOptions, onSetProperty, info, modifiers, character, r
       </li>
       <PlusMinus
         name="Persona Dice"
-        subtext="Spend up to three Persona to gain extra dice on any roll"
+        subtext="Spend up to three Persona to gain extra dice on any roll."
         value={modifiers.personaDice}
         min={0}
         max={disabledOptions.maxPersonaDice}
@@ -109,6 +107,7 @@ const AddDice = ({ disabledOptions, onSetProperty, info, modifiers, character, r
 AddDice.propTypes = {
   disabledOptions: PropTypes.object.isRequired,
   onSetProperty: PropTypes.func.isRequired,
+  info: PropTypes.object.isRequired,
   modifiers: PropTypes.object.isRequired,
   character: PropTypes.object.isRequired,
   resourcesSpent: PropTypes.object.isRequired,
