@@ -2,6 +2,7 @@ import wisesReducer, { InitialWises } from '../wises_reducer';
 
 import { deepCopy } from '../../../mock/util';
 import { MARK_TEST } from '../../../actions';
+import { ROLL_COMMIT_RESULTS } from '../../../actions/roll_actions';
 
 describe(wisesReducer, () => {
   let wises;
@@ -9,7 +10,7 @@ describe(wisesReducer, () => {
   beforeEach(() => {
     wises = deepCopy(InitialWises);
   });
-  describe('MARK_TEST action', () => {
+  describe(MARK_TEST, () => {
     beforeEach(() => {
       action = {
         type: MARK_TEST,
@@ -55,6 +56,38 @@ describe(wisesReducer, () => {
 
       const reduction = wisesReducer(wises, action);
       expect(reduction).toEqual(wises);
+    });
+  });
+
+  describe(ROLL_COMMIT_RESULTS, () => {
+    beforeEach(() => {
+      action = {
+        type: ROLL_COMMIT_RESULTS,
+        payload: {
+          wises: [],
+        },
+      };
+    })
+    it('does nothing for an empty wise list', () => {
+      const reduction = wisesReducer(wises, action);
+      expect(reduction).toEqual(wises);
+    });
+
+    it('updates each marked wise', () => {
+      wises.forEach(wise => {
+        wise.advancement.fate = false;
+        wise.advancement.persona = false;
+      });
+      action.payload.wises = [
+        { name: wises[1].name, mark: 'persona' },
+        { name: wises[0].name, mark: 'fate' },
+      ];
+      const reduction = wisesReducer(wises, action);
+      expect(reduction[0].name).toEqual(wises[0].name);
+      expect(reduction[0].advancement.fate).toBeTruthy();
+
+      expect(reduction[1].name).toEqual(wises[1].name);
+      expect(reduction[1].advancement.persona).toBeTruthy();
     });
   });
 });
