@@ -49,7 +49,7 @@ const AddDice = ({ disabledOptions, onSetProperty, info, modifiers, character, r
           <p>
             Get help from your allies, through wises or an appropriate skill.
             <br />
-            Recommended help:
+            Suggested help:
             <em> {formatSuggestedHelp(info.skill)}</em>
           </p>
         )}

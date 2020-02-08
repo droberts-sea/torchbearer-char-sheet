@@ -101,6 +101,7 @@ const abilitiesReducer = function (state = InitialAbilities, action, character) 
       return markTest(state, action.payload, character);
 
     case ROLL_COMMIT_RESULTS:
+      // Engineering decision: tax comes first. See also derivers/roll/impact.js
       if (action.payload.taxNature) {
         state = taxNature(state, action.payload.taxNature.total)
       }
