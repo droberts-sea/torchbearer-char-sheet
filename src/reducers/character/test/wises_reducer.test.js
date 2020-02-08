@@ -65,6 +65,9 @@ describe(wisesReducer, () => {
         type: ROLL_COMMIT_RESULTS,
         payload: {
           wises: [],
+          outcome: {
+            wiseAdvancement: [],
+          },
         },
       };
     })
@@ -88,6 +91,50 @@ describe(wisesReducer, () => {
 
       expect(reduction[1].name).toEqual(wises[1].name);
       expect(reduction[1].advancement.persona).toBeTruthy();
+    });
+
+    it('clears the slate for wises marked for advancement', () => {
+      wises[0].advancement = {
+        pass: true,
+        fail: true,
+        fate: true,
+        persona: false,
+      };
+      action.payload.wises = [
+        { name: wises[0].name, mark: 'persona' },
+      ];
+      action.payload.outcome.wiseAdvancement = [{
+        name: wises[0].name,
+        selectedPerk: 'test-skill',
+      }];
+
+      const reduction = wisesReducer(wises, action);
+      expect(reduction[0].name).toEqual(wises[0].name);
+      expect(reduction[0].advancement).toEqual({
+        pass: false, fail: false, fate: false, persona: false,
+      });
+    });
+
+    it('changes the name of a wise where a name change was selected', () => {
+      wises[0].advancement = {
+        pass: true,
+        fail: true,
+        fate: true,
+        persona: false,
+      };
+      action.payload.wises = [
+        { name: wises[0].name, mark: 'persona' },
+      ];
+
+      const newName = 'new name';
+      action.payload.outcome.wiseAdvancement = [{
+        name: wises[0].name,
+        selectedPerk: 'change-wise',
+        newWiseName: newName,
+      }];
+
+      const reduction = wisesReducer(wises, action);
+      expect(reduction[0].name).toEqual(newName);
     });
   });
 });

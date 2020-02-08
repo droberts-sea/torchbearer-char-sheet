@@ -2,7 +2,7 @@
 
 exports[`renders with a trained skill selected 1`] = `
 <li
-  className="skill-ability-dropdown control"
+  className="undefined skill-ability-dropdown control"
 >
   <div
     className="control-main"
@@ -108,7 +108,7 @@ exports[`renders with a trained skill selected 1`] = `
 
 exports[`renders with no skill selected 1`] = `
 <li
-  className="skill-ability-dropdown control"
+  className="undefined skill-ability-dropdown control"
 >
   <div
     className="control-main"

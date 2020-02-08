@@ -153,10 +153,11 @@ const Outcome = ({ outcome, impact, postRoll, character, onSetOutcome, onSetWise
               return "";
             })
           }
+          {/* TODO disable until all impact tasks are delt with */}
           <li key="commit-button">
             <button
               className="action-button"
-              onClick={() => operations.commitResults(impact)}
+              onClick={() => operations.commitResults(impact, outcome)}
             >
               Apply effects to character
           </button>

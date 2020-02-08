@@ -31,10 +31,13 @@ export function rollAccept(impact) {
   };
 };
 
-export function rollCommitResults(impact) {
+export function rollCommitResults(impact, outcome) {
   return {
     type: ROLL_COMMIT_RESULTS,
-    payload: impact,
+    payload: {
+      ...impact,
+      outcome,
+    },
   };
 };
 
