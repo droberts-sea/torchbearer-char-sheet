@@ -111,7 +111,7 @@ export const SkillRules = {
   LABORER: {
     description: "Laborers are the bulk of the workforce in villages, towns and cities. They gather wood for the carpenters, stone for the masons and metal for the smiths. They dig ditches, carry stuff and generally just do what they are told (until they get rum brave and riot). When you hit the big score in a dungeon and have lots of treasure to haul out, laborers are what you need. Anyone can carry a small sack in each hand or a large sack with both hands, but it takes skill to carry more.",
     supplies: "Laborer may be used to help the following trade or craft skill tests: Alchemist, Armorer, Carpenter, Cook, Healer, Hunter, Peasant, Sailor, Stonemason and Weaver.",
-    suggestedHelp: ["LABORER"],
+    suggestedHelp: [],
     beginnersLuck: "HEALTH",
     uses: "carrying two small sacks in one hand, carrying a large sack in one hand, carting bulky treasure out of the dungeon, useful as help for many skills",
   },
@@ -129,6 +129,7 @@ export const SkillRules = {
   },
   MENTOR: {
     description: "A mentor knows how to transmit skills to another character. Using this skill, you can give your student a test for advancement in a skill or teach a spell in camp or town. In order to teach, the mentor must have the skill being taught at a higher rating than the student. The skill being taught may be used by a third character to help. The student doesn’t help.",
+    suggestedHelp: [],
     beginnersLuck: "WILL",
     uses: "helping others learn skills or spells",
   },
@@ -166,7 +167,7 @@ export const SkillRules = {
   RITUALIST: {
     description: "Ritualists use prayers and chants to draw upon the power of the Immortal Lords and other primal forces to impose their will upon the world. It is the exclusive domain of clerics and creatures that know the secrets of beseeching the Immortal Lords. Use Ritualist to invoke cleric prayers.",
     supplies: "Ritualists can use supplies from many professions. See individual prayers for details.",
-    suggestedHelp: ["RITUALIST"],
+    suggestedHelp: [],
     beginnersLuck: "WILL",
     uses: "casting prayers, Abjure/Banish conflicts",
   },
@@ -177,7 +178,7 @@ export const SkillRules = {
   },
   SCAVENGER: {
     description: "A scavenger can find useful materials and forage for sustenance anywhere in the wild.",
-    suggestedHelp: ["SCAVENGER", "SCOUT"],
+    suggestedHelp: ["SCOUT"],
     beginnersLuck: "HEALTH",
     uses: "foraging for food, finding useful materials or scrap",
   },
@@ -223,7 +224,7 @@ export const SkillRules = {
   WEAVER: {
     description: "A weaver can manufacture fabric and create cloaks, aprons, blankets, rope, cordage, sheets and tapestries.",
     supplies: "Weavers can take fur from hunters, fibers from farmers or wool from herders. Dyes come from stonemasons, scavengers or alchemists.",
-    suggestedHelp: ["WEAVER"],
+    suggestedHelp: [],
     beginnersLuck: "WILL",
     uses: "The products of a weaver can be used as supplies to recover from conditions gained from being cold and wet, and many other tests.",
   },
