@@ -1,7 +1,7 @@
 import traitsReducer from '../traits_reducer';
 import { InitialTraits } from '../traits_reducer';
 import { MARK_TRAIT } from '../../../actions';
-import { ROLL_RESET } from '../../../actions/roll_actions';
+import { ROLL_RESET, ROLL_COMMIT_RESULTS } from '../../../actions/roll_actions';
 import { deepCopy } from '../../../mock/util';
 
 describe(traitsReducer, () => {
@@ -11,7 +11,7 @@ describe(traitsReducer, () => {
     traitsReducer(InitialTraits, action);
   });
 
-  describe('MARK_TRAIT action', () => {
+  describe(MARK_TRAIT, () => {
     let traits;
     beforeEach(() => {
       traits = deepCopy(InitialTraits);
@@ -86,6 +86,64 @@ describe(traitsReducer, () => {
       const reduction = traitsReducer(traits, action);
       expect(reduction[1].name).toEqual(trait.name);
       expect(reduction[1].uses).toEqual(0);
+    });
+  });
+
+  describe(ROLL_COMMIT_RESULTS, () => {
+    let traits;
+    beforeEach(() => {
+      traits = deepCopy(InitialTraits);
+      action = {
+        type: ROLL_COMMIT_RESULTS,
+        payload: {
+          beneficialTrait: undefined,
+        },
+      };
+    })
+    it('marks a use of the specified trait', () => {
+      const trait = traits[1];
+      trait.uses = 0;
+      trait.level = 2;
+
+      action.payload.beneficialTrait = trait.name;
+
+      const reduction = traitsReducer(traits, action);
+      expect(reduction[1].name).toEqual(trait.name);
+      expect(reduction[1].uses).toEqual(1);
+    });
+
+    it("won't mark a use beyond the trait's level", () => {
+      const trait = traits[1];
+      trait.uses = 2;
+      trait.level = 2;
+
+      action.payload.beneficialTrait = trait.name;
+
+      const reduction = traitsReducer(traits, action);
+      expect(reduction[1].name).toEqual(trait.name);
+      expect(reduction[1].uses).toEqual(2);
+    });
+
+    it("doesn't mark level 3 traits", () => {
+      const trait = traits[1];
+      trait.uses = 0;
+      trait.level = 3;
+
+      action.payload.beneficialTrait = trait.name;
+
+      const reduction = traitsReducer(traits, action);
+      expect(reduction[1].name).toEqual(trait.name);
+      expect(reduction[1].uses).toEqual(0);
+    });
+
+    it('ignores the action if no trait is specified', () => {
+      action.payload.beneficialTrait = undefined;
+      let reduction = traitsReducer(traits, action);
+      expect(reduction).toEqual(traits);
+
+      action.payload.beneficialTrait = 'bogus trait';
+      reduction = traitsReducer(traits, action);
+      expect(reduction).toEqual(traits);
     });
   });
 });
