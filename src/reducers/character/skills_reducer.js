@@ -1,5 +1,6 @@
 import { SkillRules } from '../../rules/skills';
 import { MARK_TEST } from '../../actions';
+import { ROLL_COMMIT_RESULTS } from '../../actions/roll_actions';
 
 const InitialSkills = {};
 Object.keys(SkillRules).forEach((name) => {
@@ -83,9 +84,9 @@ export const advanceSkill = function (skill, result, character) {
   return newSkill;
 };
 
-const markTest = function (state, action, character) {
-  const skillName = action.payload.name;
-  if (action.payload.category !== 'skills' ||
+const markTest = function (state, effect, character) {
+  const skillName = effect.name;
+  if (effect.category !== 'skills' ||
     !state[skillName]) {
     return state;
   }
@@ -93,7 +94,7 @@ const markTest = function (state, action, character) {
   const newState = { ...state };
   newState[skillName] = advanceSkill(
     state[skillName],
-    action.payload.mark,
+    effect.mark,
     character
   );
 
@@ -103,7 +104,10 @@ const markTest = function (state, action, character) {
 const skillsReducer = function (state = InitialSkills, action, character) {
   switch (action.type) {
     case MARK_TEST:
-      return markTest(state, action, character);
+      return markTest(state, action.payload, character);
+
+    case ROLL_COMMIT_RESULTS:
+      return markTest(state, action.payload.skill, character);
 
     default:
       return state;
