@@ -49,7 +49,7 @@ class RollPage extends React.Component {
             postRoll={this.props.postRollDerived}
             character={this.props.character}
             onSetReaction={this.props.onSetReaction}
-            onAcceptRoll={this.props.operations.accept}
+            onAcceptRoll={() => this.props.operations.accept(this.props.impact)}
             disabledOptions={this.props.disabledOptions.results}
             resourcesSpent={this.props.impact.points.total}
           />
@@ -61,7 +61,9 @@ class RollPage extends React.Component {
             outcome={this.props.outcome}
             impact={this.props.impact}
             postRoll={this.props.postRollDerived}
+            character={this.props.character}
             onSetOutcome={this.props.onSetOutcome}
+            onSetWiseAdvancement={this.props.onSetWiseAdvancement}
             operations={this.props.operations}
           />
         );
@@ -110,6 +112,8 @@ RollPage.propTypes = {
   onSetModifier: PropTypes.func.isRequired,
   operations: PropTypes.object.isRequired,
   onSetReaction: PropTypes.func.isRequired,
+  onSetOutcome: PropTypes.func.isRequired,
+  onSetWiseAdvancement: PropTypes.func.isRequired,
 };
 
 export default RollPage;

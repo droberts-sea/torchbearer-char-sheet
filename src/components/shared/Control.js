@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import './styles/Control.css';
 
-const Control = ({name, subtext, knob, className}) => {
+const Control = ({name, subtext, knob, className, ...props}) => {
   className += ' control';
   return (
-    <li className={className}>
+    <li className={className} {...props}>
       <div className="control-main">
         <h3 className="control-title">{ name }</h3>
         {knob}

@@ -7,6 +7,7 @@ export const ROLL_SET_INFO = 'ROLL_SET_INFO';
 export const ROLL_SET_MODIFIER = 'ROLL_SET_MODIFIER';
 export const ROLL_SET_REACTION = 'ROLL_SET_REACTION';
 export const ROLL_SET_OUTCOME = 'ROLL_SET_OUTCOME';
+export const ROLL_SET_WISE_ADVANCEMENT = 'ROLL_SET_WISE_ADVANCEMENT';
 export const ROLL_GOTO_PAGE = 'ROLL_GOTO_PAGE';
 
 export function rollReset() {
@@ -23,17 +24,17 @@ export function rollRollDice() {
   };
 };
 
-export function rollAccept() {
+export function rollAccept(impact) {
   return {
     type: ROLL_ACCEPT,
-    payload: {}
+    payload: impact,
   };
 };
 
 export function rollCommitResults(impact) {
   return {
     type: ROLL_COMMIT_RESULTS,
-    payload: impact
+    payload: impact,
   };
 };
 
@@ -102,6 +103,16 @@ export function rollSetOutcome(prop, value) {
     payload: {
       prop: prop,
       value: value,
+    },
+  };
+}
+
+export function rollSetWiseAdvancement(wiseName, prop, value) {
+  // TODO validation
+  return {
+    type: ROLL_SET_WISE_ADVANCEMENT,
+    payload: {
+      wiseName, prop, value,
     },
   };
 }

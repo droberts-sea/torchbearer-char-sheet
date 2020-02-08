@@ -70,16 +70,25 @@ class SkillAbilityDropdown extends React.Component {
   }
 
   render () {
+    const {
+      name = "Skill / Ability",
+      current = "default",
+      className,
+      onSelectSkill,
+      character,
+      extraKnob,
+      ...props
+    } = this.props;
     // NB The dropdown menu looks like garbage in chrome's dev tools,
     // but on a real mobile browser the default styles are pretty solid
-    const value = this.props.current || "default";
     return (
       <Control
-        className="skill-ability-dropdown"
-        name="Skill / Ability"
-        knob={(
+        {...props}
+        className={className + " skill-ability-dropdown"}
+        name={name}
+        knob={(<>
           <select
-            value={value}
+            value={current}
             onChange={(event) => {this.props.onSelectSkill(event.target.value)}}
             >
             <option key="default" value="default" disabled={true}>
@@ -90,16 +99,19 @@ class SkillAbilityDropdown extends React.Component {
             {this.trainedSkills()}
             {this.untrainedSkills()}
           </select>
-        )}
+          {this.props.extraKnob}
+        </>)}
         />
     );
   }
 }
 
 SkillAbilityDropdown.propTypes = {
+  name: PropTypes.string,
   current: PropTypes.string,
   onSelectSkill: PropTypes.func.isRequired,
-  character: PropTypes.object.isRequired
+  character: PropTypes.object.isRequired,
+  extraKnob: PropTypes.node,
 };
 
 export default SkillAbilityDropdown;

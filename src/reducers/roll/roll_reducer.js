@@ -7,6 +7,7 @@ import {
   ROLL_ROLL_DICE,
   ROLL_ACCEPT,
   ROLL_SET_OUTCOME,
+  ROLL_SET_WISE_ADVANCEMENT,
 } from '../../actions/roll_actions';
 
 import { traitIsAvailable } from '../../rules/traits';
@@ -52,8 +53,18 @@ export const InitialRoll = {
   // },
   outcome: {
     skillAlreadyTested: false,
+    wiseAdvancement: [],
+    natureDepletion: {},
   },
 };
+
+const InitialWiseAdvancement = Object.freeze({
+  name: undefined,
+  selectedPerk: undefined,
+  newWiseName: '',
+  selectedSkill: undefined,
+  mark: undefined,
+});
 
 const reduceInfo = function (state, action, character) {
   switch (action.type) {
@@ -175,11 +186,34 @@ const reduceDice = function (state, action, character) {
 
 const reduceOutcome = (state, action) => {
   switch (action.type) {
-    case ROLL_SET_OUTCOME:
-      const newState = {...state};
+    case ROLL_ACCEPT: {
+      const newState = { ...state };
+      newState.wiseAdvancement = action.payload.wises.map(wise => ({
+        ...InitialWiseAdvancement,
+        name: wise.name,
+      }));
+      return newState;
+    }
+    case ROLL_SET_OUTCOME: {
+      const newState = { ...state };
       newState[action.payload.prop] = action.payload.value;
       return newState;
-      
+
+    }
+    case ROLL_SET_WISE_ADVANCEMENT: {
+      const newState = { ...state };
+      const { wiseName, prop, value } = action.payload;
+      newState.wiseAdvancement = state.wiseAdvancement.map(wiseAdvancement => {
+        if (wiseAdvancement.name === wiseName) {
+          const newAdvancement = { ...wiseAdvancement };
+          newAdvancement[prop] = value;
+          return newAdvancement;
+        } else {
+          return wiseAdvancement;
+        }
+      });
+      return newState;
+    }
     default:
       return state;
   }

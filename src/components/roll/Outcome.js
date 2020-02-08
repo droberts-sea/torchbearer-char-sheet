@@ -6,6 +6,7 @@ import pluralize from 'pluralize';
 import "./styles/Outcome.css";
 import Toggle from '../shared/Toggle';
 import OutcomeSummary from './OutcomeSummary';
+import WiseAdvancement from './WiseAdvancement';
 
 const Points = ({ name, points, verb = "Spend" }) => {
   return (
@@ -79,7 +80,7 @@ const TaxNature = ({ tax }) => {
   }
 };
 
-const Outcome = ({ outcome, impact, postRoll, onSetOutcome, operations }) => {
+const Outcome = ({ outcome, impact, postRoll, character, onSetOutcome, onSetWiseAdvancement, operations }) => {
   // Page 65
   let outcomeFlavor;
   if (postRoll.outcome === 'pass') {
@@ -126,6 +127,26 @@ const Outcome = ({ outcome, impact, postRoll, onSetOutcome, operations }) => {
             active={outcome.skillAlreadyTested}
             onToggle={active => onSetOutcome('skillAlreadyTested', active)}
           />
+          {
+            impact.wises.map(wise => {
+              const advancement = outcome.wiseAdvancement.find(
+                adv => adv.name === wise.name
+              );
+              if (!advancement) {
+                throw new Error(`No matching wise advancement found in the roll outcome for advancing wise ${wise.name}`);
+              }
+              return (
+                <li>
+                  <WiseAdvancement
+                    wise={wise}
+                    character={character}
+                    wiseAdvancement={advancement}
+                    onSetWiseAdvancement={(prop, value) => onSetWiseAdvancement(wise.name, prop, value)}
+                  />
+                </li>
+              );
+            })
+          }
           <li>
             <button
               className="action-button"
@@ -156,8 +177,12 @@ const Outcome = ({ outcome, impact, postRoll, onSetOutcome, operations }) => {
 };
 
 Outcome.propTypes = {
+  outcome: PropTypes.object.isRequired,
   impact: PropTypes.object.isRequired,
   postRoll: PropTypes.object.isRequired,
+  character: PropTypes.object.isRequired,
+  onSetOutcome: PropTypes.func.isRequired,
+  onSetWiseAdvancement: PropTypes.func.isRequired,
   operations: PropTypes.object.isRequired,
 }
 

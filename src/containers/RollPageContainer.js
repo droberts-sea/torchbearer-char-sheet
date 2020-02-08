@@ -9,6 +9,7 @@ import {
   rollSetReaction,
   rollGotoPage,
   rollSetOutcome,
+  rollSetWiseAdvancement,
 } from '../actions/roll_actions';
 import RollPage from '../components/roll/RollPage';
 import preRollDerived from '../derivers/roll/pre_roll';
@@ -37,6 +38,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
+  // TODO: consider bindActionCreators
+  // https://react-redux.js.org/using-react-redux/connect-mapdispatch#defining-the-mapdispatchtoprops-function-with-bindactioncreators
   return {
     operations: {
       reset: () => {
@@ -45,8 +48,8 @@ const mapDispatchToProps = (dispatch) => {
       rollDice: () => {
         dispatch(rollRollDice());
       },
-      accept: () => {
-        dispatch(rollAccept());
+      accept: (impact) => {
+        dispatch(rollAccept(impact));
       },
       commitResults: (impact) => {
         dispatch(rollCommitResults(impact));
@@ -63,6 +66,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSetOutcome: (prop, value) => {
       dispatch(rollSetOutcome(prop, value));
+    },
+    onSetWiseAdvancement: (...args) => {
+      dispatch(rollSetWiseAdvancement(...args));
     },
     onSetReaction: (prop, value) => {
       dispatch(rollSetReaction(prop, value));
