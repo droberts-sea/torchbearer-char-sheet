@@ -188,10 +188,12 @@ const reduceOutcome = (state, action) => {
   switch (action.type) {
     case ROLL_ACCEPT: {
       const newState = { ...state };
-      newState.wiseAdvancement = action.payload.wises.map(wise => ({
-        ...InitialWiseAdvancement,
-        name: wise.name,
-      }));
+      newState.wiseAdvancement = action.payload.wises
+        .filter(w => w.advance)
+        .map(wise => ({
+          ...InitialWiseAdvancement,
+          name: wise.name,
+        }));
       return newState;
     }
     case ROLL_SET_OUTCOME: {

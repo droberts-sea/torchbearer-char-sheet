@@ -43,22 +43,25 @@ const ConditionalWrapper = ({ condition, wrapper, children }) =>
   condition ? wrapper(children) : children;
 
 const MarkEffect = ({ effect }) => {
+  // TODO something in here is missing a key, but I can't figure out what.
   return (
     <li key={`me_${effect.category}_${effect.name}`}>
+      <div key="description">
       <ConditionalWrapper
         condition={effect.ignored}
         wrapper={n => <strike>{n}</strike>}
       >
         <b>Mark</b> use of {pluralize.singular(effect.category)} <em>{effect.name}</em>
       </ConditionalWrapper>
-      <ul className="effect-details">
-        <li>
+      </div>
+      <ul className="effect-details" key="details">
+        <li key="type">
           Mark type: <em>{effect.mark}</em>
           {effect.markComment ? ` (${effect.markComment})` : ""}
         </li>
-        {effect.alreadyMarked ? (<li>(already marked)</li>) : ""}
-        {effect.advance ? (<li>Ready to advance!</li>) : ""}
-        {effect.ignored ? (<li><b>Ignored</b> due to <em>{effect.ignored}</em></li>) : ""}
+        {effect.alreadyMarked ? (<li key="am">(already marked)</li>) : ""}
+        {effect.advance ? (<li key="adv">Ready to advance!</li>) : ""}
+        {effect.ignored ? (<li key="ign"><b>Ignored</b> due to <em>{effect.ignored}</em></li>) : ""}
       </ul>
     </li>
   )
@@ -129,25 +132,28 @@ const Outcome = ({ outcome, impact, postRoll, character, onSetOutcome, onSetWise
           />
           {
             impact.wises.map(wise => {
-              const advancement = outcome.wiseAdvancement.find(
-                adv => adv.name === wise.name
-              );
-              if (!advancement) {
-                throw new Error(`No matching wise advancement found in the roll outcome for advancing wise ${wise.name}`);
+              if (wise.advance) {
+                const advancement = outcome.wiseAdvancement.find(
+                  adv => adv.name === wise.name
+                );
+                if (!advancement) {
+                  throw new Error(`No matching wise advancement found in the roll outcome for advancing wise ${wise.name}`);
+                }
+                return (
+                  <li key={`wise_adv_${wise.name}`}>
+                    <WiseAdvancement
+                      wise={wise}
+                      character={character}
+                      wiseAdvancement={advancement}
+                      onSetWiseAdvancement={(prop, value) => onSetWiseAdvancement(wise.name, prop, value)}
+                    />
+                  </li>
+                );
               }
-              return (
-                <li>
-                  <WiseAdvancement
-                    wise={wise}
-                    character={character}
-                    wiseAdvancement={advancement}
-                    onSetWiseAdvancement={(prop, value) => onSetWiseAdvancement(wise.name, prop, value)}
-                  />
-                </li>
-              );
+              return "";
             })
           }
-          <li>
+          <li key="commit-button">
             <button
               className="action-button"
               onClick={() => operations.commitResults(impact)}
@@ -155,7 +161,7 @@ const Outcome = ({ outcome, impact, postRoll, character, onSetOutcome, onSetWise
               Apply effects to character
           </button>
           </li>
-          <li>
+          <li key="reset-button">
             <button
               className="action-button"
               onClick={operations.reset}
@@ -163,7 +169,7 @@ const Outcome = ({ outcome, impact, postRoll, character, onSetOutcome, onSetWise
               Reset roll without applying effects
             </button>
           </li>
-          <li>
+          <li key="subtext">
             <p>
               *Any time you test an ability multiple times to determine the outcome, only one test is earned toward advancement. Log the first test you earn. That’s the one that counts for this conflict.
           </p><p>

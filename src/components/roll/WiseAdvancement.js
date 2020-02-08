@@ -15,10 +15,7 @@ const WiseAdvancement = ({ wise, character, wiseAdvancement, onSetWiseAdvancemen
         <Control
           name="Change the wise"
           className={wiseAdvancement.selectedPerk === 'change-wise' ? 'selected' : undefined}
-          onClick={() => {
-            console.log('click on change wise')
-            onSetWiseAdvancement('selectedPerk', 'change-wise')
-          }}
+          onClick={() => {onSetWiseAdvancement('selectedPerk', 'change-wise')}}
           knob={(<>
             <input
               type="text"
@@ -30,17 +27,18 @@ const WiseAdvancement = ({ wise, character, wiseAdvancement, onSetWiseAdvancemen
             <label htmlFor="new-wise-name">-wise</label>
           </>)}
           />
+
         {/* TODO: disable for sick (can't mark tests) */}
         <SkillAbilityDropdown
           name="Mark a test for a skill or ability"
+          character={character}
+
           className={wiseAdvancement.selectedPerk === 'mark-test' ? 'selected' : undefined}
-          onClick={() => {
-            console.log('click on mark test')
-            onSetWiseAdvancement('selectedPerk', 'mark-test')
-          }}
+          onClick={() => {onSetWiseAdvancement('selectedPerk', 'mark-test')}}
+
           current={wiseAdvancement.selectedSkill}
           onSelectSkill={skill => onSetWiseAdvancement('selectedSkill', skill)}
-          character={character}
+
           extraKnob={(<>
             <Checkbox
               active={wiseAdvancement.mark === 'pass'}
@@ -62,6 +60,8 @@ const WiseAdvancement = ({ wise, character, wiseAdvancement, onSetWiseAdvancemen
 WiseAdvancement.propTypes = {
   wise: PropTypes.object.isRequired,
   character: PropTypes.object.isRequired,
+  wiseAdvancement: PropTypes.object.isRequired,
+  onSetWiseAdvancement: PropTypes.func.isRequired,
 };
 
 export default WiseAdvancement;
