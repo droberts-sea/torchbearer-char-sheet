@@ -216,6 +216,10 @@ const skillAbility = (roll, character, mark, taxNature) => {
     effect.ignored = "sick condition";
   }
 
+  if (roll.outcome.skillAlreadyTested) {
+    effect.ignored = "skill already tested this conflict";
+  }
+
   return effect;
 }
 

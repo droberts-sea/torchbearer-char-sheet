@@ -8,6 +8,7 @@ import {
   rollSetModifier,
   rollSetReaction,
   rollGotoPage,
+  rollSetOutcome,
 } from '../actions/roll_actions';
 import RollPage from '../components/roll/RollPage';
 import preRollDerived from '../derivers/roll/pre_roll';
@@ -60,9 +61,12 @@ const mapDispatchToProps = (dispatch) => {
     onSetModifier: (prop, value) => {
       dispatch(rollSetModifier(prop, value));
     },
+    onSetOutcome: (prop, value) => {
+      dispatch(rollSetOutcome(prop, value));
+    },
     onSetReaction: (prop, value) => {
       dispatch(rollSetReaction(prop, value));
-    }
+    },
   };
 };
 

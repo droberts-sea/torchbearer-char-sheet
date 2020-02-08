@@ -6,6 +6,7 @@ export const ROLL_COMMIT_RESULTS = 'ROLL_COMMIT_RESULTS';
 export const ROLL_SET_INFO = 'ROLL_SET_INFO';
 export const ROLL_SET_MODIFIER = 'ROLL_SET_MODIFIER';
 export const ROLL_SET_REACTION = 'ROLL_SET_REACTION';
+export const ROLL_SET_OUTCOME = 'ROLL_SET_OUTCOME';
 export const ROLL_GOTO_PAGE = 'ROLL_GOTO_PAGE';
 
 export function rollReset() {
@@ -92,6 +93,16 @@ export function rollSetReaction(prop, value) {
       prop: prop,
       value: value
     }
+  };
+}
+
+export function rollSetOutcome(prop, value) {
+  return {
+    type: ROLL_SET_OUTCOME,
+    payload: {
+      prop: prop,
+      value: value,
+    },
   };
 }
 

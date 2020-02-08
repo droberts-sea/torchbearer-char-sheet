@@ -58,8 +58,10 @@ class RollPage extends React.Component {
       case 'OUTCOME':
         return (
           <Outcome
+            outcome={this.props.outcome}
             impact={this.props.impact}
             postRoll={this.props.postRollDerived}
+            onSetOutcome={this.props.onSetOutcome}
             operations={this.props.operations}
           />
         );

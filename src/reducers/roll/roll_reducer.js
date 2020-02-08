@@ -6,6 +6,7 @@ import {
   ROLL_RESET,
   ROLL_ROLL_DICE,
   ROLL_ACCEPT,
+  ROLL_SET_OUTCOME,
 } from '../../actions/roll_actions';
 
 import { traitIsAvailable } from '../../rules/traits';
@@ -48,7 +49,10 @@ export const InitialRoll = {
   // results: {
   //   rolledDice: [],
   //   reactions: {},
-  // }
+  // },
+  outcome: {
+    skillAlreadyTested: false,
+  },
 };
 
 const reduceInfo = function (state, action, character) {
@@ -169,11 +173,24 @@ const reduceDice = function (state, action, character) {
   }
 };
 
+const reduceOutcome = (state, action) => {
+  switch (action.type) {
+    case ROLL_SET_OUTCOME:
+      const newState = {...state};
+      newState[action.payload.prop] = action.payload.value;
+      return newState;
+      
+    default:
+      return state;
+  }
+}
+
 const rollReducer = function (state = InitialRoll, action, character) {
   state = {
     ...state,
     dice: reduceDice(state.dice, action, character),
     results: reduceResults(state.results, action, character, state),
+    outcome: reduceOutcome(state.outcome, action),
   };
 
   switch (action.type) {

@@ -79,7 +79,7 @@ const TaxNature = ({ tax }) => {
   }
 };
 
-const Outcome = ({ impact, postRoll, operations }) => {
+const Outcome = ({ outcome, impact, postRoll, onSetOutcome, operations }) => {
   // Page 65
   let outcomeFlavor;
   if (postRoll.outcome === 'pass') {
@@ -123,7 +123,8 @@ const Outcome = ({ impact, postRoll, operations }) => {
           <Toggle
             name="Skill already used this conflict*"
             className="skill-used-already-checkbox"
-
+            active={outcome.skillAlreadyTested}
+            onToggle={active => onSetOutcome('skillAlreadyTested', active)}
           />
           <li>
             <button

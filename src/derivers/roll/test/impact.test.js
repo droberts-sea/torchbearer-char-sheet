@@ -386,7 +386,7 @@ describe('resources', () => {
       expect(testImpact.skill.advance).toBeFalsy();
     });
 
-    it('marks the pass as ignored if the character is sick', () => {
+    it('marks the test as ignored if the character is sick', () => {
       const character = deepCopy(mockCharacter);
       const skillName = Object.keys(character.skills)[0];
       roll.dice.info.skill = skillName;
@@ -398,6 +398,19 @@ describe('resources', () => {
       character.conditions.SICK = true;
       testImpact = impact(roll, character, mockPostRoll);
       expect(testImpact.skill.ignored).toEqual('sick condition');
+    });
+
+    it('marks the test as ignored if the skill was already used', () => {
+      const skillName = Object.keys(mockCharacter.skills)[0];
+      roll.dice.info.skill = skillName;
+
+      roll.outcome.skillAlreadyTested = false;
+      let testImpact = impact(roll, mockCharacter, mockPostRoll);
+      expect(testImpact.skill.ignored).toBe(undefined);
+
+      roll.outcome.skillAlreadyTested = true;
+      testImpact = impact(roll, mockCharacter, mockPostRoll);
+      expect(testImpact.skill.ignored).toEqual('skill already tested this conflict');
     });
   });
 
