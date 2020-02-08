@@ -6,8 +6,19 @@ import Toggle from '../shared/Toggle';
 import TraitDropdown from './TraitDropdown';
 
 import './styles/AddDice.css';
+import { SkillRules } from '../../rules/skills';
 
-const AddDice = ({ disabledOptions, onSetProperty, modifiers, character, resourcesSpent }) => {
+const formatSuggestedHelp = (skill) => {
+  const captialize = w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+  if (SkillRules[skill]) {
+    return [skill].concat(SkillRules[skill].suggestedHelp)
+      .map(captialize).join(', ');
+  } else {
+    return captialize(skill);
+  }
+}
+
+const AddDice = ({ disabledOptions, onSetProperty, info, modifiers, character, resourcesSpent }) => {
   let blHeaderStyle = "";
   if (disabledOptions.natureInstead) {
     blHeaderStyle = "hidden";
@@ -34,7 +45,14 @@ const AddDice = ({ disabledOptions, onSetProperty, modifiers, character, resourc
       </li>
       <PlusMinus
         name="Help"
-        subtext="Get help from your allies, through wises or an appropriate skill"
+        subtext={(
+          <p>
+            Get help from your allies, through wises or an appropriate skill.
+            <br />
+            Recommended help:
+            <em> {formatSuggestedHelp(info.skill)}</em>
+          </p>
+        )}
         value={modifiers.help}
         min={0}
         onValueChange={(help) => onSetProperty('help', help)}
