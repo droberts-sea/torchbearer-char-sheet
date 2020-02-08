@@ -37,10 +37,19 @@ const BeneficialTrait = ({ trait }) => {
   return "";
 }
 
+// Thanks to https://blog.hackages.io/conditionally-wrap-an-element-in-react-a8b9a47fab2
+const ConditionalWrapper = ({ condition, wrapper, children }) =>
+  condition ? wrapper(children) : children;
+
 const MarkEffect = ({ effect }) => {
   return (
     <li key={`me_${effect.category}_${effect.name}`}>
-      <b>Mark</b> use of {pluralize.singular(effect.category)} <em>{effect.name}</em>
+      <ConditionalWrapper
+        condition={effect.ignored}
+        wrapper={n => <strike>{n}</strike>}
+      >
+        <b>Mark</b> use of {pluralize.singular(effect.category)} <em>{effect.name}</em>
+      </ConditionalWrapper>
       <ul className="effect-details">
         <li>
           Mark type: <em>{effect.mark}</em>
@@ -48,6 +57,7 @@ const MarkEffect = ({ effect }) => {
         </li>
         {effect.alreadyMarked ? (<li>(already marked)</li>) : ""}
         {effect.advance ? (<li>Ready to advance!</li>) : ""}
+        {effect.ignored ? (<li><b>Ignored</b> due to <em>{effect.ignored}</em></li>) : ""}
       </ul>
     </li>
   )

@@ -385,6 +385,20 @@ describe('resources', () => {
       expect(testImpact.taxNature.willDeplete).toBeTruthy();
       expect(testImpact.skill.advance).toBeFalsy();
     });
+
+    it('marks the pass as ignored if the character is sick', () => {
+      const character = deepCopy(mockCharacter);
+      const skillName = Object.keys(character.skills)[0];
+      roll.dice.info.skill = skillName;
+
+      character.conditions.SICK = false;
+      let testImpact = impact(roll, character, mockPostRoll);
+      expect(testImpact.skill.ignored).toBe(undefined);
+
+      character.conditions.SICK = true;
+      testImpact = impact(roll, character, mockPostRoll);
+      expect(testImpact.skill.ignored).toEqual('sick condition');
+    });
   });
 
   describe('taxNature', () => {

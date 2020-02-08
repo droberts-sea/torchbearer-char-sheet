@@ -212,6 +212,10 @@ const skillAbility = (roll, character, mark, taxNature) => {
     }
   }
 
+  if (character.conditions.SICK) {
+    effect.ignored = "sick condition";
+  }
+
   return effect;
 }
 
