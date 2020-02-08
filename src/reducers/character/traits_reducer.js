@@ -22,7 +22,8 @@ const traitsReducer = function (state = InitialTraits, action, character) {
   switch (action.type) {
     case MARK_TRAIT:
       return state.map(trait => {
-        if (trait.name === action.payload.name) {
+        if (trait.name === action.payload.name &&
+          trait.level < 3) {
           if (action.payload.increase) {
             return {
               ...trait,
