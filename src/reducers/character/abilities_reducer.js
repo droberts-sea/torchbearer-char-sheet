@@ -83,6 +83,18 @@ const markTest = function (state, effect, character) {
   return newState;
 }
 
+const taxNature = (state, amount) => {
+  const newState = {...state};
+  newState.NATURE.rating -= amount;
+  if (newState.NATURE.rating <= 0) {
+    newState.NATURE.untaxed -= 1;
+    newState.NATURE.rating = newState.NATURE.untaxed;
+
+    // TODO nature to 0?
+  }
+  return newState;
+}
+
 const abilitiesReducer = function (state = InitialAbilities, action, character) {
   switch (action.type) {
     case MARK_TEST:
@@ -90,7 +102,7 @@ const abilitiesReducer = function (state = InitialAbilities, action, character) 
 
     case ROLL_COMMIT_RESULTS:
       if (action.payload.taxNature) {
-        // state = taxNature(state, action.payload.taxNature.total)
+        state = taxNature(state, action.payload.taxNature.total)
       }
       return markTest(state, action.payload.skill, character);
 
