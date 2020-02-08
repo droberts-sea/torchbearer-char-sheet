@@ -2,8 +2,7 @@ import traitsReducer from '../traits_reducer';
 import { InitialTraits } from '../traits_reducer';
 import { MARK_TRAIT } from '../../../actions';
 import { ROLL_RESET } from '../../../actions/roll_actions';
-
-const deepCopy = (obj) => JSON.parse(JSON.stringify(obj));
+import { deepCopy } from '../../../mock/util';
 
 describe(traitsReducer, () => {
   let action;

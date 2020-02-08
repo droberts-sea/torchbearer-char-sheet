@@ -2,8 +2,7 @@ import resultsDisabledOptions from '../results_disabled_options';
 
 import mockCharacter from '../../../mock/character';
 import mockRoll from '../../../mock/roll';
-
-const deepCopy = obj => JSON.parse(JSON.stringify(obj));
+import { deepCopy } from '../../../mock/util';
 
 describe('resultsDisabledOptions', () => {
   let roll;

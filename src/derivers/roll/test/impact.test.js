@@ -4,8 +4,7 @@ import mockRoll from '../../../mock/roll';
 import mockCharacter from '../../../mock/character';
 import postRollDerived from '../post_roll';
 import preRollDerived from '../pre_roll';
-
-const deepCopy = (obj) => JSON.parse(JSON.stringify(obj));
+import { deepCopy } from '../../../mock/util';
 
 const mockPostRoll = postRollDerived(
   mockRoll.results.rolledDice,

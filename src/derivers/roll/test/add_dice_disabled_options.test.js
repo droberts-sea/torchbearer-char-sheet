@@ -1,6 +1,7 @@
 import addDiceDisabledOptions from '../add_dice_disabled_options';
 import fakeCharacter from '../../../mock/character.js';
 import { traitIsAvailable } from '../../../rules/traits';
+import { deepCopy } from '../../../mock/util';
 
 const fakeRoll = {
   dice: {
@@ -23,10 +24,6 @@ const fakeRoll = {
     }
   }
 };
-
-const deepCopy = (obj) => {
-  return JSON.parse(JSON.stringify(obj));
-}
 
 describe('addDiceDisabledOptions', () => {
   let resourcesSpent;

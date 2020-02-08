@@ -1,11 +1,10 @@
 import { skillReadyToAdvance } from '../skills';
 
 import mockCharacter from '../../mock/character';
+import { deepCopy } from '../../../mock/util';
 
 const mockSkill = mockCharacter.skills[Object.keys(mockCharacter.skills)[0]];
 const mockUntaxedNature = mockCharacter.abilities.NATURE.untaxed;
-
-const deepCopy = obj => JSON.parse(JSON.stringify(obj));
 
 describe('skillReadyToAdvance', () => {
   let skill;
