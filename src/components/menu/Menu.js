@@ -13,6 +13,9 @@ const writeToClipboard = (content) => {
   });
 }
 
+// This is a stateful component! Lots of little fiddly bits in the menu
+// that need neither to be serialized nor accessed by the rest of the app.
+// https://redux.js.org/faq/organizing-state#do-i-have-to-put-all-my-state-into-redux-should-i-ever-use-reacts-setstate
 class Menu extends React.Component {
   constructor(props) {
     super(props);
@@ -20,6 +23,7 @@ class Menu extends React.Component {
       characterImportString: '',
     };
   }
+
   handleChange = (propName, event) => {
     console.log("in handle change");
     console.log(this);
@@ -39,40 +43,55 @@ class Menu extends React.Component {
 
     const characterString = JSON.stringify(character)
 
+
     return (
       <div className="main-menu-container">
         <aside className={className}>
           <h2>Menu</h2>
-          <div className="menu-control">
-            <h3>Export Character</h3>
-            <textarea
-              readOnly={true}
-              rows="8"
-              className="character-string"
-              value={characterString}
+          {/* TODO: collapsable controls */}
+          <ul>
+            <Control
+              name="Export Character"
+              knob={(
+                <div className="knob">
+                  <textarea
+                    readOnly={true}
+                    rows="8"
+                    className="character-string"
+                    value={characterString}
+                  />
+                  <button onClick={() => writeToClipboard(characterString)}>
+                    Copy to clipboard
+                </button>
+                </div>
+              )}
             />
-            <button onClick={() => writeToClipboard(characterString)}>
-              Copy to clipboard
-          </button>
-          </div>
-          <div className="menu-control">
-            <h3>Import Character</h3>
-            <textarea
-              rows="8"
-              className="character-string"
-              value={this.state.characterImportString}
-              onChange={(e) => this.handleChange('characterImportString', e)}
+            <Control
+              name="Import Character"
+              knob={(
+                <div className="knob">
+                  <textarea
+                    rows="8"
+                    className="character-string"
+                    value={this.state.characterImportString}
+                    onChange={(e) => this.handleChange('characterImportString', e)}
+                  />
+                  <button onClick={() =>
+                    actions.importCharacter(JSON.parse(this.state.characterImportString))
+                  }>
+                    Import Character
+                </button>
+                </div>
+              )}
             />
-            <button onClick={() => {
-              actions.importCharacter(JSON.parse(this.state.characterImportString))}
-              }>
-              Import Character
-          </button>
-          </div>
-          <div className="menu-control">
-            <button onClick={actions.resetCharacter}>Reset charater</button>
-            <p>This cannot be undone! Mostly useful if you're a dev.</p>
-          </div>
+            <Control
+              name="Reset Character"
+              knob={(
+                <button onClick={actions.resetCharacter}>Reset charater</button>
+              )}
+              subtext="This cannot be undone! Mostly useful if you're a dev."
+            />
+          </ul>
 
         </aside>
       </div>
