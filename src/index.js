@@ -2,14 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import registerServiceWorker from './registerServiceWorker';
-import { createStore } from 'redux';
+import { compose, createStore } from 'redux';
 
 import './index.css';
 import App from './App';
 
 import { tbCharApp } from './reducers/reducers';
+import persistState from 'redux-localstorage';
 
-let store = createStore(tbCharApp);
+const enhancer = compose(
+  persistState('character')
+);
+const store = createStore(tbCharApp, enhancer);
 
 ReactDOM.render(
   <Provider store={store}>

@@ -9,8 +9,14 @@ import ui from './ui_reducer';
 
 import roll from './roll/roll_reducer';
 
+const CURRENT_CHARACTER_VERSION = 1;
+
 const character = function(state={}, action) {
+  if (state.version && state.version !== CURRENT_CHARACTER_VERSION) {
+    throw new Error(`Character version mismatch (loaded ${state.version}, code is at ${CURRENT_CHARACTER_VERSION})`);
+  }
   return {
+    version: CURRENT_CHARACTER_VERSION,
     abilities: abilities(state.abilities, action, state),
     conditions: conditions(state.conditions, action),
     points: points(state.points, action),
