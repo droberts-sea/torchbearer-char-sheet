@@ -52,8 +52,9 @@ button {
   text-transform: capitalize;
 }
 
-select {
+select, input {
   font-size: 1em;
+  border: 1px solid black;
 }
 
 .action-button {

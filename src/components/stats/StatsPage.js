@@ -8,33 +8,39 @@ import '../../styles/stats.css';
 
 class StatsPage extends React.Component {
   render() {
+    const editMode = this.props.ui.editCharacter.editMode;
     return (
       <div id="stats-page">
         <Abilities
           abilities={this.props.abilities}
           onMarkTest={
-            (name, mark) => this.props.onMarkTest(name, 'abilities', mark)
+            (name, mark) => this.props.actions.markTest(name, 'abilities', mark)
           }
           advancementDisabled={this.props.character.conditions.SICK}
+          editMode={editMode}
           />
         <Wises
           wises={this.props.wises}
-          onMarkTest={
-            (name, mark, unmark) => this.props.onMarkTest(name, 'wises', mark, unmark)
-          }
+          actions={{
+            ...this.props.actions,
+            markTest: (name, mark, unmark) => this.props.actions.markTest(name, 'wises', mark, unmark)
+          }}
+          editMode={editMode}
           />
         <Traits
           traits={this.props.traits}
-          onMarkTrait={this.props.onMarkTrait}
+          onMarkTrait={this.props.actions.markTrait}
+          editMode={editMode}
           />
         <Skills
           skills={this.props.skills}
           onMarkTest={
-            (name, mark) => this.props.onMarkTest(name, 'skills', mark)
+            (name, mark) => this.props.actions.markTest(name, 'skills', mark)
           }
           isCollapsed={this.props.ui.skillTable.collapsed}
-          onSkillCollapse={this.props.onSkillCollapse}
+          onSkillCollapse={this.props.actions.skillCollapse}
           advancementDisabled={this.props.character.conditions.SICK}
+          editMode={editMode}
           />
       </div>
     );

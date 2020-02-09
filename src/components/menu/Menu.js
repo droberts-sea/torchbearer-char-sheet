@@ -25,9 +25,6 @@ class Menu extends React.Component {
   }
 
   handleChange = (propName, event) => {
-    console.log("in handle change");
-    console.log(this);
-
     this.setState({
       [propName]: event.target.value
     });
@@ -36,7 +33,6 @@ class Menu extends React.Component {
   render() {
     const { open, ui, character, actions } = this.props;
 
-    console.log("Rendering menu " + open);
     let className = 'main-menu';
     if (!open) {
       className += " closed";

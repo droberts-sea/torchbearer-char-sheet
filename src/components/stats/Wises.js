@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Checkbox from '../shared/Checkbox';
+import EditablePropertyName from '../shared/EditablePropertyName';
 
 const wiseChekbox = (wise, mark, onMarkTest) => {
   return (
@@ -13,22 +14,34 @@ const wiseChekbox = (wise, mark, onMarkTest) => {
   );
 }
 
-const buildWise = (wise, onMarkTest) => {
+const buildWise = (wise, index, actions, editMode) => {
   return (
     <tr key={`wise_${wise.name}`}>
-      <td>{wise.name}</td>
+      <td>
+        <EditablePropertyName
+          name={wise.name}
+          editMode={editMode}
+          onEdit={(value) => actions.editCharacterProperty(value, 'wises', index, 'name')}
+          onRemove={() => actions.editCharacterRemoveField('wises', index)}
+        />
+      </td>
       {['pass', 'fail', 'fate', 'persona'].map(
-        mark => wiseChekbox(wise, mark, onMarkTest)
+        mark => wiseChekbox(wise, mark, actions.onMarkTest)
       )}
     </tr>
   );
 }
 
-const Wises = ({ wises, onMarkTest }) => {
+const Wises = ({ wises, actions, editMode }) => {
+  let classes = ['wises-table'];
+  if (editMode) {
+    classes.push('editing');
+  }
+
   return (
     <section>
       <h2>Wises</h2>
-      <table className="wises-table">
+      <table className={classes.join(' ')}>
         <thead>
           <tr>
             <th>Name</th>
@@ -40,7 +53,14 @@ const Wises = ({ wises, onMarkTest }) => {
         </thead>
         <tbody>
           {
-            wises.map(w => buildWise(w, onMarkTest))
+            wises.map((w, i) => buildWise(w, i, actions, editMode))
+          }
+          {
+            editMode ? (
+              <tr><td>
+                <button onClick={() => actions.editCharacterAddField('wises')}>+</button>
+              </td></tr>
+            ) : null
           }
         </tbody>
       </table>

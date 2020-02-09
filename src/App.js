@@ -8,6 +8,7 @@ import StatsPageContainer from './containers/StatsPageContainer';
 import InfoPageContainer from './containers/InfoPageContainer';
 import RollPageContainer from './containers/RollPageContainer';
 import MenuContainer from './containers/MenuContainer';
+import BannerContainer from './containers/BannerContainer';
 
 const mapStateToProps = (state) => {
   return {
@@ -41,13 +42,14 @@ const App = ({ ui }) => {
   }
 
   return (
-    <div>
+    <>
       <TabRowContainer />
       <MenuContainer />
+      <BannerContainer />
       <main>
         {page}
       </main>
-    </div>
+    </>
   );
 };
 

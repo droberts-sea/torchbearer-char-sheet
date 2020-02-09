@@ -1,30 +1,41 @@
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import StatsPage from '../components/stats/StatsPage';
-import { markTest, markTrait, skillCollapse } from '../actions';
+import {
+  markTest,
+  markTrait,
+  skillCollapse,
+  editCharacterProperty,
+  editCharacterAddField,
+  editCharacterRemoveField,
+} from '../actions';
 
 const mapStateToProps = (state) => {
+  let character = state.character;
+  if (state.ui.editCharacter.editMode) {
+    // character = state.ui.editCharacter.character;
+  }
   return {
-    abilities: state.character.abilities,
-    wises: state.character.wises,
-    traits: state.character.traits,
-    skills: state.character.skills,
+    abilities: character.abilities,
+    wises: character.wises,
+    traits: character.traits,
+    skills: character.skills,
     ui: state.ui,
-    character: state.character
+    character: character
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onMarkTest: (...args) => {
-      dispatch(markTest(...args));
-    },
-    onMarkTrait: (name, increase) => {
-      dispatch(markTrait(name, increase));
-    },
-    onSkillCollapse: () => {
-      dispatch(skillCollapse());
-    }
+    actions: bindActionCreators({
+      markTest,
+      markTrait,
+      skillCollapse,
+      editCharacterProperty,
+      editCharacterAddField,
+      editCharacterRemoveField,
+    }, dispatch),
   };
 };
 

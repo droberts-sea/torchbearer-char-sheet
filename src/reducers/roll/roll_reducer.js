@@ -24,7 +24,7 @@ export const ROLL_STAGES = {
 
 export const InitialRoll = {
   stage: ROLL_STAGES.PRE_ROLL,
-  pageIndex: 2,
+  pageIndex: 0,
   dice: {
     info: {
       isVersus: false,

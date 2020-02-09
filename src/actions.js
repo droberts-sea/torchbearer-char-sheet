@@ -22,6 +22,9 @@ export const IMPORT_CHARACTER = 'IMPORT_CHARACTER';
 export const EDIT_CHARACTER_BEGIN = 'EDIT_CHARACTER_BEGIN';
 export const EDIT_CHARACTER_COMMIT = 'EDIT_CHARACTER_COMMIT';
 export const EDIT_CHARACTER_REVERT = 'EDIT_CHARACTER_REVERT';
+export const EDIT_CHARACTER_PROPERTY = 'EDIT_CHARACTER_PROPERTY';
+export const EDIT_CHARACTER_ADD_FIELD = 'EDIT_CHARACTER_ADD_FIELD';
+export const EDIT_CHARACTER_REMOVE_FIELD = 'EDIT_CHARACTER_REMOVE_FIELD';
 
 
 /* Other Constants */
@@ -87,7 +90,7 @@ export function spendPoint(category) {
   }
 }
 
-export function markTest(name, category, mark, unmark=false) {
+export function markTest(name, category, mark, unmark = false) {
   mark = mark.toLowerCase();
   if (!['pass', 'fail', 'fate', 'persona'].includes(mark)) {
     throw new Error(`Bogus test mark: ${mark}`);
@@ -137,4 +140,28 @@ export function editCharacterCommit() {
 
 export function editCharacterRevert() {
   return { type: EDIT_CHARACTER_REVERT };
+};
+
+export function editCharacterProperty(value, ...path) {
+  return {
+    type: EDIT_CHARACTER_PROPERTY,
+    payload: {
+      value,
+      path,
+    },
+  };
+}
+
+export function editCharacterAddField(category) {
+  return {
+    type: EDIT_CHARACTER_ADD_FIELD,
+    payload: { category },
+  };
+};
+
+export function editCharacterRemoveField(category, index) {
+  return {
+    type: EDIT_CHARACTER_REMOVE_FIELD,
+    payload: { category, index }
+  };
 };
