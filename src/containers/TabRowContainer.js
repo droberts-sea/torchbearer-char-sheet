@@ -1,19 +1,17 @@
 import { connect } from 'react-redux';
-import { showTab } from '../actions';
+import { showTab, toggleMenu } from '../actions';
 import TabRow from '../components/tab_row/TabRow';
+import { bindActionCreators } from 'redux';
 
 const mapStateToProps = (state) => {
   return {
-    currentTab: state.ui.currentTab
+    currentTab: state.ui.currentTab,
+    menuOpen: state.ui.menu.open,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    onTabSelect: (name) => {
-      dispatch(showTab(name));
-    }
-  };
+  return bindActionCreators({ showTab, toggleMenu }, dispatch);
 };
 
 const TabRowContainer = connect(

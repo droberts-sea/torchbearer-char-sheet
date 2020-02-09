@@ -4,6 +4,7 @@
 
 // UI
 export const SHOW_TAB = 'SHOW_TAB';
+export const TOGGLE_MENU = 'TOGGLE_MENU';
 
 // INFO
 export const SET_CONDITION = 'SET_CONDITION';
@@ -19,7 +20,6 @@ export const SKILL_COLLAPSE = 'SKILL_COLLAPSE';
 /* Other Constants */
 
 export const Tabs = {
-  MENU: 'MENU',
   BIO: 'BIO',
   STATS: 'STATS',
   INFO: 'INFO',
@@ -53,6 +53,13 @@ export function showTab(tab) {
       tab: tab
     }
   }
+}
+
+export function toggleMenu() {
+  return {
+    type: TOGGLE_MENU,
+    payload: {},
+  };
 }
 
 export function addPoint(category) {

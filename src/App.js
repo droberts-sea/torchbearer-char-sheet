@@ -7,6 +7,7 @@ import TabRowContainer from './containers/TabRowContainer';
 import StatsPageContainer from './containers/StatsPageContainer';
 import InfoPageContainer from './containers/InfoPageContainer';
 import RollPageContainer from './containers/RollPageContainer';
+import MenuContainer from './containers/MenuContainer';
 
 const mapStateToProps = (state) => {
   return {
@@ -22,26 +23,27 @@ const mapDispatchToProps = (dispatch) => {
 
 const App = ({ ui }) => {
   let page = null;
-  switch(ui.currentTab) {
+  switch (ui.currentTab) {
     case Tabs.STATS:
-    page = (<StatsPageContainer />);
-    break;
+      page = (<StatsPageContainer />);
+      break;
 
     case Tabs.INFO:
-    page = (<InfoPageContainer />);
-    break;
+      page = (<InfoPageContainer />);
+      break;
 
     case Tabs.ROLL:
-    page = (<RollPageContainer />);
-    break;
+      page = (<RollPageContainer />);
+      break;
 
     default:
-    break;
+      break;
   }
 
   return (
     <div>
       <TabRowContainer />
+      <MenuContainer />
       <main>
         {page}
       </main>
