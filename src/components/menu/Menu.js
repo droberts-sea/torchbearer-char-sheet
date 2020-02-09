@@ -32,8 +32,9 @@ class Menu extends React.Component {
       [propName]: event.target.value
     });
   }
+
   render() {
-    const { open, character, actions } = this.props;
+    const { open, ui, character, actions } = this.props;
 
     console.log("Rendering menu " + open);
     let className = 'main-menu';
@@ -43,6 +44,22 @@ class Menu extends React.Component {
 
     const characterString = JSON.stringify(character)
 
+    let editKnob;
+
+    if (ui.editCharacter.editMode) {
+      editKnob = (
+        <div className="knob">
+          <button onClick={actions.editCharacterCommit}>Commit edits</button>
+          <button onClick={actions.editCharacterRevert}>Revert edits</button>
+        </div>
+      );
+    } else {
+      editKnob = (
+        <div className="knob">
+          <button onClick={actions.editCharacterBegin}>Enter edit mode</button>
+        </div>
+      );
+    }
 
     return (
       <div className="main-menu-container">
@@ -50,6 +67,11 @@ class Menu extends React.Component {
           <h2>Menu</h2>
           {/* TODO: collapsable controls */}
           <ul>
+            <Control
+              name="Edit Character"
+              knob={editKnob}
+              subtext="Edit mode. You'll need to come back here to either commit or revert your changes."
+              />
             <Control
               name="Export Character"
               knob={(

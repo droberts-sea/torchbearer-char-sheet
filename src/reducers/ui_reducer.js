@@ -4,7 +4,10 @@ import {
   SHOW_TAB,
   Tabs,
   TOGGLE_MENU,
-  SKILL_COLLAPSE
+  SKILL_COLLAPSE,
+  EDIT_CHARACTER_BEGIN,
+  EDIT_CHARACTER_COMMIT,
+  EDIT_CHARACTER_REVERT
 } from '../actions';
 
 function currentTab(state = Tabs.ROLL, action) {
@@ -50,10 +53,36 @@ const menu = (state = InitialMenuState, action) => {
   }
 }
 
+const InitialEditCharacterState = Object.freeze({
+  editMode: false,
+  character: undefined,
+});
+
+const editCharacter = (state = InitialEditCharacterState, action) => {
+  switch (action.type) {
+    case EDIT_CHARACTER_BEGIN:
+      return {
+        ...state,
+        editMode: true,
+      };
+
+    case EDIT_CHARACTER_COMMIT:
+      console.log("Commit character edits");
+      return state;
+
+    case EDIT_CHARACTER_REVERT:
+      return InitialEditCharacterState;
+
+    default:
+      return state;
+  }
+}
+
 const ui = combineReducers({
   currentTab,
   skillTable,
   menu,
+  editCharacter,
 });
 
 export default ui;

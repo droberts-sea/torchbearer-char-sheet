@@ -16,9 +16,12 @@ export const MARK_TEST = 'MARK_TEST';
 export const MARK_TRAIT = 'MARK_TRAIT';
 export const SKILL_COLLAPSE = 'SKILL_COLLAPSE';
 
-// MISC
+// Character Management
 export const RESET_CHARACTER = 'RESET_CHARACTER';
 export const IMPORT_CHARACTER = 'IMPORT_CHARACTER';
+export const EDIT_CHARACTER_BEGIN = 'EDIT_CHARACTER_BEGIN';
+export const EDIT_CHARACTER_COMMIT = 'EDIT_CHARACTER_COMMIT';
+export const EDIT_CHARACTER_REVERT = 'EDIT_CHARACTER_REVERT';
 
 
 /* Other Constants */
@@ -122,4 +125,16 @@ export function importCharacter(character) {
     type: IMPORT_CHARACTER,
     payload: character,
   };
+};
+
+export function editCharacterBegin() {
+  return { type: EDIT_CHARACTER_BEGIN };
+};
+
+export function editCharacterCommit() {
+  return { type: EDIT_CHARACTER_COMMIT };
+};
+
+export function editCharacterRevert() {
+  return { type: EDIT_CHARACTER_REVERT };
 };
