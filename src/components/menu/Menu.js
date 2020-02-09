@@ -12,7 +12,7 @@ const writeToClipboard = (content) => {
   });
 }
 
-const Menu = ({ open, character }) => {
+const Menu = ({ open, character, actions }) => {
   console.log("Rendering menu " + open);
   let className = 'main-menu';
   if (!open) {
@@ -36,6 +36,10 @@ const Menu = ({ open, character }) => {
           <button onClick={() => writeToClipboard(characterString)}>
             Copy to clipboard
           </button>
+        </div>
+        <div className="menu-control">
+          <button onClick={actions.resetCharacter}>Reset charater</button>
+          <p>This cannot be undone! Mostly useful if you're a dev.</p>
         </div>
       </aside>
     </div>

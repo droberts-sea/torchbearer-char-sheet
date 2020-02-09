@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
-import Menu from '../components/menu/Menu';
 import { bindActionCreators } from 'redux';
+
+import Menu from '../components/menu/Menu';
+
+import { resetCharacter, importCharacter } from '../actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -10,7 +13,12 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ }, dispatch);
+  return {
+    actions: bindActionCreators({
+      resetCharacter,
+      importCharacter
+    }, dispatch)
+  };
 };
 
 const MenuContainer = connect(

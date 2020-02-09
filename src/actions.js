@@ -16,6 +16,10 @@ export const MARK_TEST = 'MARK_TEST';
 export const MARK_TRAIT = 'MARK_TRAIT';
 export const SKILL_COLLAPSE = 'SKILL_COLLAPSE';
 
+// MISC
+export const RESET_CHARACTER = 'RESET_CHARACTER';
+export const IMPORT_CHARACTER = 'IMPORT_CHARACTER';
+
 
 /* Other Constants */
 
@@ -106,5 +110,16 @@ export function markTrait(name, increase) {
 export function skillCollapse() {
   return {
     type: SKILL_COLLAPSE
+  };
+};
+
+export function resetCharacter() {
+  return { type: RESET_CHARACTER };
+};
+
+export function importCharacter(character) {
+  return {
+    type: IMPORT_CHARACTER,
+    payload: character,
   };
 };
