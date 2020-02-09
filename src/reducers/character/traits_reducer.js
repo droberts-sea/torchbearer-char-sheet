@@ -1,23 +1,6 @@
 import { MARK_TRAIT, RESET_CHARACTER, IMPORT_CHARACTER } from "../../actions";
 import { ROLL_COMMIT_RESULTS } from "../../actions/roll_actions";
-
-export const InitialTraits = [
-  {
-    name: "Firey",
-    level: 1,
-    uses: 0
-  },
-  {
-    name: "Jaded",
-    level: 2,
-    uses: 2
-  },
-  {
-    name: "Curious",
-    level: 3,
-    uses: 0
-  }
-];
+import { InitialTraits } from "../../rules/initial_character";
 
 const updateTraitInList = (traits, name, increase) => {
   return traits.map(trait => {

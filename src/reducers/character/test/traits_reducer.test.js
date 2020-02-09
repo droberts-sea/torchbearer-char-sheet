@@ -1,5 +1,5 @@
 import traitsReducer from '../traits_reducer';
-import { InitialTraits } from '../traits_reducer';
+import { InitialTraits } from '../../../rules/initial_character';
 import { MARK_TRAIT } from '../../../actions';
 import { ROLL_RESET, ROLL_COMMIT_RESULTS } from '../../../actions/roll_actions';
 import { deepCopy } from '../../../mock/util';

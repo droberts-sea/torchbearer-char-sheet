@@ -5,21 +5,7 @@ import {
   IMPORT_CHARACTER
 } from '../../actions';
 import { ROLL_COMMIT_RESULTS } from '../../actions/roll_actions';
-
-export const InitialPoints = {
-  fate: {
-    available: 3,
-    spent: 0
-  },
-  persona: {
-    available: 3,
-    spent: 0
-  },
-  checks: {
-    available: 0,
-    spent: 0
-  }
-};
+import { InitialPoints } from '../../rules/initial_character';
 
 const updateAfterRoll = (state, totals) => {
   const updateBucket = (bucket, spent) => {

@@ -10,7 +10,7 @@ import {
   EDIT_CHARACTER_REVERT
 } from '../actions';
 
-function currentTab(state = Tabs.ROLL, action) {
+function currentTab(state = Tabs.STATS, action) {
   switch (action.type) {
     case SHOW_TAB:
       console.log(`Showing tab: ${action.payload.tab}`);
@@ -37,7 +37,7 @@ function skillTable(state = InitialSkillTableState, action) {
 }
 
 const InitialMenuState = Object.freeze({
-  open: true,
+  open: false,
 });
 
 const menu = (state = InitialMenuState, action) => {
