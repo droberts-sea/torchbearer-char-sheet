@@ -107,7 +107,18 @@ const skillsReducer = function (state = InitialSkills, action, character) {
       return markTest(state, action.payload, character);
 
     case ROLL_COMMIT_RESULTS:
-      return markTest(state, action.payload.skill, character);
+      state = markTest(state, action.payload.skill, character);
+      action.payload.outcome.wiseAdvancement.forEach(wiseAdvancement => {
+        if (wiseAdvancement.selectedPerk === 'mark-test') {
+          const effect = {
+            name: wiseAdvancement.selectedSkill,
+            category: 'skills', // XXX this is BS but we don't have a good way to get the category and markTest checks for list inclusion anyway.
+            mark: wiseAdvancement.mark,
+          };
+          state = markTest(state, effect, character);
+        }
+      });
+      return state;
 
     default:
       return state;

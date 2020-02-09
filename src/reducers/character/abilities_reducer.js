@@ -105,7 +105,20 @@ const abilitiesReducer = function (state = InitialAbilities, action, character) 
       if (action.payload.taxNature) {
         state = taxNature(state, action.payload.taxNature.total)
       }
-      return markTest(state, action.payload.skill, character);
+      state = markTest(state, action.payload.skill, character);
+
+      action.payload.outcome.wiseAdvancement.forEach(wiseAdvancement => {
+        if (wiseAdvancement.selectedPerk === 'mark-test') {
+          const effect = {
+            name: wiseAdvancement.selectedSkill,
+            category: 'abilities', // XXX this is BS but we don't have a good way to get the category and markTest checks for list inclusion anyway.
+            mark: wiseAdvancement.mark,
+          };
+          state = markTest(state, effect, character);
+        }
+      });
+
+      return state;
 
     default:
       return state;

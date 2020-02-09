@@ -105,7 +105,7 @@ describe(wisesReducer, () => {
       ];
       action.payload.outcome.wiseAdvancement = [{
         name: wises[0].name,
-        selectedPerk: 'test-skill',
+        selectedPerk: 'mark-test',
       }];
 
       const reduction = wisesReducer(wises, action);
