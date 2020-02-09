@@ -1,5 +1,5 @@
 import { SkillRules } from '../../rules/skills';
-import { MARK_TEST } from '../../actions';
+import { MARK_TEST, RESET_CHARACTER, IMPORT_CHARACTER } from '../../actions';
 import { ROLL_COMMIT_RESULTS } from '../../actions/roll_actions';
 
 const InitialSkills = {};
@@ -8,7 +8,7 @@ Object.keys(SkillRules).forEach((name) => {
     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
   }).join(' ');
   const skill = {
-    ...SkillRules[name],
+    beginnersLuck: SkillRules[name].beginnersLuck,
     name: display_name,
     rating: 0,
     min: 0,
@@ -119,6 +119,12 @@ const skillsReducer = function (state = InitialSkills, action, character) {
         }
       });
       return state;
+
+    case RESET_CHARACTER:
+      return InitialSkills;
+
+    case IMPORT_CHARACTER:
+      return action.payload.skills;
 
     default:
       return state;

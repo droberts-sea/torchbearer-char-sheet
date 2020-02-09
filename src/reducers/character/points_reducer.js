@@ -1,6 +1,8 @@
 import {
   ADD_POINT,
-  SPEND_POINT
+  SPEND_POINT,
+  RESET_CHARACTER,
+  IMPORT_CHARACTER
 } from '../../actions';
 import { ROLL_COMMIT_RESULTS } from '../../actions/roll_actions';
 
@@ -40,15 +42,7 @@ const updateAfterRoll = (state, totals) => {
   }
 }
 
-const pointsReducer = function (state = InitialPoints, action) {
-  if (action.type === ROLL_COMMIT_RESULTS) {
-    return updateAfterRoll(state, action.payload.points.total);
-
-  } else if (action.type !== ADD_POINT &&
-    action.type !== SPEND_POINT) {
-    return state;
-  }
-
+const addOrSpendPoint = (state, action) => {
   const category = action.payload.category;
   const bucket = state[category];
   const newState = { ...state };
@@ -76,6 +70,26 @@ const pointsReducer = function (state = InitialPoints, action) {
   }
 
   return newState;
+}
+
+const pointsReducer = function (state = InitialPoints, action) {
+  switch (action.type) {
+    case ROLL_COMMIT_RESULTS:
+      return updateAfterRoll(state, action.payload.points.total);
+
+    case ADD_POINT:
+    case SPEND_POINT:
+      return addOrSpendPoint(state, action);
+
+    case RESET_CHARACTER:
+      return InitialPoints;
+
+    case IMPORT_CHARACTER:
+      return action.payload.points;
+
+    default:
+      return state;
+  }
 };
 
 export default pointsReducer;

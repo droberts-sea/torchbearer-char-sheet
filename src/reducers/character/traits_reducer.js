@@ -1,4 +1,4 @@
-import { MARK_TRAIT } from "../../actions";
+import { MARK_TRAIT, RESET_CHARACTER, IMPORT_CHARACTER } from "../../actions";
 import { ROLL_COMMIT_RESULTS } from "../../actions/roll_actions";
 
 export const InitialTraits = [
@@ -40,13 +40,19 @@ const updateTraitInList = (traits, name, increase) => {
   });
 }
 
-const traitsReducer = function (state = InitialTraits, action, character) {
+const traitsReducer = function (state = InitialTraits, action) {
   switch (action.type) {
     case MARK_TRAIT:
       return updateTraitInList(state, action.payload.name, action.payload.increase);
 
     case ROLL_COMMIT_RESULTS:
       return updateTraitInList(state, action.payload.beneficialTrait, true);
+
+    case RESET_CHARACTER:
+      return InitialTraits;
+
+    case IMPORT_CHARACTER:
+      return action.payload.traits;
 
     default:
       return state;

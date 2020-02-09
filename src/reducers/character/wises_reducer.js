@@ -1,4 +1,4 @@
-import { MARK_TEST } from '../../actions';
+import { MARK_TEST, RESET_CHARACTER, IMPORT_CHARACTER } from '../../actions';
 import { ROLL_COMMIT_RESULTS } from '../../actions/roll_actions';
 
 export const InitialWises = [
@@ -89,6 +89,12 @@ const wisesReducer = function (state = InitialWises, action) {
       newState = advanceWises(newState, action.payload.outcome.wiseAdvancement);
 
       return newState;
+
+    case RESET_CHARACTER:
+      return InitialWises;
+
+    case IMPORT_CHARACTER:
+      return action.payload.wises;
 
     default:
       break;

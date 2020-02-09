@@ -1,4 +1,4 @@
-import { MARK_TEST } from '../../actions';
+import { MARK_TEST, RESET_CHARACTER, IMPORT_CHARACTER } from '../../actions';
 import { advanceSkill } from './skills_reducer';
 import { ROLL_COMMIT_RESULTS } from '../../actions/roll_actions';
 
@@ -84,7 +84,7 @@ const markTest = function (state, effect, character) {
 }
 
 const taxNature = (state, amount) => {
-  const newState = {...state};
+  const newState = { ...state };
   newState.NATURE.rating -= amount;
   if (newState.NATURE.rating <= 0) {
     newState.NATURE.untaxed -= 1;
@@ -119,6 +119,12 @@ const abilitiesReducer = function (state = InitialAbilities, action, character) 
       });
 
       return state;
+
+    case RESET_CHARACTER:
+      return InitialAbilities;
+
+    case IMPORT_CHARACTER:
+      return action.payload.abilities;
 
     default:
       return state;
