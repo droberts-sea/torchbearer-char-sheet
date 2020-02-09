@@ -20,6 +20,7 @@ describe(abilitiesReducer, () => {
               mark: 'fail',
             },
             taxNature: { total: undefined },
+            outcome: { wiseAdvancement: [] },
           }
         };
       });

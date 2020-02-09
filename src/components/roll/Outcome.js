@@ -153,6 +153,7 @@ const Outcome = ({ outcome, impact, postRoll, character, onSetOutcome, onSetWise
               return "";
             })
           }
+          {/* TODO widget for depleted nature */}
           {/* TODO disable until all impact tasks are delt with */}
           <li key="commit-button">
             <button
