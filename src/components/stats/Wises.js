@@ -1,14 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Checkbox from '../shared/Checkbox';
 import EditablePropertyName from '../shared/EditablePropertyName';
 
-const wiseChekbox = (wise, mark, onMarkTest) => {
+const wiseChekbox = (wise, mark, markTest) => {
   return (
     <td key={`wcb_${wise.name}_${mark}`}>
       <Checkbox
         active={wise.advancement[mark]}
-        onToggle={(active) => onMarkTest(wise.name, mark, !active)}
+        onToggle={(active) => markTest(wise.name, mark, !active)}
       />
     </td>
   );
@@ -26,7 +27,7 @@ const buildWise = (wise, index, actions, editMode) => {
         />
       </td>
       {['pass', 'fail', 'fate', 'persona'].map(
-        mark => wiseChekbox(wise, mark, actions.onMarkTest)
+        mark => wiseChekbox(wise, mark, actions.markTest)
       )}
     </tr>
   );
@@ -67,6 +68,17 @@ const Wises = ({ wises, actions, editMode }) => {
 
     </section>
   );
+};
+
+Wises.propTypes = {
+  wises: PropTypes.array.isRequired,
+  actions: PropTypes.shape({
+    markTest: PropTypes.func.isRequired,
+    editCharacterProperty: PropTypes.func.isRequired,
+    editCharacterAddField: PropTypes.func.isRequired,
+    editCharacterRemoveField: PropTypes.func.isRequired,
+  }).isRequired,
+  editMode: PropTypes.bool,
 };
 
 export default Wises;
