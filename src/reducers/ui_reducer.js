@@ -13,6 +13,7 @@ import {
 
 import update from 'immutability-helper';
 import { newWise } from '../rules/wises';
+import { newTrait } from '../rules/traits';
 
 function currentTab(state = Tabs.STATS, action) {
   switch (action.type) {
@@ -82,15 +83,10 @@ const editCharacterAddField = (state, category) => {
   const findNextId = items => Math.max(items.map(i => i.id)) + 1;
   const nextId = findNextId(state.character[category]);
 
-  let emptyField;
-  switch (category) {
-    case 'wises':
-      emptyField = newWise(nextId);
-      break;
-
-    default:
-      throw new Error('Adding field for unimplemented category ' + category);
-  }
+  let emptyField = {
+    wises: newWise,
+    traits: newTrait,
+  }[category](nextId);
 
   return update(state, { character: { [category]: { $push: [emptyField] } } });
 }

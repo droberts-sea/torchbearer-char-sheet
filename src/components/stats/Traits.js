@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Checkbox from '../shared/Checkbox';
+import EditablePropertyName from '../shared/EditablePropertyName';
 
 class Traits extends React.Component {
   buildUseCheckboxes(trait) {
@@ -13,27 +14,35 @@ class Traits extends React.Component {
         <React.Fragment>
           <Checkbox
             active={trait.uses >= 1}
-            onToggle={(active) => this.props.onMarkTrait(trait.name, active)}
-            />
+            onToggle={(active) => this.props.actions.markTrait(trait.name, active)}
+          />
           <Checkbox
             disabled={trait.level < 2}
             active={trait.uses >= 2}
-            onToggle={(active) => this.props.onMarkTrait(trait.name, active)}
-            />
+            onToggle={(active) => this.props.actions.markTrait(trait.name, active)}
+          />
         </React.Fragment>
       );
     }
   }
 
-  buildTrait(trait, i) {
+  buildTrait(trait, index) {
     return (
-      <tr key={`trait_${i}`}>
-        <td>{ trait.name }</td>
+      <tr key={`trait_${trait.id}`}>
         <td>
+          <EditablePropertyName
+            name={trait.name}
+            editMode={this.props.editMode}
+            onEdit={(value) => this.props.actions.editCharacterProperty(value, 'traits', index, 'name')}
+            onRemove={() => this.props.actions.editCharacterRemoveField('traits', index)}
+          />
+        </td>
+        <td>
+          {/* TODO editable */}
           <span className="number">{trait.level}</span>
         </td>
         <td className="trait-uses">
-          { this.buildUseCheckboxes(trait) }
+          {this.buildUseCheckboxes(trait)}
         </td>
       </tr>
     );
@@ -54,6 +63,16 @@ class Traits extends React.Component {
           <tbody>
             {
               this.props.traits.map(this.buildTrait.bind(this))
+            }
+            {
+              this.props.editMode ? (
+                <tr><td>
+                  <button
+                    onClick={() => this.props.actions.editCharacterAddField('traits')}
+                    className="editable-property-name-button"
+                  >+</button>
+                </td></tr>
+              ) : null
             }
           </tbody>
         </table>

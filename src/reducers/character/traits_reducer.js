@@ -1,4 +1,4 @@
-import { MARK_TRAIT, RESET_CHARACTER, IMPORT_CHARACTER } from "../../actions";
+import { MARK_TRAIT, RESET_CHARACTER, IMPORT_CHARACTER, EDIT_CHARACTER_COMMIT } from "../../actions";
 import { ROLL_COMMIT_RESULTS } from "../../actions/roll_actions";
 import { InitialTraits } from "../../rules/initial_character";
 
@@ -35,6 +35,7 @@ const traitsReducer = function (state = InitialTraits, action) {
       return InitialTraits;
 
     case IMPORT_CHARACTER:
+    case EDIT_CHARACTER_COMMIT:
       return action.payload.traits;
 
     default:

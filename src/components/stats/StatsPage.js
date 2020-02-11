@@ -29,7 +29,7 @@ class StatsPage extends React.Component {
           />
         <Traits
           traits={this.props.traits}
-          onMarkTrait={this.props.actions.markTrait}
+          actions={this.props.actions}
           editMode={editMode}
           />
         <Skills
