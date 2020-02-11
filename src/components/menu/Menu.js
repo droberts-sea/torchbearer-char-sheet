@@ -45,7 +45,9 @@ class Menu extends React.Component {
     if (ui.editCharacter.editMode) {
       editKnob = (
         <div className="knob">
-          <button onClick={actions.editCharacterCommit}>Commit edits</button>
+          <button
+            onClick={() => actions.editCharacterCommit(ui.editCharacter.character)}
+          >Commit edits</button>
           <button onClick={actions.editCharacterRevert}>Revert edits</button>
         </div>
       );
@@ -67,7 +69,7 @@ class Menu extends React.Component {
               name="Edit Character"
               knob={editKnob}
               subtext="Edit mode. You'll need to come back here to either commit or revert your changes."
-              />
+            />
             <Control
               name="Export Character"
               knob={(

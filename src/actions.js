@@ -134,8 +134,11 @@ export function editCharacterBegin() {
   return { type: EDIT_CHARACTER_BEGIN };
 };
 
-export function editCharacterCommit() {
-  return { type: EDIT_CHARACTER_COMMIT };
+export function editCharacterCommit(character) {
+  return {
+    type: EDIT_CHARACTER_COMMIT,
+    payload: character,
+  };
 };
 
 export function editCharacterRevert() {

@@ -1,4 +1,4 @@
-import { MARK_TEST, RESET_CHARACTER, IMPORT_CHARACTER } from '../../actions';
+import { MARK_TEST, RESET_CHARACTER, IMPORT_CHARACTER, EDIT_CHARACTER_COMMIT } from '../../actions';
 import { ROLL_COMMIT_RESULTS } from '../../actions/roll_actions';
 import { InitialWises } from '../../rules/initial_character';
 
@@ -74,6 +74,7 @@ const wisesReducer = function (state = InitialWises, action) {
       return InitialWises;
 
     case IMPORT_CHARACTER:
+    case EDIT_CHARACTER_COMMIT:
       return action.payload.wises;
 
     default:

@@ -109,9 +109,6 @@ const editCharacter = (state = InitialEditCharacterState, action, savedCharacter
       };
 
     case EDIT_CHARACTER_COMMIT:
-      console.log("Commit character edits");
-      return state;
-
     case EDIT_CHARACTER_REVERT:
       return InitialEditCharacterState;
 
