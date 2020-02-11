@@ -110,16 +110,19 @@ export const InitialSkills = Object.freeze(
 
 export const InitialTraits = Object.freeze([
   {
+    id: 0,
     name: "Firey",
     level: 1,
     uses: 0
   },
   {
+    id: 1,
     name: "Jaded",
     level: 2,
     uses: 2
   },
   {
+    id: 2,
     name: "Curious",
     level: 3,
     uses: 0
@@ -128,6 +131,7 @@ export const InitialTraits = Object.freeze([
 
 export const InitialWises = Object.freeze([
   {
+    id: 0,
     name: "Deepest Heart of Darkness",
     advancement: {
       pass: true,
@@ -137,6 +141,7 @@ export const InitialWises = Object.freeze([
     }
   },
   {
+    id: 1,
     name: "Home",
     advancement: {
       pass: false,

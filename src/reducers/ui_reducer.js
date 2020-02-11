@@ -11,6 +11,8 @@ import {
   EDIT_CHARACTER_REMOVE_FIELD
 } from '../actions';
 
+import update from 'immutability-helper';
+
 function currentTab(state = Tabs.STATS, action) {
   switch (action.type) {
     case SHOW_TAB:
@@ -38,7 +40,7 @@ function skillTable(state = InitialSkillTableState, action) {
 }
 
 const InitialMenuState = Object.freeze({
-  open: false,
+  open: true,
 });
 
 const menu = (state = InitialMenuState, action) => {
@@ -59,6 +61,19 @@ const InitialEditCharacterState = Object.freeze({
   character: undefined,
 });
 
+const editCharacterProperty = (state, value, path) => {
+  const command = { character: {} };
+  let target = command.character;
+
+  path.forEach((node) => {
+    target[node] = {};
+    target = target[node];
+  });
+  target['$set'] = value;
+  
+  return update(state, command);
+}
+
 const editCharacter = (state = InitialEditCharacterState, action, savedCharacter) => {
   switch (action.type) {
     case EDIT_CHARACTER_BEGIN:
@@ -78,7 +93,7 @@ const editCharacter = (state = InitialEditCharacterState, action, savedCharacter
     case EDIT_CHARACTER_PROPERTY:
       console.log("Editing property");
       console.log(action.payload);
-      return state;
+      return editCharacterProperty(state, action.payload.value, action.payload.path);
 
     case EDIT_CHARACTER_ADD_FIELD:
       console.log("Adding field");

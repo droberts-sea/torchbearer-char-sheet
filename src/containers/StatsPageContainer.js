@@ -14,7 +14,7 @@ import {
 const mapStateToProps = (state) => {
   let character = state.character;
   if (state.ui.editCharacter.editMode) {
-    // character = state.ui.editCharacter.character;
+    character = state.ui.editCharacter.character;
   }
   return {
     abilities: character.abilities,

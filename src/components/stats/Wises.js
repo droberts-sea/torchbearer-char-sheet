@@ -16,7 +16,7 @@ const wiseChekbox = (wise, mark, onMarkTest) => {
 
 const buildWise = (wise, index, actions, editMode) => {
   return (
-    <tr key={`wise_${wise.name}`}>
+    <tr key={`wise_${wise.id}`}>
       <td>
         <EditablePropertyName
           name={wise.name}
