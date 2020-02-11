@@ -2,8 +2,16 @@
   display: flex;
   align-items: center;
 }
+
 .editable-property-name input {
   display: block;
   width: 100%;
   margin: 0 .5rem;
+  height: 1.3rem;
+}
+
+.editable-property-name-button {
+  font-size: 1.2rem;
+  /* font-weight: bold; */
+  min-width: 2rem;
 }

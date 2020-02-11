@@ -6,7 +6,10 @@ const EditablePropertyName = ({ name, editMode, onEdit, onRemove }) => {
   if (editMode) {
     return (
       <div className="editable-property-name">
-        <button onClick={onRemove}>
+        <button
+          className="editable-property-name-button"
+          onClick={onRemove}
+        >
           -
         </button>
         <input

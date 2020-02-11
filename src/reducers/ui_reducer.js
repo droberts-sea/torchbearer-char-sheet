@@ -12,6 +12,7 @@ import {
 } from '../actions';
 
 import update from 'immutability-helper';
+import { newWise } from '../rules/wises';
 
 function currentTab(state = Tabs.STATS, action) {
   switch (action.type) {
@@ -61,6 +62,9 @@ const InitialEditCharacterState = Object.freeze({
   character: undefined,
 });
 
+// The API for immutability-helper is not super intuitive
+// (though still better than managing everything by hand)
+// See https://github.com/kolodny/immutability-helper
 const editCharacterProperty = (state, value, path) => {
   const command = { character: {} };
   let target = command.character;
@@ -70,9 +74,30 @@ const editCharacterProperty = (state, value, path) => {
     target = target[node];
   });
   target['$set'] = value;
-  
+
   return update(state, command);
+};
+
+const editCharacterAddField = (state, category) => {
+  const findNextId = items => Math.max(items.map(i => i.id)) + 1;
+  const nextId = findNextId(state.character[category]);
+
+  let emptyField;
+  switch (category) {
+    case 'wises':
+      emptyField = newWise(nextId);
+      break;
+
+    default:
+      throw new Error('Adding field for unimplemented category ' + category);
+  }
+
+  return update(state, { character: { [category]: { $push: [emptyField] } } });
 }
+
+const editCharacterRemoveField = (state, category, index) => {
+  return update(state, { character: { [category]: { $splice: [[index, 1]] } } });
+};
 
 const editCharacter = (state = InitialEditCharacterState, action, savedCharacter) => {
   switch (action.type) {
@@ -98,19 +123,19 @@ const editCharacter = (state = InitialEditCharacterState, action, savedCharacter
     case EDIT_CHARACTER_ADD_FIELD:
       console.log("Adding field");
       console.log(action.payload);
-      return state;
+      return editCharacterAddField(state, action.payload.category);
 
     case EDIT_CHARACTER_REMOVE_FIELD:
       console.log("Removing field");
       console.log(action.payload);
-      return state;
+      return editCharacterRemoveField(state, action.payload.category, action.payload.index);
 
     default:
       return state;
   }
 };
 
-const ui = (state={}, action, savedCharacter) => {
+const ui = (state = {}, action, savedCharacter) => {
   return {
     currentTab: currentTab(state.currentTab, action),
     skillTable: skillTable(state.skillTable, action),

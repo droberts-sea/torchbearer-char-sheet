@@ -6,3 +6,15 @@ export const wiseReadyToAdvance = (wise, withMark) => {
 
   return advancement.pass && advancement.fail && advancement.fate && advancement.persona;
 }
+
+export const newWise = (id, name = '') => {
+  return {
+    id, name,
+    advancement: {
+      pass: false,
+      fail: false,
+      fate: false,
+      persona: false,
+    },
+  };
+}

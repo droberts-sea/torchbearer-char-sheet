@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Checkbox from '../shared/Checkbox';
 import EditablePropertyName from '../shared/EditablePropertyName';
 
+import './styles/Wises.css';
+
 const wiseChekbox = (wise, mark, markTest) => {
   return (
     <td key={`wcb_${wise.name}_${mark}`}>
@@ -59,13 +61,15 @@ const Wises = ({ wises, actions, editMode }) => {
           {
             editMode ? (
               <tr><td>
-                <button onClick={() => actions.editCharacterAddField('wises')}>+</button>
+                <button
+                  onClick={() => actions.editCharacterAddField('wises')}
+                  className="editable-property-name-button"
+                  >+</button>
               </td></tr>
             ) : null
           }
         </tbody>
       </table>
-
     </section>
   );
 };

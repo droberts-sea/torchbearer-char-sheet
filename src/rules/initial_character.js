@@ -1,5 +1,7 @@
 import { ConditionRules } from './conditions';
 import { SkillRules } from './skills';
+import { newTrait } from './traits';
+import { newWise } from './wises';
 
 // See _Abilities_, page 26
 export const InitialAbilities = Object.freeze({
@@ -109,45 +111,12 @@ export const InitialSkills = Object.freeze(
 );
 
 export const InitialTraits = Object.freeze([
-  {
-    id: 0,
-    name: "Firey",
-    level: 1,
-    uses: 0
-  },
-  {
-    id: 1,
-    name: "Jaded",
-    level: 2,
-    uses: 2
-  },
-  {
-    id: 2,
-    name: "Curious",
-    level: 3,
-    uses: 0
-  }
+  newTrait(0, 'Firey'),
+  newTrait(1, 'Jaded', 2),
+  newTrait(2, 'Curious', 3),
 ]);
 
 export const InitialWises = Object.freeze([
-  {
-    id: 0,
-    name: "Deepest Heart of Darkness",
-    advancement: {
-      pass: true,
-      fail: true,
-      fate: true,
-      persona: false
-    }
-  },
-  {
-    id: 1,
-    name: "Home",
-    advancement: {
-      pass: false,
-      fail: false,
-      fate: false,
-      persona: true
-    }
-  }
+  newWise(0, 'Deepest Heart of Darkness'),
+  newWise(1, 'Home'),
 ]);
