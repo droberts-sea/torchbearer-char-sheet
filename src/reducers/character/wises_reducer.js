@@ -1,26 +1,6 @@
 import { MARK_TEST, RESET_CHARACTER, IMPORT_CHARACTER } from '../../actions';
 import { ROLL_COMMIT_RESULTS } from '../../actions/roll_actions';
-
-export const InitialWises = [
-  {
-    name: "Deepest Heart of Darkness",
-    advancement: {
-      pass: true,
-      fail: true,
-      fate: true,
-      persona: false
-    }
-  },
-  {
-    name: "Home",
-    advancement: {
-      pass: false,
-      fail: false,
-      fate: false,
-      persona: true
-    }
-  }
-];
+import { InitialWises } from '../../rules/initial_character';
 
 const clearSlate = () => {
   return {

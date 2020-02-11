@@ -1,72 +1,7 @@
 import { MARK_TEST, RESET_CHARACTER, IMPORT_CHARACTER } from '../../actions';
 import { advanceSkill } from './skills_reducer';
 import { ROLL_COMMIT_RESULTS } from '../../actions/roll_actions';
-
-// See _Abilities_, page 26
-const InitialAbilities = {
-  NATURE: {
-    name: 'Nature',
-    rating: 3,
-    untaxed: 5,
-    min: 0,
-    max: 7,
-    advancement: {
-      pass: 0,
-      fail: 0
-    },
-    open: true, // All abilities are always open
-    descriptors: ['Sneaking', 'Riddling', 'Merrymaking']
-  },
-  WILL: {
-    name: 'Will',
-    rating: 5,
-    min: 1,
-    max: 6,
-    advancement: {
-      pass: 0,
-      fail: 0
-    },
-    open: true
-  },
-  HEALTH: {
-    name: 'Health',
-    rating: 3,
-    min: 1,
-    max: 6,
-    advancement: {
-      pass: 0,
-      fail: 0
-    },
-    open: true
-  },
-  RESOURCES: {
-    name: 'Resources',
-    rating: 3,
-    min: 0,
-    max: 10,
-    advancement: {
-      pass: 0,
-      fail: 0
-    },
-    open: true
-  },
-  CIRCLES: {
-    name: 'Circles',
-    rating: 4,
-    min: 1,
-    max: 10,
-    advancement: {
-      pass: 0,
-      fail: 0
-    },
-    open: true
-  },
-  MIGHT: {
-    name: 'Might',
-    rating: 3,
-    open: true // do you ever even roll might?
-  }
-}
+import { InitialAbilities } from '../../rules/initial_character';
 
 const markTest = function (state, effect, character) {
   // We use the MARK_TEST action for both skills and abilities

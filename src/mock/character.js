@@ -1,7 +1,9 @@
 import { ConditionRules } from '../rules/conditions';
-import { InitialTraits } from '../reducers/character/traits_reducer';
-import { InitialWises } from '../reducers/character/wises_reducer';
-import { InitialPoints } from '../reducers/character/points_reducer';
+import {
+  InitialPoints,
+  InitialTraits,
+  InitialWises,
+} from '../rules/initial_character';
 
 const character = {
   skills: {

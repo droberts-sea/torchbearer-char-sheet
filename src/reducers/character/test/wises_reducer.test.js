@@ -1,4 +1,5 @@
-import wisesReducer, { InitialWises } from '../wises_reducer';
+import wisesReducer from '../wises_reducer';
+import { InitialWises } from '../../../rules/initial_character';
 
 import { deepCopy } from '../../../mock/util';
 import { MARK_TEST } from '../../../actions';

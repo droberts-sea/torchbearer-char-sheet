@@ -1,26 +1,6 @@
-import { SkillRules } from '../../rules/skills';
 import { MARK_TEST, RESET_CHARACTER, IMPORT_CHARACTER } from '../../actions';
 import { ROLL_COMMIT_RESULTS } from '../../actions/roll_actions';
-
-const InitialSkills = {};
-Object.keys(SkillRules).forEach((name) => {
-  const display_name = name.split('_').map((word) => {
-    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-  }).join(' ');
-  const skill = {
-    beginnersLuck: SkillRules[name].beginnersLuck,
-    name: display_name,
-    rating: 0,
-    min: 0,
-    max: 6, // Skills are rated from 1 to 6 (pg 13)
-    advancement: {
-      pass: 0,
-      fail: 0
-    },
-    open: false // Skill rating can be 0 but still open
-  };
-  InitialSkills[name] = skill;
-});
+import { InitialSkills } from '../../rules/initial_character';
 
 const clearSlate = function (advancement) {
   advancement.pass = 0;

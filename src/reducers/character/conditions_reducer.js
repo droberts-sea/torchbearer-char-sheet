@@ -1,10 +1,6 @@
 import { SET_CONDITION, RESET_CHARACTER, IMPORT_CHARACTER } from '../../actions';
-import { Conditions, ConditionRules } from '../../rules/conditions';
-
-const InitialConditions = {};
-Object.keys(ConditionRules).forEach((name) => {
-  InitialConditions[name] = ConditionRules[name].default_state;
-});
+import { Conditions } from '../../rules/conditions';
+import { InitialConditions } from '../../rules/initial_character';
 
 const conditionsReducer = function (state = InitialConditions, action) {
   switch (action.type) {
