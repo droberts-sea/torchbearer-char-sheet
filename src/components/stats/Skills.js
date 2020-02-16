@@ -37,6 +37,10 @@ class Skills extends SkillTable {
     }
   }
 
+  onSetProp = (prop, value, key, skill) => {
+    this.props.actions.editCharacterProperty(value, 'skills', key, prop);
+  }
+
   sdButton = (text, option) => {
     return (
       <button

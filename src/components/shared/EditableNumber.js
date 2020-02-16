@@ -2,10 +2,11 @@ import React from 'react';
 
 // import './styles/EditableNumber.css';
 
-const EditableNumber = ({ value, editMode, onEdit, min=0, max=9 }) => {
+const EditableNumber = ({ value, editMode, onEdit, min=0, max=9, className }) => {
   if (editMode) {
+    className += ' editable-number'
     return (
-      <div className="editable-number">
+      <div className={className}>
         <input
           className="number"
           type="number"
@@ -20,8 +21,9 @@ const EditableNumber = ({ value, editMode, onEdit, min=0, max=9 }) => {
       </div>
     );
   } else {
+    className += ' number'
     return (
-      <span className="number">{value}</span>
+      <span className={className}>{value}</span>
     );
   }
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import EditableNumber from '../shared/EditableNumber';
 
 class SkillTable extends React.Component {
   advancement(name, skill) {
@@ -24,29 +25,43 @@ class SkillTable extends React.Component {
   }
 
   // Template methods
-  rating(key, ability) { return ability.rating; }
+  rating(key, skill) { return skill.rating; }
   extraRow() { return null; }
   extraCol() { return null; }
   shouldShow() { return true; }
+  onEdit() { }
+  customRow() { return null; }
 
   tableBody(skills, category) {
     return Object.keys(skills).map((key) => {
-      if (!this.shouldShow(key, skills[key])) {
+      const skill = skills[key];
+      if (!this.shouldShow(key, skill)) {
         return null;
       }
+
+      const customRow = this.customRow(key, skill)
+      if (customRow) {
+        return customRow;
+      }
+
       return (
         <React.Fragment key={`${key}`}>
           <tr>
-            <td>{skills[key].name}</td>
+            <td>{skill.name}</td>
             <td>
-              <span className="number rating">
-                {this.rating(key, skills[key])}
-              </span>
+              <EditableNumber
+                value={this.rating(key, skill)}
+                editMode={this.props.editMode}
+                onEdit={(value) => this.onSetProp('rating', value, key, skill)}
+                min={skill.min}
+                max={skill.max}
+                className="rating"
+                />
             </td>
-            {this.advancement(key, skills[key])}
-            {this.extraCol(key, skills[key])}
+            {this.advancement(key, skill)}
+            {this.extraCol(key, skill)}
           </tr>
-          {this.extraRow(key, skills[key])}
+          {this.extraRow(key, skill)}
         </React.Fragment>
       );
     });

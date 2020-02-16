@@ -72,7 +72,7 @@ class Traits extends React.Component {
             <tr>
               <th>Name</th>
               <th>Level</th>
-              {this.props.editMode ? "" : <th>Uses</th>}
+              {this.props.editMode ? null : <th>Uses</th>}
             </tr>
           </thead>
           <tbody>

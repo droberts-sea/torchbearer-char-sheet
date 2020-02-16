@@ -1,4 +1,4 @@
-import { MARK_TEST, RESET_CHARACTER, IMPORT_CHARACTER } from '../../actions';
+import { MARK_TEST, RESET_CHARACTER, IMPORT_CHARACTER, EDIT_CHARACTER_COMMIT } from '../../actions';
 import { advanceSkill } from './skills_reducer';
 import { ROLL_COMMIT_RESULTS } from '../../actions/roll_actions';
 import { InitialAbilities } from '../../rules/initial_character';
@@ -59,6 +59,7 @@ const abilitiesReducer = function (state = InitialAbilities, action, character) 
       return InitialAbilities;
 
     case IMPORT_CHARACTER:
+    case EDIT_CHARACTER_COMMIT:
       return action.payload.abilities;
 
     default:
