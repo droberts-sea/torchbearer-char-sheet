@@ -38,6 +38,7 @@ table td:first-child {
 
 .skill-table .edit-nature-descriptors input {
   width: 100%;
+  font-style: italic;
 }
 
 .skill-table .rating {
