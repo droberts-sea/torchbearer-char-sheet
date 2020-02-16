@@ -1,15 +1,13 @@
 import React from 'react';
 
 import Checkbox from '../shared/Checkbox';
+import EditableNumber from '../shared/EditableNumber';
 import EditablePropertyName from '../shared/EditablePropertyName';
 
 class Traits extends React.Component {
   buildUseCheckboxes(trait) {
-    if (trait.level < 1 || trait.level > 3) {
-      throw new Error(`Bogus trait level ${trait.level}`);
-    } else if (trait.level === 3) {
-      return "----";
-    } else {
+    if (trait.level === 1 || trait.level === 2) {
+      console.log(`render  trait ${trait.name}`);
       return (
         <React.Fragment>
           <Checkbox
@@ -23,6 +21,9 @@ class Traits extends React.Component {
           />
         </React.Fragment>
       );
+    } else {
+      // If we've got a bogus trait level, just fake it.
+      return "----";
     }
   }
 
@@ -38,8 +39,13 @@ class Traits extends React.Component {
           />
         </td>
         <td>
-          {/* TODO editable */}
-          <span className="number">{trait.level}</span>
+          <EditableNumber
+            value={trait.level}
+            editMode={this.props.editMode}
+            onEdit={(value) => this.props.actions.editCharacterProperty(value, 'traits', index, 'level')}
+            min="1"
+            max="3"
+            />
         </td>
         <td className="trait-uses">
           {this.buildUseCheckboxes(trait)}
