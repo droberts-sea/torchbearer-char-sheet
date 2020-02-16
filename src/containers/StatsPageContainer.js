@@ -5,7 +5,7 @@ import StatsPage from '../components/stats/StatsPage';
 import {
   markTest,
   markTrait,
-  skillCollapse,
+  setSkillDisplay,
   editCharacterProperty,
   editCharacterAddField,
   editCharacterRemoveField,
@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch) => {
     actions: bindActionCreators({
       markTest,
       markTrait,
-      skillCollapse,
+      setSkillDisplay,
       editCharacterProperty,
       editCharacterAddField,
       editCharacterRemoveField,

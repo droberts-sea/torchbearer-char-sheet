@@ -2,13 +2,14 @@ import {
   SHOW_TAB,
   Tabs,
   TOGGLE_MENU,
-  SKILL_COLLAPSE,
   EDIT_CHARACTER_BEGIN,
   EDIT_CHARACTER_COMMIT,
   EDIT_CHARACTER_REVERT,
   EDIT_CHARACTER_PROPERTY,
   EDIT_CHARACTER_ADD_FIELD,
-  EDIT_CHARACTER_REMOVE_FIELD
+  EDIT_CHARACTER_REMOVE_FIELD,
+  SKILL_DISPLAY_OPTIONS,
+  SET_SKILL_DISPLAY
 } from '../actions';
 
 import update from 'immutability-helper';
@@ -26,15 +27,14 @@ function currentTab(state = Tabs.STATS, action) {
 }
 
 const InitialSkillTableState = {
-  collapsed: false
+  display: SKILL_DISPLAY_OPTIONS.CORE
 };
 
 function skillTable(state = InitialSkillTableState, action) {
-  if (action.type === SKILL_COLLAPSE) {
-    console.log("Skill collapse");
+  if (action.type === SET_SKILL_DISPLAY) {
     return {
       ...state,
-      collapsed: !state.collapsed
+      display: action.payload.display
     }
   } else {
     return state;

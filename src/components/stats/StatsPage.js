@@ -13,9 +13,10 @@ class StatsPage extends React.Component {
       <div id="stats-page">
         <Abilities
           abilities={this.props.abilities}
-          onMarkTest={
-            (name, mark) => this.props.actions.markTest(name, 'abilities', mark)
-          }
+          actions={{
+            ...this.props.actions,
+            markTest: (name, mark) => this.props.actions.markTest(name, 'abilities', mark)
+          }}
           advancementDisabled={this.props.character.conditions.SICK}
           editMode={editMode}
           />
@@ -34,10 +35,11 @@ class StatsPage extends React.Component {
           />
         <Skills
           skills={this.props.skills}
-          onMarkTest={
-            (name, mark) => this.props.actions.markTest(name, 'skills', mark)
-          }
-          isCollapsed={this.props.ui.skillTable.collapsed}
+          actions={{
+            ...this.props.actions,
+            markTest: (name, mark) => this.props.actions.markTest(name, 'skills', mark),
+          }}
+          display={this.props.ui.skillTable.display}
           onSkillCollapse={this.props.actions.skillCollapse}
           advancementDisabled={this.props.character.conditions.SICK}
           editMode={editMode}

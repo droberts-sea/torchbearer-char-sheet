@@ -3,6 +3,7 @@
 */
 
 // UI
+export const SET_SKILL_DISPLAY = 'SET_SKILL_DISPLAY';
 export const SHOW_TAB = 'SHOW_TAB';
 export const TOGGLE_MENU = 'TOGGLE_MENU';
 
@@ -14,7 +15,6 @@ export const SPEND_POINT = 'SPEND_POINT';
 // STATS
 export const MARK_TEST = 'MARK_TEST';
 export const MARK_TRAIT = 'MARK_TRAIT';
-export const SKILL_COLLAPSE = 'SKILL_COLLAPSE';
 
 // Character Management
 export const RESET_CHARACTER = 'RESET_CHARACTER';
@@ -113,9 +113,19 @@ export function markTrait(name, increase) {
   };
 }
 
-export function skillCollapse() {
+export const SKILL_DISPLAY_OPTIONS = {
+  OPEN: 'OPEN',
+  CORE: 'CORE',
+  ALL: 'ALL',
+};
+
+export function setSkillDisplay(display) {
+  if (!Object.keys(SKILL_DISPLAY_OPTIONS).includes(display)) {
+    throw new Error(`Invalid skill display option ${display}`);
+  }
   return {
-    type: SKILL_COLLAPSE
+    type: SET_SKILL_DISPLAY,
+    payload: { display },
   };
 };
 

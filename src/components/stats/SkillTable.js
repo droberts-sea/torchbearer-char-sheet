@@ -13,11 +13,11 @@ class SkillTable extends React.Component {
       <React.Fragment>
         <td className="advancement">
           <span className="number">{skill.advancement.pass}</span>
-          <button onClick={() => this.props.onMarkTest(name, 'PASS')} disabled={disabled}>Mark</button>
+          <button onClick={() => this.props.actions.markTest(name, 'PASS')} disabled={disabled}>Mark</button>
         </td>
         <td className="advancement">
           <span className="number">{skill.advancement.fail}</span>
-          <button onClick={() => this.props.onMarkTest(name, 'FAIL')} disabled={disabled}>Mark</button>
+          <button onClick={() => this.props.actions.markTest(name, 'FAIL')} disabled={disabled}>Mark</button>
         </td>
       </React.Fragment>
     );
