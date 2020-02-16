@@ -29,8 +29,11 @@ class SkillTable extends React.Component {
   extraRow() { return null; }
   extraCol() { return null; }
   shouldShow() { return true; }
-  onEdit() { }
   customRow() { return null; }
+
+  onSetProp = (prop, value, key) => {
+    this.props.actions.editCharacterProperty(value, key, prop);
+  }
 
   tableBody(skills, category) {
     return Object.keys(skills).map((key) => {

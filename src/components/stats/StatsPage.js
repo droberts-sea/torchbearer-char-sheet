@@ -15,6 +15,7 @@ class StatsPage extends React.Component {
           abilities={this.props.abilities}
           actions={{
             ...this.props.actions,
+            editCharacterProperty: (value, ...path) => this.props.actions.editCharacterProperty(value, 'abilities', ...path),
             markTest: (name, mark) => this.props.actions.markTest(name, 'abilities', mark)
           }}
           advancementDisabled={this.props.character.conditions.SICK}
@@ -37,6 +38,7 @@ class StatsPage extends React.Component {
           skills={this.props.skills}
           actions={{
             ...this.props.actions,
+            editCharacterProperty: (value, ...path) => this.props.actions.editCharacterProperty(value, 'skills', ...path),
             markTest: (name, mark) => this.props.actions.markTest(name, 'skills', mark),
           }}
           display={this.props.ui.skillTable.display}
