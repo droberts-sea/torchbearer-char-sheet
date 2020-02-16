@@ -38,6 +38,20 @@ table td:first-child {
   text-align: center;
 }
 
+.skill-table .editable-number {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.skill-table .edit-nature-rating {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: .2rem;
+  font-size: 1.5rem;
+}
+
 .skill-display-buttons {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

@@ -29,7 +29,7 @@ main section {
 .number {
   display: inline-block;
   font-family: 'Macondo', fantasy, cursive;
-  font-size: 1.4em;
+  font-size: 1.5rem;
 
   width: 1.5em;
   text-align: center;

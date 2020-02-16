@@ -45,11 +45,10 @@ class SkillTable extends React.Component {
   }
 
   // Template methods
-  rating(key, skill) { return skill.rating; }
   extraRow() { return null; }
   extraCol() { return null; }
   shouldShow() { return true; }
-  customRow() { return null; }
+  customRating() { return null; }
 
   onSetProp = (value, ...path) => {
     this.props.actions.editCharacterProperty(value, ...path);
@@ -62,25 +61,25 @@ class SkillTable extends React.Component {
         return null;
       }
 
-      const customRow = this.customRow(key, skill)
-      if (customRow) {
-        return customRow;
+      let rating = this.customRating(key, skill);
+      if (!rating) {
+        rating = (
+          <EditableNumber
+            value={skill.rating}
+            editMode={this.props.editMode}
+            onEdit={(value) => this.onSetProp(value, key, 'rating')}
+            min={skill.min}
+            max={skill.max}
+            className="rating"
+          />
+        )
       }
 
       return (
         <React.Fragment key={`${key}`}>
           <tr>
             <td>{skill.name}</td>
-            <td>
-              <EditableNumber
-                value={this.rating(key, skill)}
-                editMode={this.props.editMode}
-                onEdit={(value) => this.onSetProp(value, key, 'rating')}
-                min={skill.min}
-                max={skill.max}
-                className="rating"
-              />
-            </td>
+            <td>{rating}</td>
             {this.advancement(key, skill)}
             {this.extraCol(key, skill)}
           </tr>
