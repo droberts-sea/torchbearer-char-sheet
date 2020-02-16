@@ -2,7 +2,19 @@ import React from 'react';
 import EditableNumber from '../shared/EditableNumber';
 
 class SkillTable extends React.Component {
-  advancement(name, skill) {
+  advancementButton(name, mark, disabled) {
+    if (this.props.editMode) {
+      return null;
+    }
+    return (
+      <button
+        onClick={() => this.props.actions.markTest(name, mark)}
+        disabled={disabled}
+      >Mark</button>
+    );
+  }
+
+  advancement(key, skill) {
     if (!skill.advancement) {
       return null;
     }
@@ -13,12 +25,20 @@ class SkillTable extends React.Component {
     return (
       <React.Fragment>
         <td className="advancement">
-          <span className="number">{skill.advancement.pass}</span>
-          <button onClick={() => this.props.actions.markTest(name, 'PASS')} disabled={disabled}>Mark</button>
+          <EditableNumber
+            value={skill.advancement.pass}
+            editMode={this.props.editMode}
+            onEdit={value => this.onSetProp(value, key, 'advancement', 'pass')}
+          />
+          {this.advancementButton(key, 'pass', disabled)}
         </td>
         <td className="advancement">
-          <span className="number">{skill.advancement.fail}</span>
-          <button onClick={() => this.props.actions.markTest(name, 'FAIL')} disabled={disabled}>Mark</button>
+          <EditableNumber
+            value={skill.advancement.fail}
+            editMode={this.props.editMode}
+            onEdit={value => this.onSetProp(value, key, 'advancement', 'fail')}
+          />
+          {this.advancementButton(key, 'fail', disabled)}
         </td>
       </React.Fragment>
     );
@@ -31,8 +51,8 @@ class SkillTable extends React.Component {
   shouldShow() { return true; }
   customRow() { return null; }
 
-  onSetProp = (prop, value, key) => {
-    this.props.actions.editCharacterProperty(value, key, prop);
+  onSetProp = (value, ...path) => {
+    this.props.actions.editCharacterProperty(value, ...path);
   }
 
   tableBody(skills, category) {
@@ -55,11 +75,11 @@ class SkillTable extends React.Component {
               <EditableNumber
                 value={this.rating(key, skill)}
                 editMode={this.props.editMode}
-                onEdit={(value) => this.onSetProp('rating', value, key, skill)}
+                onEdit={(value) => this.onSetProp(value, key, 'rating')}
                 min={skill.min}
                 max={skill.max}
                 className="rating"
-                />
+              />
             </td>
             {this.advancement(key, skill)}
             {this.extraCol(key, skill)}
