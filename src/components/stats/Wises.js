@@ -18,6 +18,12 @@ const wiseChekbox = (wise, mark, markTest) => {
 }
 
 const buildWise = (wise, index, actions, editMode) => {
+  let checkboxes = null;
+  if (!editMode) {
+    checkboxes = ['pass', 'fail', 'fate', 'persona'].map(
+      mark => wiseChekbox(wise, mark, actions.markTest)
+    );
+  }
   return (
     <tr key={`wise_${wise.id}`}>
       <td>
@@ -28,9 +34,7 @@ const buildWise = (wise, index, actions, editMode) => {
           onRemove={() => actions.editCharacterRemoveField('wises', index)}
         />
       </td>
-      {['pass', 'fail', 'fate', 'persona'].map(
-        mark => wiseChekbox(wise, mark, actions.markTest)
-      )}
+      {checkboxes}
     </tr>
   );
 }
@@ -41,17 +45,18 @@ const Wises = ({ wises, actions, editMode }) => {
     classes.push('editing');
   }
 
+  let headers = ["Name"];
+  if (!editMode) {
+    headers = headers.concat(["Pass", "Fail", "Fate", "Pers."]);
+  }
+
   return (
     <section>
       <h2>Wises</h2>
       <table className={classes.join(' ')}>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Pass</th>
-            <th>Fail</th>
-            <th>Fate</th>
-            <th>Pers.</th>
+            {headers.map(h => <th key={`wh_${h}`}>{h}</th>)}
           </tr>
         </thead>
         <tbody>
