@@ -4,7 +4,7 @@ import Checkbox from '../shared/Checkbox';
 import EditableNumber from '../shared/EditableNumber';
 import EditablePropertyName from '../shared/EditablePropertyName';
 
-const UseCheckboxes = ({trait, markTrait}) => {
+const UseCheckboxes = ({ trait, markTrait }) => {
   if (trait.level === 1 || trait.level === 2) {
     return (
       <React.Fragment>
@@ -30,6 +30,15 @@ const UseCheckboxes = ({trait, markTrait}) => {
 class Traits extends React.Component {
 
   buildTrait(trait, index) {
+    let uses = null;
+    if (!this.props.editMode) {
+      uses = (
+        <td className="trait-uses">
+          <UseCheckboxes trait={trait} markTrait={this.props.actions.markTrait} />
+        </td>
+      );
+    }
+
     return (
       <tr key={`trait_${trait.id}`}>
         <td>
@@ -47,11 +56,9 @@ class Traits extends React.Component {
             onEdit={(value) => this.props.actions.editCharacterProperty(value, 'traits', index, 'level')}
             min="1"
             max="3"
-            />
+          />
         </td>
-        <td className="trait-uses">
-          <UseCheckboxes trait={trait} markTrait={this.props.actions.markTrait} />
-        </td>
+        {uses}
       </tr>
     );
   }
@@ -65,7 +72,7 @@ class Traits extends React.Component {
             <tr>
               <th>Name</th>
               <th>Level</th>
-              <th>Uses</th>
+              {this.props.editMode ? "" : <th>Uses</th>}
             </tr>
           </thead>
           <tbody>
