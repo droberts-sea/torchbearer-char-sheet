@@ -9,7 +9,7 @@ const EditableNumber = ({ value, editMode, onEdit, min=0, max=9 }) => {
         <input
           className="number"
           type="number"
-          value={value == undefined ? "" : value}
+          value={value == undefined ? "" : value} // eslint-disable-line eqeqeq
           onChange={(e) => {
             let value = parseInt(e.target.value);
             onEdit(isNaN(value) ? undefined : value);
