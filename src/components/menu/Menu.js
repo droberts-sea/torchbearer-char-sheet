@@ -62,13 +62,18 @@ class Menu extends React.Component {
     return (
       <div className="main-menu-container">
         <aside className={className}>
-          <h2>Menu</h2>
+          <header className="main-menu-header">
+            <h2>Menu</h2>
+            <div className="main-menu-close"
+              onClick={actions.toggleMenu}
+            >←</div>
+          </header>
           {/* TODO: collapsable controls */}
           <ul>
             <Control
               name="Edit Character"
               knob={editKnob}
-              subtext="Edit mode. You'll need to come back here to either commit or revert your changes."
+              subtext="This lets you change things like the names and numbers of wises and traits, and the rating of skills and abilities. Normal controls are disabled while in edit mode. You'll need to come back here to either commit or revert your changes."
             />
             <Control
               name="Export Character"

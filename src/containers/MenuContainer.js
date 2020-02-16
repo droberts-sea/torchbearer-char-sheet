@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import Menu from '../components/menu/Menu';
 
 import {
+  toggleMenu,
   resetCharacter,
   importCharacter,
   editCharacterBegin,
@@ -22,6 +23,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({
+      toggleMenu,
       resetCharacter,
       importCharacter,
       editCharacterBegin,

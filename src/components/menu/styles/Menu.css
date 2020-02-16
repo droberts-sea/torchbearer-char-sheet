@@ -10,8 +10,10 @@
 	transition-duration: .25s;
   /* transition-timing-function: cubic-bezier(1, 0, 1, 0.5); */
 
-  position: absolute;
-  height: 100vh;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
   border-right: 1px solid black;
   border-top: 1px solid black;
 
@@ -24,16 +26,28 @@
   border: 0;
 }
 
-.main-menu h2 {
+.main-menu-header {
   font-family: 'Macondo', fantasy, cursive, sans-serif;
 
   background-color: rgb(242, 239, 208);
 
   width: 300px;
+  position: relative;
+}
+
+.main-menu-header h2 {
   text-align: center;
 
-  margin-top: 0;
+  margin: 0;
   padding: .5rem 0;
+}
+
+.main-menu-header .main-menu-close {
+  font-size: 2em;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0 .3em;
 }
 
 .main-menu ul {
