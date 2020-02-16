@@ -9,8 +9,11 @@ const EditableNumber = ({ value, editMode, onEdit, min=0, max=9 }) => {
         <input
           className="number"
           type="number"
-          value={value}
-          onChange={(e) => onEdit(e.target.value)}
+          value={value == undefined ? "" : value}
+          onChange={(e) => {
+            let value = parseInt(e.target.value);
+            onEdit(isNaN(value) ? undefined : value);
+          }}
           min={min}
           max={max}
         />
