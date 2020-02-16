@@ -4,28 +4,30 @@ import Checkbox from '../shared/Checkbox';
 import EditableNumber from '../shared/EditableNumber';
 import EditablePropertyName from '../shared/EditablePropertyName';
 
-class Traits extends React.Component {
-  buildUseCheckboxes(trait) {
-    if (trait.level === 1 || trait.level === 2) {
-      console.log(`render  trait ${trait.name}`);
-      return (
-        <React.Fragment>
-          <Checkbox
-            active={trait.uses >= 1}
-            onToggle={(active) => this.props.actions.markTrait(trait.name, active)}
-          />
-          <Checkbox
-            disabled={trait.level < 2}
-            active={trait.uses >= 2}
-            onToggle={(active) => this.props.actions.markTrait(trait.name, active)}
-          />
-        </React.Fragment>
-      );
-    } else {
-      // If we've got a bogus trait level, just fake it.
-      return "----";
-    }
+const UseCheckboxes = ({trait, markTrait}) => {
+  if (trait.level === 1 || trait.level === 2) {
+    return (
+      <React.Fragment>
+        <Checkbox
+          active={trait.uses >= 1}
+          onToggle={(active) => markTrait(trait.name, active)}
+        />
+        <Checkbox
+          disabled={trait.level < 2}
+          active={trait.uses >= 2}
+          onToggle={(active) => markTrait(trait.name, active)}
+        />
+      </React.Fragment>
+    );
+  } else {
+    // If we've got a bogus trait level, just fake it.
+    return (
+      <div className="use-checkbox-standin">----</div>
+    );
   }
+};
+
+class Traits extends React.Component {
 
   buildTrait(trait, index) {
     return (
@@ -48,7 +50,7 @@ class Traits extends React.Component {
             />
         </td>
         <td className="trait-uses">
-          {this.buildUseCheckboxes(trait)}
+          <UseCheckboxes trait={trait} markTrait={this.props.actions.markTrait} />
         </td>
       </tr>
     );
