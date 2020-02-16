@@ -39,3 +39,9 @@ table td:first-child {
   text-align: center;
   height: 2em;
 }
+
+/* TODO the height doesn't match up, for some reason the td with the real checkboxes adds in 4 pixels of padding. Fixed by hardcoding, and I hate it. */
+.use-checkbox-standin {
+  height: calc(2em + 5px);
+  line-height: calc(2em + 5px);
+}
