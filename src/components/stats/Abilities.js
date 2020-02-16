@@ -4,15 +4,37 @@ import EditableNumber from '../shared/EditableNumber';
 
 class Abilities extends SkillTable {
   natureDescriptors(nature) {
-    let text = nature.descriptors.join(', ');
+    let contents;
+    if (this.props.editMode) {
+      contents = (
+        <div className="edit-nature-descriptors">
+          {
+            nature.descriptors.map((desc, i) => (
+              <input key={`nd_${i}`}
+                type="text"
+                value={desc}
+                onChange={(e =>
+                  this.props.actions.editCharacterProperty(e.target.value, 'NATURE', 'descriptors', i)
+                )}
+              />
+            ))
+          }
+        </div>
+      );
+
+    } else {
+      contents = nature.descriptors.join(', ');
+    }
+
     return (
       <tr key="nature_descriptor">
         <td className="nature-descriptors" colSpan="4">
-          {text}
+          {contents}
         </td>
       </tr>
     );
   }
+
 
   extraRow(key, ability) {
     if (key === 'NATURE') {

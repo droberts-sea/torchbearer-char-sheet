@@ -30,6 +30,16 @@ table td:first-child {
   font-style: italic;
 }
 
+.skill-table .edit-nature-descriptors {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+}
+
+.skill-table .edit-nature-descriptors input {
+  width: 100%;
+}
+
 .skill-table .rating {
   width: 90%;
 }
