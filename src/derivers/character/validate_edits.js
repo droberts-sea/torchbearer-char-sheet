@@ -67,6 +67,12 @@ const validateTraits = (traits) => {
   
   validateNames(traits, errors);
 
+  traits.forEach((trait, index) => {
+    if (trait.level < 1 || trait.level > 3) {
+      errors.add(index, 'level', "level must be between 1 and 3");
+    }
+  });
+
   return errors;
 };
 

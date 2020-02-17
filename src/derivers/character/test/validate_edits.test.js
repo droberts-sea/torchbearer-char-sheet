@@ -60,5 +60,19 @@ describe(validateEdits, () => {
       expect(Object.keys(problems.traits[0])).toContain('name');
       expect(Object.keys(problems.traits[1])).toContain('name');
     });
+
+    it('marks level under 1 invalid', () => {
+      character.traits[0].level = 0;
+      const problems = validateEdits(character);
+      expect(Object.keys(problems.traits)).toEqual(['0']);
+      expect(Object.keys(problems.traits[0])).toContain('level');
+    });
+
+    it('marks level over 3 invalid', () => {
+      character.traits[0].level = 4;
+      const problems = validateEdits(character);
+      expect(Object.keys(problems.traits)).toEqual(['0']);
+      expect(Object.keys(problems.traits[0])).toContain('level');
+    });
   });
 });
