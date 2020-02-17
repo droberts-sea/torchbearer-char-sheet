@@ -36,7 +36,7 @@ const validateWises = (wises) => {
 
   wises.forEach((wise, index) => {
     if (!wise.name || wise.name === '') {
-      errors.add(index, 'name', "can't be blank");
+      errors.add(index, 'name', "name can't be blank");
     }
 
     if (names[wise.name]) {
@@ -59,6 +59,10 @@ const validateWises = (wises) => {
 
 
 const validateEdits = (character) => {
+  if (!character) {
+    return undefined;
+  }
+
   return {
     wises: validateWises(character.wises),
   };

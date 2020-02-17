@@ -17,7 +17,7 @@ const wiseChekbox = (wise, mark, markTest) => {
   );
 }
 
-const buildWise = (wise, index, actions, editMode) => {
+const buildWise = (wise, index, actions, editMode, errors = {}) => {
   let checkboxes = null;
   if (!editMode) {
     checkboxes = ['pass', 'fail', 'fate', 'persona'].map(
@@ -32,6 +32,7 @@ const buildWise = (wise, index, actions, editMode) => {
           editMode={editMode}
           onEdit={(value) => actions.editCharacterProperty(value, 'wises', index, 'name')}
           onRemove={() => actions.editCharacterRemoveField('wises', index)}
+          errors={errors.name}
         />
       </td>
       {checkboxes}
@@ -39,7 +40,7 @@ const buildWise = (wise, index, actions, editMode) => {
   );
 }
 
-const Wises = ({ wises, actions, editMode }) => {
+const Wises = ({ wises, actions, editMode, errors = {} }) => {
   let classes = ['wises-table'];
   if (editMode) {
     classes.push('editing');
@@ -61,7 +62,7 @@ const Wises = ({ wises, actions, editMode }) => {
         </thead>
         <tbody>
           {
-            wises.map((w, i) => buildWise(w, i, actions, editMode))
+            wises.map((w, i) => buildWise(w, i, actions, editMode, errors[i]))
           }
           {
             editMode ? (
@@ -69,7 +70,7 @@ const Wises = ({ wises, actions, editMode }) => {
                 <button
                   onClick={() => actions.editCharacterAddField('wises')}
                   className="editable-property-name-button"
-                  >+</button>
+                >+</button>
               </td></tr>
             ) : null
           }

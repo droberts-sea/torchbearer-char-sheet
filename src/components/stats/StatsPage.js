@@ -28,6 +28,7 @@ class StatsPage extends React.Component {
             markTest: (name, mark, unmark) => this.props.actions.markTest(name, 'wises', mark, unmark)
           }}
           editMode={editMode}
+          errors={this.props.errors.wises}
           />
         <Traits
           traits={this.props.traits}
@@ -49,6 +50,10 @@ class StatsPage extends React.Component {
       </div>
     );
   }
+};
+
+StatsPage.defaultProps = {
+  errors: {},
 }
 
 export default StatsPage;

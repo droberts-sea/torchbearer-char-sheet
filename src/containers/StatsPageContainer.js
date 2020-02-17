@@ -10,19 +10,23 @@ import {
   editCharacterAddField,
   editCharacterRemoveField,
 } from '../actions';
+import validateEdits from '../derivers/character/validate_edits';
 
 const mapStateToProps = (state) => {
   let character = state.character;
+
   if (state.ui.editCharacter.editMode) {
     character = state.ui.editCharacter.character;
   }
+
   return {
     abilities: character.abilities,
     wises: character.wises,
     traits: character.traits,
     skills: character.skills,
     ui: state.ui,
-    character: character
+    character: character,
+    errors: validateEdits(state.ui.editCharacter.character),
   };
 };
 

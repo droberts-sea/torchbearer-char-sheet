@@ -1,4 +1,4 @@
-.editable-property-name {
+.editable-property-name-row {
   display: flex;
   align-items: center;
 }
@@ -14,4 +14,9 @@
   font-size: 1.2rem;
   /* font-weight: bold; */
   min-width: 2rem;
+}
+
+.editable-property-name .error-details {
+  margin-left: 1rem;
+  padding: .2rem;
 }

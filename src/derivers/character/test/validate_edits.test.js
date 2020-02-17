@@ -13,6 +13,11 @@ describe(validateEdits, () => {
     validateEdits(mockCharacter);
   });
 
+  it('returns undefined if given no character', () => {
+    const problems = validateEdits();
+    expect(problems).toBe(undefined);
+  })
+
   describe('wises', () => {
     it('marks empty wise names as invalid', () => {
       const wiseIndex = 1;

@@ -57,6 +57,19 @@ select, input {
   border: 1px solid black;
 }
 
+input.errors {
+  border: 1px solid #cc0000;
+  background-color: #fee;
+}
+
+.error-details {
+  color: #cc0000;
+}
+
+.error-details ::first-letter {
+  text-transform: capitalize;
+}
+
 .action-button {
   font-size: 1.5em;
   display: block;
