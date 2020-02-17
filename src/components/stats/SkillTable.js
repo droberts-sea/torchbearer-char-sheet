@@ -1,5 +1,6 @@
 import React from 'react';
 import EditableNumber from '../shared/EditableNumber';
+import ErrorRow from '../shared/ErrorRow';
 
 class SkillTable extends React.Component {
   advancementButton(name, mark, disabled) {
@@ -14,7 +15,7 @@ class SkillTable extends React.Component {
     );
   }
 
-  advancement(key, skill) {
+  advancement(key, skill, errors) {
     if (!skill.advancement) {
       return null;
     }
@@ -29,6 +30,7 @@ class SkillTable extends React.Component {
             value={skill.advancement.pass}
             editMode={this.props.editMode}
             onEdit={value => this.onSetProp(value, key, 'advancement', 'pass')}
+            errors={errors.pass}
           />
           {this.advancementButton(key, 'pass', disabled)}
         </td>
@@ -37,6 +39,7 @@ class SkillTable extends React.Component {
             value={skill.advancement.fail}
             editMode={this.props.editMode}
             onEdit={value => this.onSetProp(value, key, 'advancement', 'fail')}
+            errors={errors.fail}
           />
           {this.advancementButton(key, 'fail', disabled)}
         </td>
@@ -55,8 +58,10 @@ class SkillTable extends React.Component {
   }
 
   tableBody(skills, category) {
+    const allErrors = this.props.errors || {};
     return Object.keys(skills).map((key) => {
       const skill = skills[key];
+      const errors = allErrors[key] || {};
       if (!this.shouldShow(key, skill)) {
         return null;
       }
@@ -71,6 +76,7 @@ class SkillTable extends React.Component {
             min={skill.min}
             max={skill.max}
             className="rating"
+            errors={errors.rating}
           />
         )
       }
@@ -80,10 +86,11 @@ class SkillTable extends React.Component {
           <tr>
             <td>{skill.name}</td>
             <td>{rating}</td>
-            {this.advancement(key, skill)}
+            {this.advancement(key, skill, errors)}
             {this.extraCol(key, skill)}
           </tr>
           {this.extraRow(key, skill)}
+          <ErrorRow errors={errors} />
         </React.Fragment>
       );
     });

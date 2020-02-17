@@ -47,6 +47,7 @@ class StatsPage extends React.Component {
           onSkillCollapse={this.props.actions.skillCollapse}
           advancementDisabled={this.props.character.conditions.SICK}
           editMode={editMode}
+          errors={this.props.errors.skills}
           />
       </div>
     );
