@@ -1,0 +1,4 @@
+.error-row td:first-child {
+  text-overflow: initial;
+  white-space: normal;
+}

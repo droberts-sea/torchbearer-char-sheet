@@ -118,7 +118,7 @@ const validateAbilities = (abilities) => {
   validateRatings(abilities, nature.untaxed, errors);
 
   if (nature.rating > nature.untaxed) {
-    errors.add('NATURE', 'rating', "must be less than untaxed rating");
+    errors.add('NATURE', 'rating', "must be less than or equal to untaxed rating");
   }
 
   if (nature.untaxed < nature.min || nature.untaxed > nature.max) {
