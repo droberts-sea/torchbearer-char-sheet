@@ -26,11 +26,19 @@ exports[`renders with a trained skill selected 1`] = `
         label="Abilities"
       >
         <option
+          value="NATURE"
+        >
+          Nature
+           (
+          3
+          )
+        </option>
+        <option
           value="WILL"
         >
           Will
            (
-          3
+          5
           )
         </option>
         <option
@@ -38,15 +46,7 @@ exports[`renders with a trained skill selected 1`] = `
         >
           Health
            (
-          5
-          )
-        </option>
-        <option
-          value="NATURE"
-        >
-          Nature
-           (
-          4
+          3
           )
         </option>
         <option
@@ -62,7 +62,15 @@ exports[`renders with a trained skill selected 1`] = `
         >
           Circles
            (
-          2
+          4
+          )
+        </option>
+        <option
+          value="MIGHT"
+        >
+          Might
+           (
+          3
           )
         </option>
       </optgroup>
@@ -96,7 +104,7 @@ exports[`renders with a trained skill selected 1`] = `
             (
           W
            - 
-          3
+          5
           )
         </option>
       </optgroup>
@@ -132,11 +140,19 @@ exports[`renders with no skill selected 1`] = `
         label="Abilities"
       >
         <option
+          value="NATURE"
+        >
+          Nature
+           (
+          3
+          )
+        </option>
+        <option
           value="WILL"
         >
           Will
            (
-          3
+          5
           )
         </option>
         <option
@@ -144,15 +160,7 @@ exports[`renders with no skill selected 1`] = `
         >
           Health
            (
-          5
-          )
-        </option>
-        <option
-          value="NATURE"
-        >
-          Nature
-           (
-          4
+          3
           )
         </option>
         <option
@@ -168,7 +176,15 @@ exports[`renders with no skill selected 1`] = `
         >
           Circles
            (
-          2
+          4
+          )
+        </option>
+        <option
+          value="MIGHT"
+        >
+          Might
+           (
+          3
           )
         </option>
       </optgroup>
@@ -202,7 +218,7 @@ exports[`renders with no skill selected 1`] = `
             (
           W
            - 
-          3
+          5
           )
         </option>
       </optgroup>

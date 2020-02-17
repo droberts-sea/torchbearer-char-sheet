@@ -105,4 +105,23 @@ describe('skillReadyToAdvance', () => {
       expect(skillReadyToAdvance(skill, mockUntaxedNature, 'fail')).toBeTruthy();
     });
   });
+
+  it('Uses untaxed nature for the required number of tests for the NATURE ability', () => {
+    const nature = deepCopy(mockCharacter.abilities.NATURE);
+    nature.rating = 3;
+    nature.untaxed = 5;
+
+    nature.advancement.pass = 3;
+    nature.advancement.fail = 2;
+    expect(skillReadyToAdvance(nature, nature.untaxed)).toBeFalsy();
+
+    nature.advancement.pass = 5;
+    nature.advancement.fail = 4;
+    expect(skillReadyToAdvance(nature, nature.untaxed)).toBeTruthy();
+  });
+
+  it('Returns false for MIGHT', () => {
+    const might = deepCopy(mockCharacter.abilities.MIGHT);
+    expect(skillReadyToAdvance(might, mockUntaxedNature)).toBeFalsy();
+  })
 });

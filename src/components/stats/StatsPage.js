@@ -20,6 +20,7 @@ class StatsPage extends React.Component {
           }}
           advancementDisabled={this.props.character.conditions.SICK}
           editMode={editMode}
+          errors={this.props.errors.abilities}
           />
         <Wises
           wises={this.props.wises}

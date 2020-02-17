@@ -109,18 +109,18 @@ const editCharacter = (state = InitialEditCharacterState, action, savedCharacter
       return InitialEditCharacterState;
 
     case EDIT_CHARACTER_PROPERTY:
-      console.log("Editing property");
-      console.log(action.payload);
+      console.debug("Editing property");
+      console.debug(action.payload);
       return editCharacterProperty(state, action.payload.value, action.payload.path);
 
     case EDIT_CHARACTER_ADD_FIELD:
-      console.log("Adding field");
-      console.log(action.payload);
+      console.debug("Adding field");
+      console.debug(action.payload);
       return editCharacterAddField(state, action.payload.category);
 
     case EDIT_CHARACTER_REMOVE_FIELD:
-      console.log("Removing field");
-      console.log(action.payload);
+      console.debug("Removing field");
+      console.debug(action.payload);
       return editCharacterRemoveField(state, action.payload.category, action.payload.index);
 
     default:

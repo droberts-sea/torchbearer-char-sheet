@@ -3,6 +3,7 @@ import {
   InitialPoints,
   InitialTraits,
   InitialWises,
+  InitialAbilities,
 } from '../rules/initial_character';
 
 const character = {
@@ -32,30 +33,7 @@ const character = {
       min: 0, max: 6,
     }
   },
-  abilities: {
-    WILL: {
-      name: 'Will',
-      rating: 3
-    },
-    HEALTH: {
-      name: 'Health',
-      rating: 5
-    },
-    NATURE: {
-      name: 'Nature',
-      rating: 4,
-      untaxed: 5,
-      advancement: { pass: 0, fail: 0, },
-    },
-    RESOURCES: {
-      name: 'Resources',
-      rating: 3
-    },
-    CIRCLES: {
-      name: 'Circles',
-      rating: 2
-    }
-  },
+  abilities: InitialAbilities,
   conditions: {},
   traits: InitialTraits,
   wises: InitialWises,

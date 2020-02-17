@@ -5,11 +5,17 @@ export const skillReadyToAdvance = (skill, untaxedNature, mark) => {
   }
 
   if (skill.open) {
+    let threshold = skill.rating;
+    // Nature checks against the untaxed rating
+    if (Object.keys(skill).includes('untaxed')) {
+      threshold = skill.untaxed;
+    }
+
     // An ability or skill advances when you pass a number of tests equal to its current rating and fail a number of tests equal to one less than its rating. (pg 104)
     return (
       skill.rating < skill.max &&
-      advancement.pass >= skill.rating &&
-      advancement.fail >= skill.rating - 1
+      advancement.pass >= threshold &&
+      advancement.fail >= threshold - 1
     );
 
   } else {

@@ -147,4 +147,125 @@ describe(validateEdits, () => {
       expect(Object.keys(afterProblems.skills[skillName])).toContain('fail');
     });
   });
+
+  describe('abilities', () => {
+    it('marks rating invalid over max', () => {
+      const abilityName = 'WILL';
+      character.abilities[abilityName].rating = character.abilities[abilityName].max;
+      const beforeProblems = validateEdits(character);
+      expect(beforeProblems.abilities).toEqual({});
+
+      character.abilities[abilityName].rating = character.abilities[abilityName].max + 1;
+      const afterProblems = validateEdits(character);
+      expect(Object.keys(afterProblems.abilities)).toEqual([abilityName]);
+      expect(Object.keys(afterProblems.abilities[abilityName])).toContain('rating');
+    });
+
+    it('marks rating invalid under min', () => {
+      const abilityName = 'WILL';
+      character.abilities[abilityName].rating = character.abilities[abilityName].min;
+      const beforeProblems = validateEdits(character);
+      expect(beforeProblems.abilities).toEqual({});
+
+      character.abilities[abilityName].rating = character.abilities[abilityName].min - 1;
+      const afterProblems = validateEdits(character);
+      expect(Object.keys(afterProblems.abilities)).toEqual([abilityName]);
+      expect(Object.keys(afterProblems.abilities[abilityName])).toContain('rating');
+    });
+
+    it('marks pass invalid under 0', () => {
+      const abilityName = 'WILL';
+      character.abilities[abilityName].advancement.pass = 0;
+      const beforeProblems = validateEdits(character);
+      expect(beforeProblems.abilities).toEqual({});
+
+      character.abilities[abilityName].advancement.pass = -1;
+      const afterProblems = validateEdits(character);
+      expect(Object.keys(afterProblems.abilities)).toEqual([abilityName]);
+      expect(Object.keys(afterProblems.abilities[abilityName])).toContain('pass');
+    });
+
+    it('marks fail invalid under 0', () => {
+      const abilityName = 'WILL';
+      character.abilities[abilityName].advancement.fail = 0;
+      const beforeProblems = validateEdits(character);
+      expect(beforeProblems.abilities).toEqual({});
+
+      character.abilities[abilityName].advancement.fail = -1;
+      const afterProblems = validateEdits(character);
+      expect(Object.keys(afterProblems.abilities)).toEqual([abilityName]);
+      expect(Object.keys(afterProblems.abilities[abilityName])).toContain('fail');
+    });
+
+    it('marks pass + fail invalid if they would cause advancement', () => {
+      const abilityName = 'WILL';
+      const ability = character.abilities[abilityName];
+      ability.open = true;
+      ability.rating = 3;
+      ability.advancement.pass = 2;
+      ability.advancement.fail = 2;
+      expect(skillReadyToAdvance(ability)).toBeFalsy();
+
+      const beforeProblems = validateEdits(character);
+      expect(beforeProblems.abilities).toEqual({});
+
+      ability.advancement.pass = 3;
+      expect(skillReadyToAdvance(ability)).toBeTruthy();
+
+      const afterProblems = validateEdits(character);
+      expect(Object.keys(afterProblems.abilities)).toEqual([abilityName]);
+      expect(Object.keys(afterProblems.abilities[abilityName])).toContain('pass');
+      expect(Object.keys(afterProblems.abilities[abilityName])).toContain('fail');
+    });
+
+    describe('NATURE', () => {
+      it('marks rating invalid if greater than untaxed', () => {
+        const abilityName = 'NATURE';
+        character.abilities[abilityName].rating = character.abilities.NATURE.untaxed;
+        const beforeProblems = validateEdits(character);
+        expect(beforeProblems.abilities).toEqual({});
+
+        character.abilities[abilityName].rating = character.abilities.NATURE.untaxed + 1;
+        const afterProblems = validateEdits(character);
+        expect(Object.keys(afterProblems.abilities)).toEqual([abilityName]);
+        expect(Object.keys(afterProblems.abilities[abilityName])).toContain('rating');
+      });
+
+      it('marks rating invalid under 1', () => {
+        const abilityName = 'NATURE';
+        character.abilities[abilityName].rating = character.abilities[abilityName].min;
+        const beforeProblems = validateEdits(character);
+        expect(beforeProblems.abilities).toEqual({});
+  
+        character.abilities[abilityName].rating = character.abilities[abilityName].min - 1;
+        const afterProblems = validateEdits(character);
+        expect(Object.keys(afterProblems.abilities)).toEqual([abilityName]);
+        expect(Object.keys(afterProblems.abilities[abilityName])).toContain('rating');
+      });
+
+      it('marks untaxed invalid if greater than 7', () => {
+        const abilityName = 'NATURE';
+        character.abilities[abilityName].untaxed = 7;
+        const beforeProblems = validateEdits(character);
+        expect(beforeProblems.abilities).toEqual({});
+
+        character.abilities[abilityName].untaxed = 8;
+        const afterProblems = validateEdits(character);
+        expect(Object.keys(afterProblems.abilities)).toEqual([abilityName]);
+        expect(Object.keys(afterProblems.abilities[abilityName])).toContain('untaxed');
+      });
+
+      it('marks untaxed invalid under 0', () => {
+        const abilityName = 'NATURE';
+        character.abilities[abilityName].untaxed = 0;
+        const beforeProblems = validateEdits(character);
+        expect(beforeProblems.abilities[abilityName]).not.toContain('untaxed');
+  
+        character.abilities[abilityName].untaxed = -1;
+        const afterProblems = validateEdits(character);
+        expect(Object.keys(afterProblems.abilities)).toEqual([abilityName]);
+        expect(Object.keys(afterProblems.abilities[abilityName])).toContain('untaxed');
+      });
+    });
+  });
 });

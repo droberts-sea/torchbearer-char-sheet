@@ -58,7 +58,7 @@ const validateNames = (items, errors) => {
 
 const validateWises = (wises) => {
   const errors = new ValidationErrors();
-  
+
   validateNames(wises, errors);
 
   return errors;
@@ -66,7 +66,7 @@ const validateWises = (wises) => {
 
 const validateTraits = (traits) => {
   const errors = new ValidationErrors();
-  
+
   validateNames(traits, errors);
 
   traits.forEach((trait, index) => {
@@ -78,29 +78,52 @@ const validateTraits = (traits) => {
   return errors;
 };
 
-const validateSkills = (skills, character) => {
-  const errors = new ValidationErrors();
-
-  // console.log(skills);
+const validateRatings = (skills, untaxedNature, errors) => {
   Object.keys(skills).forEach((skillName) => {
     const skill = skills[skillName];
     if (skill.rating > skill.max || skill.rating < skill.min) {
       errors.add(skillName, 'rating', `must be between ${skill.min} and ${skill.max}`);
     }
 
-    if (skill.advancement.pass < 0) {
-      errors.add(skillName, 'pass', "must be greater than 0");
-    }
+    // MIGHT doesn't track advancement
+    if (skill.advancement) {
+      if (skill.advancement.pass < 0) {
+        errors.add(skillName, 'pass', "must be greater than 0");
+      }
 
-    if (skill.advancement.fail < 0) {
-      errors.add(skillName, 'fail', "must be greater than 0");
-    }
+      if (skill.advancement.fail < 0) {
+        errors.add(skillName, 'fail', "must be greater than 0");
+      }
 
-    if (skillReadyToAdvance(skill, character.abilities.NATURE.untaxed)) {
-      errors.add(skillName, 'pass', "skill would advance");
-      errors.add(skillName, 'fail', "skill would advance");
+      if (skillReadyToAdvance(skill, untaxedNature)) {
+        errors.add(skillName, 'pass', "skill would advance");
+        errors.add(skillName, 'fail', "skill would advance");
+      }
     }
   });
+};
+
+const validateSkills = (skills, character) => {
+  const errors = new ValidationErrors();
+
+  validateRatings(skills, character.abilities.NATURE.untaxed, errors);
+
+  return errors;
+}
+
+const validateAbilities = (abilities) => {
+  const errors = new ValidationErrors();
+  const nature = abilities.NATURE;
+
+  validateRatings(abilities, nature.untaxed, errors);
+
+  if (nature.rating > nature.untaxed) {
+    errors.add('NATURE', 'rating', "must be less than untaxed rating");
+  }
+
+  if (nature.untaxed < nature.min || nature.untaxed > nature.max) {
+    errors.add('NATURE', 'untaxed', `must be between ${nature.min} and ${nature.max}`);
+  }
 
   return errors;
 }
@@ -111,6 +134,7 @@ const validateEdits = (character) => {
   }
 
   return {
+    abilities: validateAbilities(character.abilities),
     skills: validateSkills(character.skills, character),
     traits: validateTraits(character.traits),
     wises: validateWises(character.wises),

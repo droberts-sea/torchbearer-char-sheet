@@ -33,7 +33,6 @@ export const tbCharApp = function(state={}, action) {
     character: character(state.character, action),
     roll: roll(state.roll, action, state.character)
   };
-  console.log(state.character.skills);
 
   return state;
 };
