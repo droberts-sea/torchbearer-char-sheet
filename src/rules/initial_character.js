@@ -90,26 +90,29 @@ export const InitialPoints = Object.freeze({
   }
 });
 
-export const InitialSkills = Object.freeze(
-  Object.keys(SkillRules).map((name) => {
-    const display_name = name.split('_').map((word) => {
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    }).join(' ');
-    return {
-      beginnersLuck: SkillRules[name].beginnersLuck,
-      name: display_name,
-      internalName: name,
-      rating: 0,
-      min: 0,
-      max: 6, // Skills are rated from 1 to 6 (pg 13)
-      advancement: {
-        pass: 0,
-        fail: 0
-      },
-      open: false // Skill rating can be 0 but still open
-    };
-  })
-);
+const InitialSkills = {};
+
+Object.keys(SkillRules).forEach(name => {
+  const display_name = name.split('_').map((word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }).join(' ');
+  InitialSkills[name] = {
+    beginnersLuck: SkillRules[name].beginnersLuck,
+    name: display_name,
+    internalName: name,
+    rating: 0,
+    min: 0,
+    max: 6, // Skills are rated from 1 to 6 (pg 13)
+    advancement: {
+      pass: 0,
+      fail: 0
+    },
+    open: false // Skill rating can be 0 but still open
+  };
+});
+
+const frozenSkills = Object.freeze(InitialSkills)
+export { frozenSkills as InitialSkills};
 
 export const InitialTraits = Object.freeze([
   newTrait(0, 'Firey'),

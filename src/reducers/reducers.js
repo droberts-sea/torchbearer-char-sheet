@@ -28,9 +28,12 @@ const character = function(state={}, action) {
 
 export const tbCharApp = function(state={}, action) {
   console.log(action.type);
-  return {
+  state = {
     ui: ui(state.ui, action, state.character),
     character: character(state.character, action),
     roll: roll(state.roll, action, state.character)
-  }
+  };
+  console.log(state.character.skills);
+
+  return state;
 };
