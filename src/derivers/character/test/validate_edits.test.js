@@ -236,7 +236,7 @@ describe(validateEdits, () => {
         character.abilities[abilityName].rating = character.abilities[abilityName].min;
         const beforeProblems = validateEdits(character);
         expect(beforeProblems.abilities).toEqual({});
-  
+
         character.abilities[abilityName].rating = character.abilities[abilityName].min - 1;
         const afterProblems = validateEdits(character);
         expect(Object.keys(afterProblems.abilities)).toEqual([abilityName]);
@@ -260,11 +260,31 @@ describe(validateEdits, () => {
         character.abilities[abilityName].untaxed = 0;
         const beforeProblems = validateEdits(character);
         expect(beforeProblems.abilities[abilityName]).not.toContain('untaxed');
-  
+
         character.abilities[abilityName].untaxed = -1;
         const afterProblems = validateEdits(character);
         expect(Object.keys(afterProblems.abilities)).toEqual([abilityName]);
         expect(Object.keys(afterProblems.abilities[abilityName])).toContain('untaxed');
+      });
+
+      it('marks empty descriptors as invalid', () => {
+        const descriptorIndex = 1;
+        character.abilities.NATURE.descriptors[descriptorIndex] = '';
+
+        const problems = validateEdits(character);
+        expect(Object.keys(problems.abilities)).toContain('NATURE');
+        expect(Object.keys(problems.abilities.NATURE)).toContain(`descriptor-${descriptorIndex}`);
+      });
+
+      it('marks duplicate descriptors as invalid', () => {
+        const descriptorName = 'duplicate';
+        character.abilities.NATURE.descriptors[0] = descriptorName;
+        character.abilities.NATURE.descriptors[1] = descriptorName;
+
+        const problems = validateEdits(character);
+        expect(Object.keys(problems.abilities)).toContain('NATURE');
+        expect(Object.keys(problems.abilities.NATURE)).toContain('descriptor-0');
+        expect(Object.keys(problems.abilities.NATURE)).toContain('descriptor-1');
       });
     });
   });

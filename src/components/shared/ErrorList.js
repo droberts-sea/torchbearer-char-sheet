@@ -9,7 +9,7 @@ const ErrorList = ({ errors }) => {
   const problems = [];
   Object.keys(errors).forEach(field => {
     errors[field].forEach(problem => {
-      problems.push(`${field}: ${problem}`);
+      problems.push(`${field.replace('-', ' ')}: ${problem}`);
     });
   });
 

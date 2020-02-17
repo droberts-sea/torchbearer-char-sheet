@@ -4,20 +4,29 @@ import EditableNumber from '../shared/EditableNumber';
 
 class Abilities extends SkillTable {
   natureDescriptors(nature) {
+    const errors = this.props.errors.NATURE || {};
     let contents;
     if (this.props.editMode) {
       contents = (
         <div className="edit-nature-descriptors">
           {
-            nature.descriptors.map((desc, i) => (
-              <input key={`nd_${i}`}
-                type="text"
-                value={desc}
-                onChange={(e =>
-                  this.props.actions.editCharacterProperty(e.target.value, 'NATURE', 'descriptors', i)
-                )}
-              />
-            ))
+            nature.descriptors.map((desc, i) => {
+              let className = '';
+              const errorField = `descriptor-${i}`;
+              if (errors[errorField]) {
+                className = 'errors'
+              }
+              return (
+                <input key={`nd_${i}`}
+                  className={className}
+                  type="text"
+                  value={desc}
+                  onChange={(e =>
+                    this.props.actions.editCharacterProperty(e.target.value, 'NATURE', 'descriptors', i)
+                  )}
+                />
+              );
+            })
           }
         </div>
       );

@@ -111,11 +111,37 @@ const validateSkills = (skills, character) => {
   return errors;
 }
 
+// Blegh this is just different enough from validateNames that I couldn't merge them
+const validateNameList = (names, errors, errorKey, fieldPrefix) => {
+  const uniqueNames = {};
+
+  names.forEach((name, index) => {
+    if (!name || name === '') {
+      errors.add(errorKey, `${fieldPrefix}-${index}`, "can't be blank");
+    }
+
+    if (uniqueNames[name]) {
+      uniqueNames[name].push(index);
+    } else {
+      uniqueNames[name] = [index];
+    }
+  });
+
+  Object.keys(uniqueNames).forEach(name => {
+    if (uniqueNames[name].length > 1) {
+      uniqueNames[name].forEach(index => {
+        errors.add(errorKey, `${fieldPrefix}-${index}`, "must be unique");
+      });
+    }
+  });
+}
+
 const validateAbilities = (abilities) => {
   const errors = new ValidationErrors();
   const nature = abilities.NATURE;
 
   validateRatings(abilities, nature.untaxed, errors);
+  validateNameList(nature.descriptors, errors, 'NATURE', 'descriptor');
 
   if (nature.rating > nature.untaxed) {
     errors.add('NATURE', 'rating', "must be less than or equal to untaxed rating");
