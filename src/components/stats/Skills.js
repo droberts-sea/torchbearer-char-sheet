@@ -28,7 +28,7 @@ class Skills extends SkillTable {
         return isOpen;
 
       case SKILL_DISPLAY_OPTIONS.CORE:
-        const rule = SkillRules[skill.internalName];
+        const rule = SkillRules[key];
         return isOpen || (rule && rule.isCore);
 
       case SKILL_DISPLAY_OPTIONS.ALL:

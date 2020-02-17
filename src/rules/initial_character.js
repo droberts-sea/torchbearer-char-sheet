@@ -99,7 +99,6 @@ Object.keys(SkillRules).forEach(name => {
   InitialSkills[name] = {
     beginnersLuck: SkillRules[name].beginnersLuck,
     name: display_name,
-    internalName: name,
     rating: 0,
     min: 0,
     max: 6, // Skills are rated from 1 to 6 (pg 13)
