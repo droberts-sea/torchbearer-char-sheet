@@ -18,7 +18,7 @@ const character = {
     FIGHTER: {
       name: 'Fighter',
       beginnersLuck: 'HEALTH',
-      rating: 0,
+      rating: 4,
       open: true,
       advancement: { pass: 0, fail: 0, },
       min: 0, max: 6,

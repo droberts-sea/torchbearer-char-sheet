@@ -2,6 +2,7 @@ import validateEdits from '../validate_edits';
 
 import mockCharacter from '../../../mock/character';
 import { deepCopy } from '../../../mock/util';
+import { skillReadyToAdvance } from '../../../rules/skills';
 
 describe(validateEdits, () => {
   let character;
@@ -73,6 +74,77 @@ describe(validateEdits, () => {
       const problems = validateEdits(character);
       expect(Object.keys(problems.traits)).toEqual(['0']);
       expect(Object.keys(problems.traits[0])).toContain('level');
+    });
+  });
+
+  describe('skills', () => {
+    it('marks rating invalid over max', () => {
+      const skillName = 'ALCHEMIST';
+      character.skills[skillName].rating = character.skills[skillName].max;
+      const beforeProblems = validateEdits(character);
+      expect(beforeProblems.skills).toEqual({});
+
+      character.skills[skillName].rating = character.skills[skillName].max + 1;
+      const afterProblems = validateEdits(character);
+      expect(Object.keys(afterProblems.skills)).toEqual([skillName]);
+      expect(Object.keys(afterProblems.skills[skillName])).toContain('rating');
+    });
+
+    it('marks rating invalid under min', () => {
+      const skillName = 'ALCHEMIST';
+      character.skills[skillName].rating = character.skills[skillName].min;
+      const beforeProblems = validateEdits(character);
+      expect(beforeProblems.skills).toEqual({});
+
+      character.skills[skillName].rating = character.skills[skillName].min - 1;
+      const afterProblems = validateEdits(character);
+      expect(Object.keys(afterProblems.skills)).toEqual([skillName]);
+      expect(Object.keys(afterProblems.skills[skillName])).toContain('rating');
+    });
+
+    it('marks pass invalid under 0', () => {
+      const skillName = 'ALCHEMIST';
+      character.skills[skillName].advancement.pass = 0;
+      const beforeProblems = validateEdits(character);
+      expect(beforeProblems.skills).toEqual({});
+
+      character.skills[skillName].advancement.pass = -1;
+      const afterProblems = validateEdits(character);
+      expect(Object.keys(afterProblems.skills)).toEqual([skillName]);
+      expect(Object.keys(afterProblems.skills[skillName])).toContain('pass');
+    });
+
+    it('marks fail invalid under 0', () => {
+      const skillName = 'ALCHEMIST';
+      character.skills[skillName].advancement.fail = 0;
+      const beforeProblems = validateEdits(character);
+      expect(beforeProblems.skills).toEqual({});
+
+      character.skills[skillName].advancement.fail = -1;
+      const afterProblems = validateEdits(character);
+      expect(Object.keys(afterProblems.skills)).toEqual([skillName]);
+      expect(Object.keys(afterProblems.skills[skillName])).toContain('fail');
+    });
+
+    it('marks pass + fail invalid if they would cause advancement', () => {
+      const skillName = 'ALCHEMIST';
+      const skill = character.skills[skillName];
+      skill.open = true;
+      skill.rating = 3;
+      skill.advancement.pass = 2;
+      skill.advancement.fail = 2;
+      expect(skillReadyToAdvance(skill)).toBeFalsy();
+
+      const beforeProblems = validateEdits(character);
+      expect(beforeProblems.skills).toEqual({});
+
+      skill.advancement.pass = 3;
+      expect(skillReadyToAdvance(skill)).toBeTruthy();
+
+      const afterProblems = validateEdits(character);
+      expect(Object.keys(afterProblems.skills)).toEqual([skillName]);
+      expect(Object.keys(afterProblems.skills[skillName])).toContain('pass');
+      expect(Object.keys(afterProblems.skills[skillName])).toContain('fail');
     });
   });
 });

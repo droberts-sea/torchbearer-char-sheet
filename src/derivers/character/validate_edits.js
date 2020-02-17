@@ -1,3 +1,5 @@
+import { skillReadyToAdvance } from "../../rules/skills";
+
 // FORMAT
 // problems = {
 //   wises: {
@@ -76,12 +78,40 @@ const validateTraits = (traits) => {
   return errors;
 };
 
+const validateSkills = (skills, character) => {
+  const errors = new ValidationErrors();
+
+  // console.log(skills);
+  Object.keys(skills).forEach((skillName) => {
+    const skill = skills[skillName];
+    if (skill.rating > skill.max || skill.rating < skill.min) {
+      errors.add(skillName, 'rating', `must be between ${skill.min} and ${skill.max}`);
+    }
+
+    if (skill.advancement.pass < 0) {
+      errors.add(skillName, 'pass', "must be greater than 0");
+    }
+
+    if (skill.advancement.fail < 0) {
+      errors.add(skillName, 'fail', "must be greater than 0");
+    }
+
+    if (skillReadyToAdvance(skill, character.abilities.NATURE.untaxed)) {
+      errors.add(skillName, 'pass', "skill would advance");
+      errors.add(skillName, 'fail', "skill would advance");
+    }
+  });
+
+  return errors;
+}
+
 const validateEdits = (character) => {
   if (!character) {
     return undefined;
   }
 
   return {
+    skills: validateSkills(character.skills, character),
     traits: validateTraits(character.traits),
     wises: validateWises(character.wises),
   };

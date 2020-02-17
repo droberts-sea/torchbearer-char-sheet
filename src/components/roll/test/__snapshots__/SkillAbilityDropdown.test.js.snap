@@ -74,7 +74,7 @@ exports[`renders with a trained skill selected 1`] = `
         >
           Fighter
            (
-          0
+          4
           )
         </option>
         <option
@@ -180,7 +180,7 @@ exports[`renders with no skill selected 1`] = `
         >
           Fighter
            (
-          0
+          4
           )
         </option>
         <option
