@@ -30,19 +30,18 @@ class ValidationErrors {
   }
 }
 
-const validateWises = (wises) => {
-  const errors = new ValidationErrors();
+const validateNames = (items, errors) => {
   const names = {};
 
-  wises.forEach((wise, index) => {
-    if (!wise.name || wise.name === '') {
+  items.forEach((item, index) => {
+    if (!item.name || item.name === '') {
       errors.add(index, 'name', "name can't be blank");
     }
 
-    if (names[wise.name]) {
-      names[wise.name].push(index);
+    if (names[item.name]) {
+      names[item.name].push(index);
     } else {
-      names[wise.name] = [index];
+      names[item.name] = [index];
     }
   });
 
@@ -53,10 +52,23 @@ const validateWises = (wises) => {
       });
     }
   });
+};
+
+const validateWises = (wises) => {
+  const errors = new ValidationErrors();
+  
+  validateNames(wises, errors);
 
   return errors;
-}
+};
 
+const validateTraits = (traits) => {
+  const errors = new ValidationErrors();
+  
+  validateNames(traits, errors);
+
+  return errors;
+};
 
 const validateEdits = (character) => {
   if (!character) {
@@ -64,6 +76,7 @@ const validateEdits = (character) => {
   }
 
   return {
+    traits: validateTraits(character.traits),
     wises: validateWises(character.wises),
   };
 }
