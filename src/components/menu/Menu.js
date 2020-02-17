@@ -1,8 +1,11 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
+import _ from 'underscore';
+
 import './styles/Menu.css';
 import Control from '../shared/Control';
+import validateEdits from '../../derivers/character/validate_edits';
 
 const writeToClipboard = (content) => {
   navigator.clipboard.writeText(content).then(() => {
@@ -40,6 +43,15 @@ class Menu extends React.Component {
 
     const characterString = JSON.stringify(character)
 
+    let errorSections = [];
+
+    if (ui.editCharacter.editMode) {
+      const errors = validateEdits(ui.editCharacter.character);
+      errorSections = Object.keys(errors).filter(
+        section => !_.isEmpty(errors[section])
+      );
+    }
+
     let editKnob;
 
     if (ui.editCharacter.editMode) {
@@ -47,6 +59,7 @@ class Menu extends React.Component {
         <div className="knob">
           <button
             onClick={() => actions.editCharacterCommit(ui.editCharacter.character)}
+            disabled={errorSections.length > 0}
           >Commit edits</button>
           <button onClick={actions.editCharacterRevert}>Revert edits</button>
         </div>
@@ -56,6 +69,21 @@ class Menu extends React.Component {
         <div className="knob">
           <button onClick={actions.editCharacterBegin}>Enter edit mode</button>
         </div>
+      );
+    }
+
+    let editSubtext = "This lets you change things like the names and numbers of wises and traits, and the rating of skills and abilities. Normal controls are disabled while in edit mode. You'll need to come back here to either commit or revert your changes.";
+    if (ui.editCharacter.editMode && errorSections.length > 0) {
+      editSubtext = (
+        <>
+          <p>{editSubtext}</p>
+          <p className='error-details'>
+            Before committing changes, please resolve the issues with the following sections:
+          </p>
+          <ul className='error-details'>
+            {errorSections.map(section => <li>{section}</li>)}
+          </ul>
+        </>
       );
     }
 
@@ -73,7 +101,7 @@ class Menu extends React.Component {
             <Control
               name="Edit Character"
               knob={editKnob}
-              subtext="This lets you change things like the names and numbers of wises and traits, and the rating of skills and abilities. Normal controls are disabled while in edit mode. You'll need to come back here to either commit or revert your changes."
+              subtext={editSubtext}
             />
             <Control
               name="Export Character"

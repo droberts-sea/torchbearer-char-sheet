@@ -70,6 +70,11 @@ input.errors {
   text-transform: capitalize;
 }
 
+.error-details ul, ul.error-details{
+  margin-left: 1rem;
+  padding: .2rem;
+}
+
 .action-button {
   font-size: 1.5em;
   display: block;
