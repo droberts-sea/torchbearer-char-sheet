@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
     skills: character.skills,
     ui: state.ui,
     character: character,
-    errors: validateEdits(state.ui.editCharacter.character),
+    errors: validateEdits(character),
   };
 };
 

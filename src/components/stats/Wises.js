@@ -5,6 +5,7 @@ import Checkbox from '../shared/Checkbox';
 import EditablePropertyName from '../shared/EditablePropertyName';
 
 import './styles/Wises.css';
+import ErrorRow from '../shared/ErrorRow';
 
 const wiseChekbox = (wise, mark, markTest) => {
   return (
@@ -24,19 +25,23 @@ const buildWise = (wise, index, actions, editMode, errors = {}) => {
       mark => wiseChekbox(wise, mark, actions.markTest)
     );
   }
+
   return (
-    <tr key={`wise_${wise.id}`}>
-      <td>
-        <EditablePropertyName
-          name={wise.name}
-          editMode={editMode}
-          onEdit={(value) => actions.editCharacterProperty(value, 'wises', index, 'name')}
-          onRemove={() => actions.editCharacterRemoveField('wises', index)}
-          errors={errors.name}
-        />
-      </td>
-      {checkboxes}
-    </tr>
+    <React.Fragment key={`wise_${wise.id}`}>
+      <tr key={`wise_${wise.id}_info`}>
+        <td>
+          <EditablePropertyName
+            name={wise.name}
+            editMode={editMode}
+            onEdit={(value) => actions.editCharacterProperty(value, 'wises', index, 'name')}
+            onRemove={() => actions.editCharacterRemoveField('wises', index)}
+            errors={errors.name}
+          />
+        </td>
+        {checkboxes}
+      </tr>
+      <ErrorRow errors={errors} reactKey={`wise_${wise.id}_errors`} />
+    </React.Fragment>
   );
 }
 

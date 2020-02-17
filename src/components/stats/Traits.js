@@ -3,6 +3,7 @@ import React from 'react';
 import Checkbox from '../shared/Checkbox';
 import EditableNumber from '../shared/EditableNumber';
 import EditablePropertyName from '../shared/EditablePropertyName';
+import ErrorRow from '../shared/ErrorRow';
 
 const UseCheckboxes = ({ trait, markTrait }) => {
   if (trait.level === 1 || trait.level === 2) {
@@ -39,28 +40,39 @@ class Traits extends React.Component {
       );
     }
 
+    const errors = this.props.errors[index] || {};
+
     return (
-      <tr key={`trait_${trait.id}`}>
-        <td>
-          <EditablePropertyName
-            name={trait.name}
-            editMode={this.props.editMode}
-            onEdit={(value) => this.props.actions.editCharacterProperty(value, 'traits', index, 'name')}
-            onRemove={() => this.props.actions.editCharacterRemoveField('traits', index)}
-          />
-        </td>
-        <td>
-          <EditableNumber
-            value={trait.level}
-            editMode={this.props.editMode}
-            onEdit={(value) => this.props.actions.editCharacterProperty(value, 'traits', index, 'level')}
-            min="1"
-            max="3"
-          />
-        </td>
-        {uses}
-      </tr>
+      <React.Fragment key={`trait_${trait.id}`}>
+        <tr key={`trait_${trait.id}_info`}>
+          <td>
+            <EditablePropertyName
+              name={trait.name}
+              editMode={this.props.editMode}
+              onEdit={(value) => this.props.actions.editCharacterProperty(value, 'traits', index, 'name')}
+              onRemove={() => this.props.actions.editCharacterRemoveField('traits', index)}
+              errors={errors.name}
+            />
+          </td>
+          <td>
+            <EditableNumber
+              value={trait.level}
+              editMode={this.props.editMode}
+              onEdit={(value) => this.props.actions.editCharacterProperty(value, 'traits', index, 'level')}
+              min="1"
+              max="3"
+              errors={errors.level}
+            />
+          </td>
+          {uses}
+        </tr>
+        <ErrorRow errors={errors} reactKey={`trait_${trait.id}_errors`} />
+      </React.Fragment>
     );
+  }
+
+  static defaultProps = {
+    errors: {},
   }
 
   render() {
@@ -96,5 +108,6 @@ class Traits extends React.Component {
     );
   }
 }
+
 
 export default Traits;

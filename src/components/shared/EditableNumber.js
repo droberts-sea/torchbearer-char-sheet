@@ -2,13 +2,13 @@ import React from 'react';
 
 // import './styles/EditableNumber.css';
 
-const EditableNumber = ({ value, editMode, onEdit, min=0, max=9, className }) => {
+const EditableNumber = ({ value, editMode, onEdit, min=0, max=9, className, errors }) => {
   if (editMode) {
     className += ' editable-number'
     return (
       <div className={className}>
         <input
-          className="number"
+          className={"number" + (errors ? ' errors' : '')}
           type="number"
           value={value == undefined ? "" : value} // eslint-disable-line eqeqeq
           onChange={(e) => {

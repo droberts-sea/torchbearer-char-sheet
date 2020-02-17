@@ -35,7 +35,7 @@ const validateNames = (items, errors) => {
 
   items.forEach((item, index) => {
     if (!item.name || item.name === '') {
-      errors.add(index, 'name', "name can't be blank");
+      errors.add(index, 'name', "can't be blank");
     }
 
     if (names[item.name]) {
@@ -48,7 +48,7 @@ const validateNames = (items, errors) => {
   Object.keys(names).forEach(name => {
     if (names[name].length > 1) {
       names[name].forEach(index => {
-        errors.add(index, 'name', "duplicate name");
+        errors.add(index, 'name', "must be unique");
       });
     }
   });
@@ -69,7 +69,7 @@ const validateTraits = (traits) => {
 
   traits.forEach((trait, index) => {
     if (trait.level < 1 || trait.level > 3) {
-      errors.add(index, 'level', "level must be between 1 and 3");
+      errors.add(index, 'level', "must be between 1 and 3");
     }
   });
 

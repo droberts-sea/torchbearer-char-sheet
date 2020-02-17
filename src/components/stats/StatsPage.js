@@ -34,6 +34,7 @@ class StatsPage extends React.Component {
           traits={this.props.traits}
           actions={this.props.actions}
           editMode={editMode}
+          errors={this.props.errors.traits}
           />
         <Skills
           skills={this.props.skills}
