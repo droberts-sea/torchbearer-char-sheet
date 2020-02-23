@@ -52,7 +52,7 @@ button {
   text-transform: capitalize;
 }
 
-select, input {
+select, input, textarea {
   font-size: 1em;
   border: 1px solid black;
 }

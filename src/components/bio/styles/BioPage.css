@@ -1,0 +1,18 @@
+.bio-page {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1em;
+  font-size: 1.2em;
+}
+
+.bio-page .block {
+  grid-column: 1 / span 2;
+}
+
+.bio-page h3 {
+  text-transform: capitalize;
+}
+
+.bio-page * {
+  margin: .3em 0;
+}

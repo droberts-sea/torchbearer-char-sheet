@@ -1,0 +1,27 @@
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+// TODO: Import child component(s) here
+// import {{pascalCase name}} from '../components/...';
+
+import {
+} from '../actions';
+
+const mapStateToProps = (state) => {
+  return {
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({
+    }, dispatch)
+  };
+};
+
+const {{pascalCase name}}Container = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)({{pascalCase name}});
+
+export default {{pascalCase name}}Container;

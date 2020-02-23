@@ -4,6 +4,7 @@ import { Tabs } from './actions';
 import './App.css';
 
 import TabRowContainer from './containers/TabRowContainer';
+import BioPageContainer from './containers/BioPageContainer';
 import StatsPageContainer from './containers/StatsPageContainer';
 import InfoPageContainer from './containers/InfoPageContainer';
 import RollPageContainer from './containers/RollPageContainer';
@@ -25,6 +26,10 @@ const mapDispatchToProps = (dispatch) => {
 const App = ({ ui }) => {
   let page = null;
   switch (ui.currentTab) {
+    case Tabs.BIO:
+      page = (<BioPageContainer />);
+      break;
+      
     case Tabs.STATS:
       page = (<StatsPageContainer />);
       break;
