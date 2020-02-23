@@ -13,7 +13,12 @@ class GatherInfo extends React.Component {
     const properties = [
       {
         name: 'inNature',
-        text: "Within Nature"
+        text: "Within Nature",
+        subtext: (
+          <span className="nature-descriptors">
+            {this.props.character.abilities.NATURE.descriptors.join(', ')}
+          </span>
+        ),
       },
       {
         name: 'isVersus',
@@ -37,7 +42,8 @@ class GatherInfo extends React.Component {
         name={prop.text}
         active={this.props.info[prop.name]}
         onToggle={(value) => this.props.onSetProperty(prop.name, value)}
-        />
+        subtext={prop.subtext}
+      />
     ));
   }
   render() {
@@ -48,12 +54,12 @@ class GatherInfo extends React.Component {
           value={this.props.info.ob}
           min={0}
           onValueChange={(ob) => this.props.onSetProperty('ob', ob)}
-          />
+        />
         <SkillAbilityDropdown
           character={this.props.character}
           current={this.props.info.skill}
           onSelectSkill={(skill) => this.props.onSetProperty('skill', skill)}
-          />
+        />
         {this.propertyToggles()}
       </ul>
     );
