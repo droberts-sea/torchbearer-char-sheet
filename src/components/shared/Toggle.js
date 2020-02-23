@@ -37,7 +37,7 @@ Toggle.propTypes = {
   name: PropTypes.string.isRequired,
   active: PropTypes.bool.isRequired,
   test: PropTypes.object,
-  subtext: PropTypes.string,
+  subtext: PropTypes.node,
   onToggle: PropTypes.func.isRequired,
   disabled: PropTypes.bool
 };
