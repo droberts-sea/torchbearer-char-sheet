@@ -72,6 +72,18 @@ describe('skillReadyToAdvance', () => {
       skill.max = 3;
       expect(skillReadyToAdvance(skill, mockUntaxedNature)).toBeFalsy();
     });
+
+    it("requires at least one test for a skill with rating 0", () => {
+      skill.open = true;
+      skill.rating = 0;
+      skill.advancement.pass = 0;
+      skill.advancement.fail = 0;
+
+      expect(skillReadyToAdvance(skill, mockUntaxedNature)).toBeFalsy();
+
+      skill.advancement.pass = 1;
+      expect(skillReadyToAdvance(skill, mockUntaxedNature)).toBeTruthy();
+    });
   });
 
   describe('New skills', () => {

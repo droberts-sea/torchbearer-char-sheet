@@ -11,6 +11,11 @@ export const skillReadyToAdvance = (skill, untaxedNature, mark) => {
       threshold = skill.untaxed;
     }
 
+    // You always need at least one check to advance
+    if (threshold === 0) {
+      threshold = 1;
+    }
+
     // An ability or skill advances when you pass a number of tests equal to its current rating and fail a number of tests equal to one less than its rating. (pg 104)
     return (
       skill.rating < skill.max &&

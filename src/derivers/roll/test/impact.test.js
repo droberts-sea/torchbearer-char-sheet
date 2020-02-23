@@ -306,6 +306,7 @@ describe('resources', () => {
 
       const skill = character.skills[skillName]
       skill.open = true;
+      skill.rating = 3;
       skill.advancement.pass = skill.rating - 1;
       skill.advancement.fail = skill.rating - 1;
       postRoll.outcome = 'pass';
