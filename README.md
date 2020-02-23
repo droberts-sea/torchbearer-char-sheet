@@ -24,38 +24,39 @@ Roughly in order of importance
 
 _MVP_
 
-- Roll page (half finished)
-  - [] Dice math for opposed rolls
+- [x] Roll page
   - [x] Actually do the roll
   - [x] React / reroll
-  - [] Feed results back into character sheet after roll
+  - [x] Feed results back into character sheet after roll
     - [x] Calculate impact
     - [x] Show impact to user
-    - [] Apply impact to character
+    - [x] Apply impact to character
   - [x] Cancel button
-- Character creation / input
-- Edit mode for a character (possibly same as ^^)
-- Character saved (local)
-- End of session (reset traits, other per-session resources)
+- [x] Edit mode for a character (possibly same as ^^)
+- [x] Character saved (local)
 
 _Post-MVP_
 
+- [ ] Bio page
+- [ ] Gear page
+- [ ] Session end / start
+- [ ] Camp
+- [ ] Town
+- [ ] Class features
+  - [ ] Leveling
+  - [ ] Magic
+- [ ] Dice math for opposed rolls
+- End of session (reset traits, other per-session resources)
+- Character creation / input
 - Character saved (cloud)
 - Undo / redo (less important with edit mode)
-- Bio page
-- Gear page
-- Session end / start
-- Camp
-- Town
-- Leveling
-- Class features
 - Multiple characters
 - Hamburger menu
   - About
   - Log in
   - Switch characters
   - Join game?
-  - Export / import character as JSON
+  - [x] Export / import character as JSON
 - Join game with others in party
   - Be able to contribute to rolls and have things update
   - GM view?
