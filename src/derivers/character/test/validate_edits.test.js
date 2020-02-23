@@ -303,5 +303,18 @@ describe(validateEdits, () => {
         expect(Object.keys(afterProblems.points[catName])).toContain('available');
       });
     });
+
+    it('marks spent below 0 as invalid', () => {
+      const beforeProblems = validateEdits(character);
+      expect(beforeProblems.points).toEqual({});
+
+      Object.keys(PointCategories).forEach(category => {
+        const catName = PointCategories[category];
+        character.points[catName].spent = -1;
+        const afterProblems = validateEdits(character);
+        expect(Object.keys(afterProblems.points)).toContain(catName);
+        expect(Object.keys(afterProblems.points[catName])).toContain('spent');
+      });
+    });
   });
 });
