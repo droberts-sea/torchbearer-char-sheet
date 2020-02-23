@@ -3,6 +3,7 @@ import validateEdits from '../validate_edits';
 import mockCharacter from '../../../mock/character';
 import { deepCopy } from '../../../mock/util';
 import { skillReadyToAdvance } from '../../../rules/skills';
+import { PointCategories } from '../../../actions';
 
 describe(validateEdits, () => {
   let character;
@@ -285,6 +286,21 @@ describe(validateEdits, () => {
         expect(Object.keys(problems.abilities)).toContain('NATURE');
         expect(Object.keys(problems.abilities.NATURE)).toContain('descriptor-0');
         expect(Object.keys(problems.abilities.NATURE)).toContain('descriptor-1');
+      });
+    });
+  });
+
+  describe('points', () => {
+    it('marks available below 0 as invalid', () => {
+      const beforeProblems = validateEdits(character);
+      expect(beforeProblems.points).toEqual({});
+
+      Object.keys(PointCategories).forEach(category => {
+        const catName = PointCategories[category];
+        character.points[catName].available = -1;
+        const afterProblems = validateEdits(character);
+        expect(Object.keys(afterProblems.points)).toContain(catName);
+        expect(Object.keys(afterProblems.points[catName])).toContain('available');
       });
     });
   });

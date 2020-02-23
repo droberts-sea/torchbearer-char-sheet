@@ -2,7 +2,8 @@ import {
   ADD_POINT,
   SPEND_POINT,
   RESET_CHARACTER,
-  IMPORT_CHARACTER
+  IMPORT_CHARACTER,
+  EDIT_CHARACTER_COMMIT
 } from '../../actions';
 import { ROLL_COMMIT_RESULTS } from '../../actions/roll_actions';
 import { InitialPoints } from '../../rules/initial_character';
@@ -71,6 +72,7 @@ const pointsReducer = function (state = InitialPoints, action) {
       return InitialPoints;
 
     case IMPORT_CHARACTER:
+    case EDIT_CHARACTER_COMMIT:
       return action.payload.points;
 
     default:

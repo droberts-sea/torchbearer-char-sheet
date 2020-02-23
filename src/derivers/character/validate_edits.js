@@ -1,4 +1,5 @@
 import { skillReadyToAdvance } from "../../rules/skills";
+import { PointCategories } from "../../actions";
 
 // FORMAT
 // problems = {
@@ -152,7 +153,24 @@ const validateAbilities = (abilities) => {
   }
 
   return errors;
-}
+};
+
+const validatePoints = (points) => {
+  const errors = new ValidationErrors();
+
+  Object.keys(PointCategories).forEach(category => {
+    const catName = PointCategories[category];
+    if (points[catName].available < 0) {
+      errors.add(catName, 'available', "must be at least 0");
+    }
+
+    if (points[catName].spent < 0) {
+      errors.add(catName, 'spent', "must be at least 0");
+    }
+  });
+
+  return errors;
+};
 
 const validateEdits = (character) => {
   if (!character) {
@@ -161,6 +179,7 @@ const validateEdits = (character) => {
 
   return {
     abilities: validateAbilities(character.abilities),
+    points: validatePoints(character.points),
     skills: validateSkills(character.skills, character),
     traits: validateTraits(character.traits),
     wises: validateWises(character.wises),

@@ -12,8 +12,11 @@ class InfoPage extends React.Component {
       <PointBucket
         name={category}
         bucket={this.props.points[category]}
+        editMode={this.props.ui.editCharacter.editMode}
         onAdd={() => this.props.onPointAdd(category)}
         onSpend={() => this.props.onPointSpend(category)}
+        onEdit={(value, bucket) => this.props.editCharacterProperty(value, 'points', category, bucket)}
+        errors={this.props.errors.points[category]}
         />
     );
   };
