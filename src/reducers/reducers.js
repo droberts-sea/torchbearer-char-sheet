@@ -10,12 +10,16 @@ import ui from './ui_reducer';
 
 import roll from './roll/roll_reducer';
 
-const CURRENT_CHARACTER_VERSION = 1;
+import {
+  CURRENT_CHARACTER_VERSION,
+  upgradeCharacter,
+} from './character/upgrade';
 
 const character = function(state={}, action) {
   if (state.version && state.version !== CURRENT_CHARACTER_VERSION) {
-    throw new Error(`Character version mismatch (loaded ${state.version}, code is at ${CURRENT_CHARACTER_VERSION})`);
+    upgradeCharacter(state.version, CURRENT_CHARACTER_VERSION, state);
   }
+
   return {
     version: CURRENT_CHARACTER_VERSION,
     abilities: abilities(state.abilities, action, state),
@@ -25,7 +29,7 @@ const character = function(state={}, action) {
     skills: skills(state.skills, action, state),
     traits: traits(state.traits, action, state),
     wises: wises(state.wises, action, state)
-  }
+  };
 };
 
 export const tbCharApp = function(state={}, action) {
