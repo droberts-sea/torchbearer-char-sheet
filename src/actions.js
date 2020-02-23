@@ -7,6 +7,9 @@ export const SET_SKILL_DISPLAY = 'SET_SKILL_DISPLAY';
 export const SHOW_TAB = 'SHOW_TAB';
 export const TOGGLE_MENU = 'TOGGLE_MENU';
 
+// BIO
+export const SET_BIO_FIELD = 'SET_BIO_FIELD';
+
 // INFO
 export const SET_CONDITION = 'SET_CONDITION';
 export const ADD_POINT = 'ADD_POINT';
@@ -44,6 +47,13 @@ export const PointCategories = {
 }
 
 /* Action Creators */
+
+export const setBioField = (prop, value) => {
+  return {
+    type: SET_BIO_FIELD,
+    payload: { prop, value },
+  };
+};
 
 export function toggleCondition(condition, isActive) {
   console.log(`action create: ${condition} condition toggle`);

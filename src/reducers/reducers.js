@@ -1,4 +1,5 @@
 import abilities from './character/abilities_reducer';
+import bio from './character/bio_reducer';
 import conditions from './character/conditions_reducer';
 import points from './character/points_reducer';
 import skills from './character/skills_reducer';
@@ -18,6 +19,7 @@ const character = function(state={}, action) {
   return {
     version: CURRENT_CHARACTER_VERSION,
     abilities: abilities(state.abilities, action, state),
+    bio: bio(state.bio, action),
     conditions: conditions(state.conditions, action),
     points: points(state.points, action),
     skills: skills(state.skills, action, state),

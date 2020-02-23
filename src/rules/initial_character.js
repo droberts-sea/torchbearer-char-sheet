@@ -123,3 +123,10 @@ export const InitialWises = Object.freeze([
   newWise(0, 'Deepest Heart of Darkness'),
   newWise(1, 'Home'),
 ]);
+
+export const InitialBio = Object.freeze({
+  name: 'Tilly the Red',
+  stock: 'Halfling',
+  class: 'Burgular',
+  level: '1',
+})
