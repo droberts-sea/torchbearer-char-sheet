@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-// TODO: Import child component(s) here
 import BioPage from '../components/bio/BioPage';
 
 import {
