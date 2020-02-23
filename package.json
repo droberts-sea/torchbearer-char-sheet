@@ -25,7 +25,8 @@
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {
-    "gh-pages": "^2.2.0"
+    "gh-pages": "^2.2.0",
+    "plop": "^2.5.4"
   },
   "browserslist": {
     "production": [
