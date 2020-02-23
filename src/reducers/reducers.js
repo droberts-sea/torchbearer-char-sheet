@@ -12,7 +12,7 @@ import roll from './roll/roll_reducer';
 const CURRENT_CHARACTER_VERSION = 1;
 
 const character = function(state={}, action) {
-  if (state.version && state.version !== CURRENT_CHARACTER_VERSION) {
+  if (state.version && state.version < CURRENT_CHARACTER_VERSION) {
     throw new Error(`Character version mismatch (loaded ${state.version}, code is at ${CURRENT_CHARACTER_VERSION})`);
   }
   return {
