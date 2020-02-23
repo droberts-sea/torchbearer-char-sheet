@@ -256,6 +256,7 @@ describe('resources', () => {
 
     it('tracks whether the mark is pass or fail', () => {
       const postRoll = deepCopy(mockPostRoll);
+      roll.dice.info.skill = Object.keys(mockCharacter.abilities)[0];
 
       postRoll.outcome = 'fail'
       let testImpact = impact(roll, mockCharacter, postRoll);
