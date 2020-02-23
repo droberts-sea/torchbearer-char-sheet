@@ -16,7 +16,7 @@ import update from 'immutability-helper';
 import { newWise } from '../rules/wises';
 import { newTrait } from '../rules/traits';
 
-function currentTab(state = Tabs.STATS, action) {
+function currentTab(state = Tabs.BIO, action) {
   switch (action.type) {
     case SHOW_TAB:
       console.log(`Showing tab: ${action.payload.tab}`);
