@@ -172,6 +172,10 @@ const taxNature = (roll, character, postRoll) => {
 }
 
 const skillAbility = (roll, character, mark, taxNature) => {
+  if (!roll.dice.info.skill) {
+    return undefined;
+  }
+  
   let skill;
   const effect = {
     name: roll.dice.info.skill,

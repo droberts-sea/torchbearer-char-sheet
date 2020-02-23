@@ -42,7 +42,7 @@ function skillTable(state = InitialSkillTableState, action) {
 }
 
 const InitialMenuState = Object.freeze({
-  open: true,
+  open: false,
 });
 
 const menu = (state = InitialMenuState, action) => {

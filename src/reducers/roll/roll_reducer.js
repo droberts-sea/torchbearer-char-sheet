@@ -28,20 +28,20 @@ export const InitialRoll = {
   dice: {
     info: {
       isVersus: false,
-      skill: 'WILL',
+      skill: undefined,
       ob: 3,
       inNature: false,
       isInstinct: false,
       isRecovery: false,
-      isDisposition: true
+      isDisposition: false,
     },
 
     modifiers: {
       natureInstead: false,
       tapNature: false,
-      traitName: 'Jaded',
+      traitName: undefined,
       traitEffect: undefined,
-      help: 3,
+      help: 0,
       personaDice: 0,
       supplies: false,
       gear: true,
