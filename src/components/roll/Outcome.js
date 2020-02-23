@@ -47,12 +47,12 @@ const MarkEffect = ({ effect }) => {
   return (
     <li key={`me_${effect.category}_${effect.name}`}>
       <div key="description">
-      <ConditionalWrapper
-        condition={effect.ignored}
-        wrapper={n => <strike>{n}</strike>}
-      >
-        <b>Mark</b> use of {pluralize.singular(effect.category)} <em>{effect.name}</em>
-      </ConditionalWrapper>
+        <ConditionalWrapper
+          condition={effect.ignored}
+          wrapper={n => <strike>{n}</strike>}
+        >
+          <b>Mark</b> use of {pluralize.singular(effect.category)} <em>{effect.name}</em>
+        </ConditionalWrapper>
       </div>
       <ul className="effect-details" key="details">
         <li key="type">
@@ -83,7 +83,7 @@ const TaxNature = ({ tax }) => {
   }
 };
 
-const Outcome = ({ outcome, impact, postRoll, character, onSetOutcome, onSetWiseAdvancement, operations }) => {
+const Outcome = ({ outcome, impact, postRoll, impactApplied, character, onSetOutcome, onSetWiseAdvancement, operations }) => {
   // Page 65
   let outcomeFlavor;
   if (postRoll.outcome === 'pass') {
@@ -154,29 +154,31 @@ const Outcome = ({ outcome, impact, postRoll, character, onSetOutcome, onSetWise
             })
           }
           {/* TODO widget for depleted nature */}
-          {/* TODO disable until all impact tasks are delt with */}
+          {/* TODO disable until all impact tasks are dealt with */}
           <li key="commit-button">
             <button
               className="action-button"
               onClick={() => operations.commitResults(impact, outcome)}
+              disabled={impactApplied}
             >
               Apply effects to character
-          </button>
+            </button>
           </li>
           <li key="reset-button">
             <button
               className="action-button"
               onClick={operations.reset}
             >
-              Reset roll without applying effects
+              {impactApplied ? "Reset" : "Reset roll without applying effects"}
             </button>
           </li>
           <li key="subtext">
             <p>
               *Any time you test an ability multiple times to determine the outcome, only one test is earned toward advancement. Log the first test you earn. That’s the one that counts for this conflict.
-          </p><p>
+            </p>
+            <p>
               Exception: If you only need one more of a particular type of test to advance, you can hold off noting your test during a conflict to see if you get the pass or fail that you need to advance.
-          </p>
+            </p>
           </li>
         </ul>
       </div>

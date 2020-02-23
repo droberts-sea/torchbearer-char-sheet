@@ -61,6 +61,7 @@ class RollPage extends React.Component {
             outcome={this.props.outcome}
             impact={this.props.impact}
             postRoll={this.props.postRollDerived}
+            impactApplied={this.props.impactApplied}
             character={this.props.character}
             onSetOutcome={this.props.onSetOutcome}
             onSetWiseAdvancement={this.props.onSetWiseAdvancement}

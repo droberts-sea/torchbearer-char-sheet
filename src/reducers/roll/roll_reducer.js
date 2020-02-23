@@ -8,6 +8,7 @@ import {
   ROLL_ACCEPT,
   ROLL_SET_OUTCOME,
   ROLL_SET_WISE_ADVANCEMENT,
+  ROLL_COMMIT_RESULTS,
 } from '../../actions/roll_actions';
 
 import { traitIsAvailable } from '../../rules/traits';
@@ -25,6 +26,7 @@ export const ROLL_STAGES = {
 export const InitialRoll = {
   stage: ROLL_STAGES.PRE_ROLL,
   pageIndex: 0,
+  impactApplied: false,
   dice: {
     info: {
       isVersus: false,
@@ -238,6 +240,7 @@ const rollReducer = function (state = InitialRoll, action, character) {
     case ROLL_RESET:
       state.stage = ROLL_STAGES.PRE_ROLL;
       state.pageIndex = 0;
+      state.impactApplied = false;
       break;
 
     case ROLL_ROLL_DICE:
@@ -248,6 +251,10 @@ const rollReducer = function (state = InitialRoll, action, character) {
     case ROLL_ACCEPT:
       state.stage = ROLL_STAGES.OUTCOME;
       state.pageIndex = ROLL_PAGES.indexOf('OUTCOME');
+      break;
+
+    case ROLL_COMMIT_RESULTS:
+      state.impactApplied = true;
       break;
 
     default:
