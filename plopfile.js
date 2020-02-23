@@ -32,5 +32,26 @@ module.exports = function (plop) {
       type: 'add',
       path: '{{directory}}styles/{{pascalCase name}}.css',
     }]
-  })
+  });
+  
+  plop.setGenerator('container', {
+    description: 'React container component',
+    prompts: [{
+      type: 'input',
+      name: 'name',
+      message: 'container name',
+      filter: (name) => {
+        if (name.endsWith('Container')) {
+          return name.slice(0, -9);
+        } else {
+          return name;
+        }
+      }
+    }],
+    actions: [{
+      type: 'add',
+      path: 'src/containers/{{pascalCase name}}Container.js',
+      templateFile: 'plop_templates/container.js.hbs',
+    }],
+  });
 };
