@@ -15,6 +15,11 @@ const rollNavStatus = (roll) => {
     },
   };
 
+  if (ROLL_PAGES[roll.pageIndex] === 'GATHER INFO' &&
+    !roll.dice.info.skill) {
+    navStatus.forward.disabled = true;
+  }
+
   if (ROLL_PAGES[roll.pageIndex] === 'READY' &&
     roll.stage === ROLL_STAGES.PRE_ROLL) {
     navStatus.forward.disabled = true;
