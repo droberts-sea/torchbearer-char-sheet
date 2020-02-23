@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: auto 1fr;
   column-gap: 1em;
+  font-size: 1.2em;
 }
 
 .bio-page .block {
