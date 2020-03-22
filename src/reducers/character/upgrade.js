@@ -1,14 +1,36 @@
-export const CURRENT_CHARACTER_VERSION = 2;
+export const CURRENT_CHARACTER_VERSION = 3;
 
-export const upgradeCharacter = (fromVersion, toVersion, character) => {
-  if (fromVersion === 1 && toVersion === 2) {
-    if (!character.bio) {
-      // Give them a blank bio
-      character = { ...character };
-      character.bio = {};
-    }
-    return character;
+export const upgradeCharacter = (toVersion, character) => {
+  if (toVersion > CURRENT_CHARACTER_VERSION) {
+    throw new Error(`Unknown character version ${toVersion}`);
   }
 
-  throw new Error(`No upgrade path found for character data from v${fromVersion} to v${toVersion})`);
-}
+  if (character.version < 2 && toVersion >= 2) {
+    if (!character.bio) {
+      // Give them a blank bio
+      character = {
+        ...character,
+        bio: {},
+        version: 2,
+      };
+    }
+  }
+
+  if (character.version < 3 && toVersion >= 3) {
+    // Mark any skill with a non-zero rating as open
+    character = { ...character, version: 3 };
+    character.skills = { ...character.skills };
+
+    Object.keys(character.skills).forEach((skillName) => {
+      const skill = character.skills[skillName];
+      if (!skill.open && skill.rating > 0) {
+        character.skills[skillName] = {
+          ...skill,
+          open: true
+        }
+      }
+    });
+  }
+  
+  return character;
+};

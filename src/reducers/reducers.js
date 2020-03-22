@@ -15,20 +15,20 @@ import {
   upgradeCharacter,
 } from './character/upgrade';
 
-const character = function(state={}, action) {
-  if (state.version && state.version !== CURRENT_CHARACTER_VERSION) {
-    upgradeCharacter(state.version, CURRENT_CHARACTER_VERSION, state);
+const character = function(character={}, action) {
+  if (character.version && character.version !== CURRENT_CHARACTER_VERSION) {
+    character = upgradeCharacter(CURRENT_CHARACTER_VERSION, character);
   }
 
   return {
     version: CURRENT_CHARACTER_VERSION,
-    abilities: abilities(state.abilities, action, state),
-    bio: bio(state.bio, action),
-    conditions: conditions(state.conditions, action),
-    points: points(state.points, action),
-    skills: skills(state.skills, action, state),
-    traits: traits(state.traits, action, state),
-    wises: wises(state.wises, action, state)
+    abilities: abilities(character.abilities, action, character),
+    bio: bio(character.bio, action),
+    conditions: conditions(character.conditions, action),
+    points: points(character.points, action),
+    skills: skills(character.skills, action, character),
+    traits: traits(character.traits, action, character),
+    wises: wises(character.wises, action, character)
   };
 };
 
