@@ -49,7 +49,8 @@ class SkillTable extends React.Component {
 
   // Template methods
   extraRow() { return null; }
-  extraCol() { return null; }
+  extraColAfterName() { return null; }
+  extraColEnd() { return null; }
   shouldShow() { return true; }
   customRating() { return null; }
 
@@ -85,9 +86,10 @@ class SkillTable extends React.Component {
         <React.Fragment key={`${key}`}>
           <tr>
             <td>{skill.name}</td>
+            {this.extraColAfterName(key, skill)}
             <td>{rating}</td>
             {this.advancement(key, skill, errors)}
-            {this.extraCol(key, skill)}
+            {this.extraColEnd(key, skill)}
           </tr>
           {this.extraRow(key, skill)}
           <ErrorRow errors={errors} />

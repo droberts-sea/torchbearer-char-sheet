@@ -3,10 +3,27 @@ import SkillTable from './SkillTable';
 import { SKILL_DISPLAY_OPTIONS } from '../../actions';
 import { SkillRules } from '../../rules/skills';
 
+import Checkbox from '../shared/Checkbox';
+
 // XXX this is an antipattern, react specifically recommends against extending your own components
 // see https://reactjs.org/docs/composition-vs-inheritance.html
 class Skills extends SkillTable {
-  extraCol(key, ability) {
+  extraColAfterName(key, ability) {
+    if (this.props.editMode) {
+      return (
+        <td>
+          <Checkbox
+            active={ability.open}
+            onToggle={(value) => this.onSetProp(value, key, 'open')}
+          />
+        </td>
+      )
+    } else {
+      return null;
+    }
+  }
+
+  extraColEnd(key, ability) {
     return (
       <td className="beginners-luck">
         {ability.beginnersLuck[0]}
@@ -16,6 +33,9 @@ class Skills extends SkillTable {
 
   tableHeaders() {
     const headers = super.tableHeaders();
+    if (this.props.editMode) {
+      headers.splice(1, 0, 'Open');
+    }
     headers.push('BL');
     return headers;
   }

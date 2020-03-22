@@ -75,8 +75,19 @@ const editCharacterProperty = (state, value, path) => {
     target = target[node];
   });
   target['$set'] = value;
+  
+  state = update(state, command);
+  
+  // Oh no special cases!
+  if (path[0] === 'skills') {
+    if (path[2] === 'rating' && value > 0) {
+      state.character.skills[path[1]].open = true;
+    } else if (path[2] === 'open' && !value) {
+      state.character.skills[path[1]].rating = 0;
+    }
+  }
 
-  return update(state, command);
+  return state;
 };
 
 const editCharacterAddField = (state, category) => {
