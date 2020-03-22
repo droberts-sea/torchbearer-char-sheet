@@ -17,7 +17,6 @@ const bioReducer = (state = InitialBio, action) => {
     default:
       break;
   }
-  console.log(state);
   return state;
 };
 

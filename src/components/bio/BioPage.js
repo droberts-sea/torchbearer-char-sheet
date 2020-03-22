@@ -59,7 +59,6 @@ const properties = [
 ]
 
 const BioPage = ({ bio, editMode, actions }) => {
-  console.log(bio);
   return (
     <div className="bio-page">
       {
