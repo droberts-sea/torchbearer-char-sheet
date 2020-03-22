@@ -4,7 +4,7 @@ export const skillReadyToAdvance = (skill, untaxedNature, mark) => {
     advancement[mark] += 1;
   }
 
-  if (skill.open) {
+  if (skillIsOpen(skill)) {
     let threshold = skill.rating;
     // Nature checks against the untaxed rating
     if (Object.keys(skill).includes('untaxed')) {

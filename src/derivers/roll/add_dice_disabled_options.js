@@ -1,4 +1,5 @@
 import { traitIsAvailable } from '../../rules/traits';
+import { skillIsOpen } from '../../rules/skills';
 
 const addDiceDisabledOptions = function (state, character, resourcesSpent) {
   const disabledOptions = {};
@@ -7,11 +8,11 @@ const addDiceDisabledOptions = function (state, character, resourcesSpent) {
 
   // BEGINNER'S LUCK
   // The natureInstead option is only available if the character does not have the skill open (page 27)
-  disabledOptions.natureInstead = !(character && character.skills[skillName] && !character.skills[skillName].open);
+  disabledOptions.natureInstead = !(character && character.skills[skillName] && !skillIsOpen(character.skills[skillName]));
 
   // beginner's luck cannot be used when a character has the Afraid condition
   const skill = character.skills[state.dice.info.skill];
-  disabledOptions.unselectNatureInstead = skill && !skill.open && character.conditions.AFRAID;
+  disabledOptions.unselectNatureInstead = skill && !skillIsOpen(skill) && character.conditions.AFRAID;
 
   // beginner's luck only applies if the skill is not open AND natureInstead has not been selected
   disabledOptions.beginnersLuckHeaders = disabledOptions.natureInstead || state.dice.modifiers.natureInstead;

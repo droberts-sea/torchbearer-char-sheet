@@ -1,4 +1,5 @@
 import diceMath from './dice_math';
+import { skillIsOpen } from '../../rules/skills';
 
 const InitialState = {
   summary: {
@@ -57,7 +58,7 @@ export const skillDice = function (state, character, summary, details) {
 
   // Figure out which skill or ability applies
   if (skill) {
-    if (skill.open) {
+    if (skillIsOpen(skill)) {
       // open skill -> just use it
       rating = skill.rating;
       source = `${skill.name} rating`;

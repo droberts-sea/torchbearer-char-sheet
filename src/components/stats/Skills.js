@@ -1,7 +1,7 @@
 import React from 'react';
 import SkillTable from './SkillTable';
 import { SKILL_DISPLAY_OPTIONS } from '../../actions';
-import { SkillRules } from '../../rules/skills';
+import { SkillRules, skillIsOpen } from '../../rules/skills';
 
 import Checkbox from '../shared/Checkbox';
 
@@ -13,7 +13,7 @@ class Skills extends SkillTable {
       return (
         <td>
           <Checkbox
-            active={ability.open}
+            active={skillIsOpen(ability)}
             onToggle={(value) => this.onSetProp(value, key, 'open')}
           />
         </td>
@@ -41,7 +41,7 @@ class Skills extends SkillTable {
   }
 
   shouldShow(key, skill) {
-    const isOpen = skill.open || skill.rating > 0 || skill.advancement.pass > 0 || skill.advancement.fail > 0;
+    const isOpen = skillIsOpen(skill) || skill.advancement.pass > 0 || skill.advancement.fail > 0;
 
     switch (this.props.display) {
       case SKILL_DISPLAY_OPTIONS.OPEN:

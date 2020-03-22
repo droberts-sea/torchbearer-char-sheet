@@ -15,6 +15,7 @@ import { traitIsAvailable } from '../../rules/traits';
 import { SET_CONDITION } from '../../actions';
 
 import reduceResults from './results_reducer';
+import { skillIsOpen } from '../../rules/skills';
 
 // Transitions between stages are controlled by big buttons, not the nav arrows. Naving to a stage that hasn't begun is impossible. Previous stages are visible but can't interact.
 export const ROLL_STAGES = {
@@ -133,14 +134,14 @@ const reduceModifiers = function (state, action, character, rollInfo) {
         }
 
         // Can't use BL when Afraid - must roll w/ nature instead
-        if (!skill.open && character.conditions.AFRAID) {
+        if (!skillIsOpen(skill) && character.conditions.AFRAID) {
           newState.natureInstead = true;
         }
 
         // Toggle gear based on beginner's luck
         // TODO: default to false if no backpack (pg 34)
         // TODO: exception for dwarves (always have tools if have backpack - pg 34)
-        if (!skill.open && !newState.natureInstead) {
+        if (!skillIsOpen(skill) && !newState.natureInstead) {
           newState.gear = false;
         } else {
           newState.gear = true;
@@ -161,7 +162,7 @@ const reduceModifiers = function (state, action, character, rollInfo) {
       // Whether or not you can use beginner's luck or are forced to use Nature is affected by the afraid condition, so we have to listen for when that changes.
       if (action.payload.condition === 'AFRAID' && action.payload.isActive) {
         skill = character.skills[rollInfo.skill];
-        if (skill && !skill.open) {
+        if (skill && !skillIsOpen(skill)) {
           newState = { ...state };
           newState.natureInstead = true;
           return newState;

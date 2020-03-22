@@ -1,5 +1,5 @@
 import { wiseReadyToAdvance } from "../../rules/wises";
-import { skillReadyToAdvance } from "../../rules/skills";
+import { skillReadyToAdvance, skillIsOpen } from "../../rules/skills";
 
 // Thought: maybe you could consolidate all the impact effects into a single type?
 
@@ -185,7 +185,7 @@ const skillAbility = (roll, character, mark, taxNature) => {
     effect.category = 'skills';
 
     // Once you use Beginner’s Luck... Check off one of the Pass bubbles—it doesn’t matter if you passed or failed that particular test. (pg 30)
-    if (!character.skills[effect.name].open && mark === 'fail') {
+    if (!skillIsOpen(character.skills[effect.name]) && mark === 'fail') {
       effect.markComment = "beginner's luck always marks pass";
       mark = 'pass';
     }
@@ -208,7 +208,7 @@ const skillAbility = (roll, character, mark, taxNature) => {
       // If tax depletes max nature to 1, a single pass (this roll) is enough to advance. You clean the slate (remove all marks, pg 104) after depleting, so if max nature is more than 1 after depletion or this isn't a pass roll then no advancement.
       effect.advance = character.abilities.NATURE.untaxed <= 2 && mark === 'pass';
 
-    } else if (!skill.open) {
+    } else if (!skillIsOpen(skill)) {
       // Tax / depletion and beginner's luck advancement
       // If tax happens first, then BL advancement should use the depleted nature value
       const depletedNature = character.abilities.NATURE.untaxed - 1

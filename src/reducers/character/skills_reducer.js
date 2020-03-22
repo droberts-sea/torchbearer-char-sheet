@@ -1,6 +1,7 @@
 import { MARK_TEST, RESET_CHARACTER, IMPORT_CHARACTER, EDIT_CHARACTER_COMMIT } from '../../actions';
 import { ROLL_COMMIT_RESULTS } from '../../actions/roll_actions';
 import { InitialSkills } from '../../rules/initial_character';
+import { skillIsOpen } from '../../rules/skills';
 
 const clearSlate = function (advancement) {
   advancement.pass = 0;
@@ -36,7 +37,7 @@ export const advanceSkill = function (skill, result, character) {
   }
 
   // Advancement
-  if (skill.open) {
+  if (skillIsOpen(skill)) {
     // If a skill is open, you need passes equal to
     // the rating, and fails equal to the rating - 1
     // See page 104

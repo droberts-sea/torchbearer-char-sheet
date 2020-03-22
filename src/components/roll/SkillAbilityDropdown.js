@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Control from '../shared/Control';
 
 import './styles/SkillAbilityDropdown.css';
+import { skillIsOpen } from '../../rules/skills';
 
 class SkillAbilityDropdown extends React.Component {
   abilities() {
@@ -27,7 +28,7 @@ class SkillAbilityDropdown extends React.Component {
   trainedSkills() {
     const skills = this.props.character.skills;
     const trainedSkills = Object.keys(skills).filter((name) => {
-      return skills[name].open;
+      return skillIsOpen(skills[name]);
     });
     return (
       <optgroup label="Trained Skills">
@@ -49,7 +50,7 @@ class SkillAbilityDropdown extends React.Component {
     const skills = this.props.character.skills;
     const abilities = this.props.character.abilities;
     const untrainedSkills = Object.keys(skills).filter((name) => {
-      return !skills[name].open;
+      return !skillIsOpen(skills[name]);
     });
     return (
       <optgroup label="Beginner's Luck">
