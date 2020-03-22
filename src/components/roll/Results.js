@@ -106,6 +106,11 @@ const Results = ({ postRoll, reactions, rollSummary, character, onSetReaction, o
   const availableFate = character.points.fate.available - resourcesSpent.fate;
   const availablePersona = character.points.persona.available - resourcesSpent.persona;
 
+  let extraSuccesses = rollSummary.addSuccesses;
+  if (postRoll.outcome === 'pass') {
+    extraSuccesses += rollSummary.conditionalSuccesses;
+  }
+
   return (
     <div
       className="roll-results"
@@ -114,7 +119,7 @@ const Results = ({ postRoll, reactions, rollSummary, character, onSetReaction, o
         <DiceList
           dice={successes}
           name="Successes"
-          extra={rollSummary.addSuccesses} />
+          extra={extraSuccesses} />
         <DiceList
           dice={scoundrels}
           name="Scoundrels" />
