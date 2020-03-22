@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/torchbearer-char-sheet/static/css/main.ce25a76e.chunk.css",
+    "main.js": "/torchbearer-char-sheet/static/js/main.79cff7ba.chunk.js",
+    "main.js.map": "/torchbearer-char-sheet/static/js/main.79cff7ba.chunk.js.map",
+    "runtime-main.js": "/torchbearer-char-sheet/static/js/runtime-main.db05ba9a.js",
+    "runtime-main.js.map": "/torchbearer-char-sheet/static/js/runtime-main.db05ba9a.js.map",
+    "static/js/2.5776a2f0.chunk.js": "/torchbearer-char-sheet/static/js/2.5776a2f0.chunk.js",
+    "static/js/2.5776a2f0.chunk.js.map": "/torchbearer-char-sheet/static/js/2.5776a2f0.chunk.js.map",
+    "index.html": "/torchbearer-char-sheet/index.html",
+    "precache-manifest.343333bd3b273e231b17afe9ecb5065d.js": "/torchbearer-char-sheet/precache-manifest.343333bd3b273e231b17afe9ecb5065d.js",
+    "service-worker.js": "/torchbearer-char-sheet/service-worker.js",
+    "static/css/main.ce25a76e.chunk.css.map": "/torchbearer-char-sheet/static/css/main.ce25a76e.chunk.css.map",
+    "static/js/2.5776a2f0.chunk.js.LICENSE.txt": "/torchbearer-char-sheet/static/js/2.5776a2f0.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.db05ba9a.js",
+    "static/js/2.5776a2f0.chunk.js",
+    "static/css/main.ce25a76e.chunk.css",
+    "static/js/main.79cff7ba.chunk.js"
+  ]
+}
