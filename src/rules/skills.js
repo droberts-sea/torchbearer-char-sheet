@@ -31,6 +31,10 @@ export const skillReadyToAdvance = (skill, untaxedNature, mark) => {
   }
 }
 
+export const skillIsOpen = (skill) => {
+  return skill.open || skill.rating > 0;
+};
+
 export const SkillRules = {
   ALCHEMIST: {
     description: "The Alchemist skill is used primarily by magicians and wise (or foolish) sages to create potions, tinctures, acids or eldritch preparations.",

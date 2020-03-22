@@ -1,4 +1,4 @@
-import { skillReadyToAdvance } from '../skills';
+import { skillReadyToAdvance, skillIsOpen } from '../skills';
 
 import mockCharacter from '../../mock/character';
 import { deepCopy } from '../../mock/util';
@@ -6,7 +6,7 @@ import { deepCopy } from '../../mock/util';
 const mockSkill = mockCharacter.skills[Object.keys(mockCharacter.skills)[0]];
 const mockUntaxedNature = mockCharacter.abilities.NATURE.untaxed;
 
-describe('skillReadyToAdvance', () => {
+describe(skillReadyToAdvance, () => {
   let skill;
   beforeEach(() => {
     skill = deepCopy(mockSkill);
@@ -136,4 +136,43 @@ describe('skillReadyToAdvance', () => {
     const might = deepCopy(mockCharacter.abilities.MIGHT);
     expect(skillReadyToAdvance(might, mockUntaxedNature)).toBeFalsy();
   })
+});
+
+describe(skillIsOpen, () => {
+  let skill;
+  beforeEach(() => {
+    skill = deepCopy(mockSkill);
+  });
+
+  it('returns true for an open skill with rating 0', () => {
+    skill.open = true;
+    skill.rating = 0;
+
+    const result = skillIsOpen(skill);
+    expect(result).toBeTruthy();
+  });
+
+  it('returns true for an open skill with rating > 0', () => {
+    skill.open = true;
+    skill.rating = 2;
+
+    const result = skillIsOpen(skill);
+    expect(result).toBeTruthy();
+  });
+
+  it('returns true for a skill with rating > 0', () => {
+    skill.open = false;
+    skill.rating = 2;
+
+    const result = skillIsOpen(skill);
+    expect(result).toBeTruthy();
+  });
+
+  it('returns false for a non-open skill with rating 0', () => {
+    skill.open = false;
+    skill.rating = 0;
+
+    const result = skillIsOpen(skill);
+    expect(result).toBeFalsy();
+  });
 });
