@@ -48,6 +48,7 @@ export const InitialRoll = {
       personaDice: 0,
       supplies: false,
       gear: true,
+      orderOfMight: 0,
     },
   },
   // results: {

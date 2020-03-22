@@ -74,6 +74,7 @@ const ROLL_MODIFIER_PROPS = [
   'personaDice',
   'supplies',
   'gear',
+  'orderOfMight',
 ];
 
 export function rollSetModifier(prop, value) {

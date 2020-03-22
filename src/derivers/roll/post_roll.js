@@ -10,11 +10,15 @@ const postRollDerived = (rolledDice, rollSummary) => {
   const successes = groups.successes || [];
   const scoundrels = groups.scoundrels || [];
 
-  const totalSuccesses = successes.length + rollSummary.addSuccesses;
+  let totalSuccesses = successes.length + rollSummary.addSuccesses;
 
   
   // Note: 'pass' and 'fail' are used as keywords elsewhere
   const outcome = totalSuccesses >= rollSummary.ob ? 'pass' : 'fail';
+
+  if (outcome === 'pass') {
+    totalSuccesses += rollSummary.conditionalSuccesses;
+  }
 
   const margin = Math.abs(rollSummary.ob - totalSuccesses);
   

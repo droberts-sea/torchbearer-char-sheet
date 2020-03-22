@@ -253,6 +253,21 @@ describe('Pre Roll Derived', () => {
       });
     });
 
+    test('order of might', () => {
+      const [beforeState, afterState] = rollWithoutAndWithModifier({
+        modName: 'orderOfMight',
+        beforeSetting: 0,
+        afterSetting: 1,
+      });
+
+      checkModifierAdded({
+        beforeState,
+        afterState,
+        detailsText: 'Order of Might',
+        effectType: 'conditionalSuccesses',
+      });
+    });
+
     describe("traits", () => {
       const rollWithoutAndWithTrait = ({
         traitName,

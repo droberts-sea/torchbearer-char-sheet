@@ -7,6 +7,7 @@ const InitialState = {
     dice: 0,
     ob: 0,
     addSuccesses: 0,
+    conditionalSuccesses: 0,
     odds: 0,
     expectedMargin: 0
   },
@@ -154,6 +155,16 @@ const addPostBLDice = function (state, character, summary, details) {
 
   const modifiers = state.dice.modifiers;
 
+  // order of might (page 75)
+  // ...your Might grants a substantial bonus: +1s per level of order greater than your opponent for all successful or tied actions in kill, capture, and drive off conflicts
+  if (modifiers.orderOfMight > 0) {
+    summary.conditionalSuccesses += modifiers.orderOfMight;
+    details.push({
+      effect: '+1S',
+      source: 'Order of Might (on a pass or tie)',
+    });
+  }
+
   // traits (page 22)
   // There are three levels for each trait:
   //   Level 1 traits grant +1D to one roll per session.
@@ -242,6 +253,7 @@ export const preRollDerived = function (state, character) {
     type: state.dice.info.isVersus ? 'versus' : 'obstacle',
     dice: 0,
     addSuccesses: 0,
+    conditionalSuccesses: 0,
     ob: state.dice.info.ob,
     opponentDice: 0,
     odds: 50,

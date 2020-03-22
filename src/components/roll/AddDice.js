@@ -68,6 +68,13 @@ const AddDice = ({ disabledOptions, onSetProperty, info, modifiers, character, r
       <li className={blHeaderStyle}>
         <h2>After Beginner&apos;s Luck</h2>
       </li>
+      <PlusMinus
+        name="Order of Might"
+        subtext="If this is a Kill, Capture or Drive Off conflict, record the difference between your might and your opponent's. If the roll result is a pass or tie, you add successes equal to this difference."
+        value={modifiers.orderOfMight}
+        min={0}
+        onValueChange={(oom) => onSetProperty('orderOfMight', oom)}
+      />
       <TraitDropdown
         traitName={modifiers.traitName}
         traitEffect={modifiers.traitEffect}
