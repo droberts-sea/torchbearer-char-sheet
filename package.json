@@ -15,7 +15,7 @@
     "react-test-renderer": "^16.12.0",
     "redux": "^4.0.5",
     "redux-localstorage": "^0.4.1",
-    "underscore": "^1.9.2"
+    "underscore": "^1.12.1"
   },
   "scripts": {
     "start": "export PORT='8080'; react-scripts start",
